@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dataAccess\dataAccess.csproj" />
+    <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 
 </Project>
