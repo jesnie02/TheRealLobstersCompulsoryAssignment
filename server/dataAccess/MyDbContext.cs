@@ -12,6 +12,8 @@ public partial class MyDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Attribute> Attributes { get; set; }
+
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
@@ -20,10 +22,13 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<Paper> Papers { get; set; }
 
-    public virtual DbSet<Property> Properties { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Attribute>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("properties_pkey");
+        });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("customers_pkey");
@@ -59,8 +64,8 @@ public partial class MyDbContext : DbContext
 
             entity.HasMany(d => d.Properties).WithMany(p => p.Papers)
                 .UsingEntity<Dictionary<string, object>>(
-                    "PaperProperty",
-                    r => r.HasOne<Property>().WithMany()
+                    "PaperAttribute",
+                    r => r.HasOne<Attribute>().WithMany()
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("paper_properties_property_id_fkey"),
@@ -71,16 +76,11 @@ public partial class MyDbContext : DbContext
                     j =>
                     {
                         j.HasKey("PaperId", "PropertyId").HasName("paper_properties_pkey");
-                        j.ToTable("paper_properties");
+                        j.ToTable("paper_attributes");
                         j.HasIndex(new[] { "PropertyId" }, "IX_paper_properties_property_id");
                         j.IndexerProperty<int>("PaperId").HasColumnName("paper_id");
                         j.IndexerProperty<int>("PropertyId").HasColumnName("property_id");
                     });
-        });
-
-        modelBuilder.Entity<Property>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("properties_pkey");
         });
 
         OnModelCreatingPartial(modelBuilder);
