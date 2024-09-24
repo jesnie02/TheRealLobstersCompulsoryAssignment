@@ -22,7 +22,7 @@ public partial class Order
 
     [Column("status")]
     [StringLength(50)]
-    public string Status { get; set; } = null!;
+    public string? Status { get; set; } = null!;
 
     [Column("total_amount")]
     public double TotalAmount { get; set; }

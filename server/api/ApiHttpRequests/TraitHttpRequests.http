@@ -1,0 +1,11 @@
+﻿### Get trait by ID
+GET http://localhost:5139/api/traits/1
+Content-Type: application/json
+
+### Create a new trait 
+POST http://localhost:5139/api/traits
+Content-Type: application/json
+
+{
+  "traitName": "Soft"
+}

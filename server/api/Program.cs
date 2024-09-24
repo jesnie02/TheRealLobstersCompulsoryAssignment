@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<TraitService>();
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {
     Options.UseNpgsql(builder.Configuration.GetConnectionString("MyDbConn"));
