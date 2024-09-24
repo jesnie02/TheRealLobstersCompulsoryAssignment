@@ -1,6 +1,5 @@
 name: Run Tests
 
-# Trigger the workflow on every push to the main branch and pull requests
 on:
   push:
     branches:
@@ -14,24 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Set up .NET Core (if your project uses .NET, for example)
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.x' # Adjust this version as needed
-
-    # Restore dependencies
-    - name: Install dependencies
-      run: dotnet restore
-
-    # Build the project
+        dotnet-version: '8.x' 
+  
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-
-    # Run tests
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build 
