@@ -9,3 +9,7 @@ Content-Type: application/json
   "totalAmount": 100.50,
   "customerId": 1
 }
+
+### Get order history for a customer
+GET http://localhost:5139/api/order/customer/1/history
+Content-Type: application/json

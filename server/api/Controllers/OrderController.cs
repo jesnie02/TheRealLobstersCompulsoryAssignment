@@ -1,4 +1,7 @@
-﻿using service.dto.OrderDto;
+﻿// This controller handles HTTP requests related to orders, including creating an order,
+// retrieving an order by its ID, and getting the order history for a specific customer.
+
+using service.dto.OrderDto;
 using dataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using service;
@@ -16,6 +19,7 @@ namespace api.Controllers
             _orderService = orderService;
         }
 
+        // Creates a new order
         [HttpPost]
         public async Task<IActionResult> CreateOrder(CreateOrderDto orderDto)
         {
@@ -30,6 +34,50 @@ namespace api.Controllers
 
             var createdOrder = await _orderService.CreateOrderAsync(order);
             return CreatedAtAction(nameof(CreateOrder), new { id = createdOrder.Id }, createdOrder);
+        }
+
+        // Retrieves an order by its ID
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrder(int id)
+        {
+            var order = await _orderService.GetOrderByIdAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var orderDto = new GetOrderDto
+            {
+                OrderDate = order.OrderDate,
+                DeliveryDate = order.DeliveryDate,
+                Status = order.Status,
+                TotalAmount = order.TotalAmount,
+                CustomerId = order.CustomerId
+            };
+
+            return Ok(orderDto);
+        }
+
+        // Retrieves the order history for a specific customer
+        [HttpGet("customer/{customerId}/history")]
+        public async Task<IActionResult> GetOrderHistory(int customerId)
+        {
+            var orders = await _orderService.GetOrdersByCustomerIdAsync(customerId);
+            if (orders == null || !orders.Any())
+            {
+                return NotFound();
+            }
+
+            var orderDtos = orders.Select(order => new GetOrderDto
+            {
+                OrderDate = order.OrderDate,
+                DeliveryDate = order.DeliveryDate,
+                Status = order.Status,
+                TotalAmount = order.TotalAmount,
+                CustomerId = order.CustomerId
+            }).ToList();
+
+            return Ok(orderDtos);
         }
     }
 }
