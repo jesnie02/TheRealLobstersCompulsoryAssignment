@@ -1,6 +1,7 @@
 using dataAccess;
 using Microsoft.EntityFrameworkCore;
 using service;
+using service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

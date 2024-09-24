@@ -1,10 +1,11 @@
 ﻿// This controller handles HTTP requests related to orders, including creating an order,
 // retrieving an order by its ID, and getting the order history for a specific customer.
 
-using service.dto.OrderDto;
 using dataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using service;
+using service.dto;
+using service.Services;
 
 namespace api.Controllers
 {
@@ -21,7 +22,7 @@ namespace api.Controllers
 
         // Creates a new order
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(CreateOrderDto orderDto)
+        public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
             var order = new Order
             {
@@ -46,7 +47,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            var orderDto = new GetOrderDto
+            var orderDto = new OrderDto
             {
                 OrderDate = order.OrderDate,
                 DeliveryDate = order.DeliveryDate,
@@ -68,7 +69,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            var orderDtos = orders.Select(order => new GetOrderDto
+            var orderDtos = orders.Select(order => new OrderDto
             {
                 OrderDate = order.OrderDate,
                 DeliveryDate = order.DeliveryDate,

@@ -1,6 +1,6 @@
-﻿namespace service.dto.OrderDto
+﻿namespace service.dto
 {
-    public class CreateOrderDto
+    public class OrderDto
     {
         public DateTime OrderDate { get; set; }
         public DateOnly? DeliveryDate { get; set; }

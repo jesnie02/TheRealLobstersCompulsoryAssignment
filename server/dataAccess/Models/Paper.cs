@@ -32,5 +32,5 @@ public partial class Paper
 
     [ForeignKey("PaperId")]
     [InverseProperty("Papers")]
-    public virtual ICollection<Attribute> Properties { get; set; } = new List<Attribute>();
+    public virtual ICollection<Trait> Traits { get; set; } = new List<Trait>();
 }

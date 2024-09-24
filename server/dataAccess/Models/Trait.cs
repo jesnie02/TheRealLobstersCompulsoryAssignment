@@ -6,18 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dataAccess.Models;
 
-[Table("attributes")]
-public partial class Attribute
+[Table("traits")]
+public partial class Trait
 {
     [Key]
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("property_name")]
+    [Column("trait_name")]
     [StringLength(255)]
-    public string PropertyName { get; set; } = null!;
+    public string TraitName { get; set; } = null!;
 
-    [ForeignKey("PropertyId")]
-    [InverseProperty("Properties")]
+    [ForeignKey("TraitId")]
+    [InverseProperty("Traits")]
     public virtual ICollection<Paper> Papers { get; set; } = new List<Paper>();
 }

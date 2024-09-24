@@ -1,6 +1,6 @@
 ﻿namespace api.Controllers;
 
-public class PaperPropertyController
+public class TraitController
 {
     
 }

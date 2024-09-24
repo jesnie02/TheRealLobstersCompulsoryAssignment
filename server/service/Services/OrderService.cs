@@ -5,7 +5,7 @@ using dataAccess;
 using dataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace service
+namespace service.Services
 {
     public class OrderService
     {
@@ -25,7 +25,7 @@ namespace service
         }
 
         // Retrieves an order by its ID
-        public async Task<Order> GetOrderByIdAsync(int id)
+        public async Task<Order?> GetOrderByIdAsync(int id)
         {
             return await _context.Orders.FindAsync(id);
         }
