@@ -15,4 +15,9 @@
     <ProjectReference Include="..\service\service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>
