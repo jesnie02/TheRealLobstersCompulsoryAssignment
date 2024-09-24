@@ -22,7 +22,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.x' # Adjust this version as needed
+        dotnet-version: '7.x' # Adjust this version as needed
 
     # Restore dependencies
     - name: Install dependencies
@@ -31,3 +31,7 @@ jobs:
     # Build the project
     - name: Build
       run: dotnet build --configuration Release --no-restore
+
+    # Run tests
+    - name: Run tests
+      run: dotnet test --no-build --verbosity normal
