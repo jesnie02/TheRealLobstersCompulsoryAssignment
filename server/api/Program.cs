@@ -1,5 +1,6 @@
 using dataAccess;
 using Microsoft.EntityFrameworkCore;
+using service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApiDocument();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {
     Options.UseNpgsql(builder.Configuration.GetConnectionString("MyDbConn"));
