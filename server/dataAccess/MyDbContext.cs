@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using dataAccess.Models;
+using Attribute = dataAccess.Models.Attribute;
 
 namespace dataAccess;
 
