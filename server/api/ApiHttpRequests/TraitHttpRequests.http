@@ -9,3 +9,8 @@ Content-Type: application/json
 {
   "traitName": "Soft"
 }
+
+### Delete a trait
+DELETE http://localhost:5139/api/traits/1
+Content-Type: : application/json
+

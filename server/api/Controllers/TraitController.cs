@@ -49,5 +49,17 @@ namespace api.Controllers
             return Ok(traitDto);
         }
         
+        //delete trait by id 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTrait(int id)
+        {
+            var isDeleted = await _traitService.DeleteTraitAsync(id);
+            if (!isDeleted)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

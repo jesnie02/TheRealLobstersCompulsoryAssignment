@@ -34,5 +34,19 @@ namespace service.Services
         {
             return await _context.Traits.ToListAsync();
         }
+        
+       // Deletes a trait by its ID
+        public async Task<bool> DeleteTraitAsync(int id)
+        {
+            var trait = await _context.Traits.FindAsync(id);
+            if (trait == null)
+            {
+                return false;
+            }
+
+            _context.Traits.Remove(trait);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }
