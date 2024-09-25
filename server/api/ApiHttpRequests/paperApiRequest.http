@@ -1,0 +1,25 @@
+### Create a new paper
+POST http://localhost:5139/api/Paper
+Content-Type: application/json
+
+{
+  "name": "gold paper",
+  "discontinued": true,
+  "stock": 100,
+  "price": 10.20
+}
+
+### Update an existing paper
+PUT http://localhost:5139/api/Paper/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Updated Paper",
+  "discontinued": false,
+  "price": 12.0,
+  "stock": 150
+}
+
+### Delete a paper
+DELETE http://localhost:5139/api/Paper/1
