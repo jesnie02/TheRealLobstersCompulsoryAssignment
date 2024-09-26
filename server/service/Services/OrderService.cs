@@ -17,30 +17,27 @@ namespace service.Services
     public class OrderService : IOrderService
     {
         private readonly ILogger<OrderService> _logger;
-        private readonly IValidator<OrderDto> _createOrderValidator;
-        private readonly IValidator<OrderDto> _updateOrderValidator;
+        private readonly IValidator<OrderDto> _orderValidator;
         private readonly MyDbContext _context;
 
         public OrderService(
             ILogger<OrderService> logger,
-            IValidator<OrderDto> createOrderValidator,
-            IValidator<OrderDto> updateOrderValidator,
+            IValidator<OrderDto> orderValidator,
             MyDbContext context)
         {
             _logger = logger;
-            _createOrderValidator = createOrderValidator;
-            _updateOrderValidator = updateOrderValidator;
+            _orderValidator = orderValidator;
             _context = context;
         }
 
         public async Task<OrderDto> CreateOrderAsync(OrderDto createOrderDto)
         {
-            _logger.LogInformation("Creating a new order"); // Logging statement
-            await _createOrderValidator.ValidateAndThrowAsync(createOrderDto);
+            _logger.LogInformation("Creating a new order");
+            await _orderValidator.ValidateAndThrowAsync(createOrderDto);
             var order = createOrderDto.ToOrder();
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Order created successfully"); 
+            _logger.LogInformation("Order created successfully");
             return new OrderDto().FromEntity(order);
         }
         
@@ -71,10 +68,9 @@ namespace service.Services
             order.DeliveryDate = updateOrderDto.DeliveryDate;
             order.Status = updateOrderDto.Status;
 
-           
-            await _updateOrderValidator.ValidateAndThrowAsync(updateOrderDto);
+            await _orderValidator.ValidateAndThrowAsync(updateOrderDto);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Order was succesfully updated");
+            _logger.LogInformation("Order was successfully updated");
             
             return new OrderDto().FromEntity(order);
         }

@@ -8,6 +8,7 @@ using _service.Validators;
 using dataAccess.Repositories;
 using FluentValidation;
 using service.Validators;
+using api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,9 +34,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<TraitDtoValidator>();
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {
     Options.UseNpgsql(builder.Configuration.GetConnectionString("MyDbConn"));
-    
 });
-
 
 var app = builder.Build();
 
@@ -45,6 +44,7 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.EnsureCreated();
 }
 
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 app.MapControllers();
 app.UseOpenApi();
@@ -55,6 +55,5 @@ app.UseCors(opts => {
     opts.AllowAnyMethod();
     opts.AllowAnyHeader();
 });
-
 
 app.Run();

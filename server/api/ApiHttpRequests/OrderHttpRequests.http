@@ -15,11 +15,10 @@ GET http://localhost:5139/api/order/customer/1/history
 Content-Type: application/json
 
 ### Update an order by its id
-PUT http://localhost:5139/api/Order/1
+PUT http://localhost:5139/api/Order/11
 Content-Type: application/json
 
 {
-  "id": 1,
   "orderDate": "2023-10-01T00:00:00Z",
   "deliveryDate": "2023-10-05",
   "status": "Shipped",
