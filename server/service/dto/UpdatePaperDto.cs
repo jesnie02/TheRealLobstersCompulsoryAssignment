@@ -1,4 +1,5 @@
 ﻿using dataAccess.Models;
+using service.dto;
 
 namespace _service.dto;
 
@@ -9,6 +10,7 @@ public class UpdatePaperDto
     public bool Discontinued { get; set; }
     public int Stock { get; set; }
     public double Price { get; set; }
+   
     
     public Paper ToPaper()
     {

@@ -2,7 +2,9 @@
 using dataAccess;
 using dataAccess.interfaces;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using service.dto;
 
 namespace service.Services;
 
@@ -11,6 +13,8 @@ public interface IPaperService
     Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto);
     Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
     Task DeletePaperAsync(int paperId);
+    Task<PaperDto> TraitToPaperAsync(TraitToPaperDto traitsToPaperDto); 
+    
 }
 
 public class PaperService : IPaperService
@@ -42,7 +46,7 @@ public class PaperService : IPaperService
         await _context.Papers.AddAsync(paper);
         await _context.SaveChangesAsync();
 
-        return new PaperDto().FromEntity(paper);
+        return PaperDto.FromEntity(paper);
     }
 
     public async Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto)
@@ -61,7 +65,7 @@ public class PaperService : IPaperService
         _context.Papers.Update(paper);
         await _context.SaveChangesAsync();
 
-        return new PaperDto().FromEntity(paper);
+        return PaperDto.FromEntity(paper);
     }
 
     public async Task DeletePaperAsync(int paperId)
@@ -74,5 +78,29 @@ public class PaperService : IPaperService
 
         _context.Papers.Remove(paper);
         await _context.SaveChangesAsync();
+    }
+    
+    
+    public async Task<PaperDto> TraitToPaperAsync(TraitToPaperDto traitsToPaperDto) 
+    {
+        var paper = await _context.Papers.Include(p => p.Traits)
+            .FirstOrDefaultAsync(p => p.Id == traitsToPaperDto.PaperId);
+        if (paper == null) throw new KeyNotFoundException("Paper not found");
+
+        var traits = await _context.Traits
+            .Where(t => traitsToPaperDto.TraitIds.Contains(t.Id))
+            .ToListAsync();
+        if (traits.Count != traitsToPaperDto.TraitIds.Count)
+            throw new KeyNotFoundException("Some Traits not found");
+    
+        foreach (var trait in traits)
+        {
+            if (!paper.Traits.Any(t => t.Id == trait.Id))
+            {
+                paper.Traits.Add(trait);
+            }
+        }
+        await _context.SaveChangesAsync();
+        return PaperDto.FromEntity(paper);
     }
 }

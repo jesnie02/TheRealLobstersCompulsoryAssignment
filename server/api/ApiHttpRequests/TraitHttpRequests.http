@@ -7,7 +7,7 @@ POST http://localhost:5139/api/traits
 Content-Type: application/json
 
 {
-  "traitName": "white"
+  "traitName": "Blue"
 }
 
 ### Delete a trait

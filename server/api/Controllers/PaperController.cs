@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using _service;
 using _service.dto;
+using service.dto;
 using service.Services;
 
 namespace api.Controllers;
@@ -46,5 +47,15 @@ public class PaperController : ControllerBase
     }
     
     
+    [HttpPost("{id}/traits")]
+    public async Task<IActionResult> AddTraitToPaper(int id, TraitToPaperDto traitToPaperDto)
+    {
+        if (id != traitToPaperDto.PaperId)
+        {
+            return BadRequest(new { message = "Paper ID mismatch" });
+        }
+        var updatedPaper = await _service.TraitToPaperAsync(traitToPaperDto);
+        return Ok(updatedPaper);
+    }
     
 }
