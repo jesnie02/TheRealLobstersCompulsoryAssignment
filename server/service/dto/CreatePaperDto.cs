@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using dataAccess.Models;
+using service.dto;
 
 namespace _service.dto;
 
@@ -10,7 +11,6 @@ public class CreatePaperDto
     public int Stock { get; set; }
     public double Price { get; set; }
     
-    
     public Paper ToPaper()
     {
         return new Paper
@@ -18,7 +18,8 @@ public class CreatePaperDto
             Name = Name ?? string.Empty,
             Discontinued = Discontinued,
             Stock = Stock,
-            Price = Price
+            Price = Price,
+            
         };
     }
 }

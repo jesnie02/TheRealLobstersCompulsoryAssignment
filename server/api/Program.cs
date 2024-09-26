@@ -1,4 +1,5 @@
 using dataAccess;
+using System.Text.Json.Serialization;
 using dataAccess.interfaces;
 using dataAccess.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,10 @@ using api.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(opt =>
+{
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApiDocument(configure =>
 {

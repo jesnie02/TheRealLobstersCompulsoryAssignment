@@ -3,7 +3,7 @@ POST http://localhost:5139/api/Paper
 Content-Type: application/json
 
 {
-  "name": "sommer paper",
+  "name": "lorte paper",
   "discontinued": true,
   "stock": 200,
   "price": 10.20
@@ -23,3 +23,15 @@ Content-Type: application/json
 
 ### Delete a paper
 DELETE http://localhost:5139/api/Paper/4
+
+
+### Add trait to paper
+POST http://localhost:5139/api/Paper/6/traits
+Content-Type: application/json
+
+{
+  "paperId": 6,
+  "traitsIds": [
+    2
+  ]
+}
