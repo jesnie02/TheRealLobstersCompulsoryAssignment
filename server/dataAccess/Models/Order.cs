@@ -28,7 +28,7 @@ public partial class Order
     public double TotalAmount { get; set; }
 
     [Column("customer_id")]
-    public int? CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     [ForeignKey("CustomerId")]
     [InverseProperty("Orders")]

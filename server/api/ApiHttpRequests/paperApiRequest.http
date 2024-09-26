@@ -3,18 +3,18 @@ POST http://localhost:5139/api/Paper
 Content-Type: application/json
 
 {
-  "name": "gold paper",
+  "name": "sommer paper",
   "discontinued": true,
-  "stock": 100,
+  "stock": 200,
   "price": 10.20
 }
 
 ### Update an existing paper
-PUT http://localhost:5139/api/Paper/2
+PUT http://localhost:5139/api/Paper/4
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 4,
   "name": "Updated Paper",
   "discontinued": false,
   "price": 12.0,
@@ -22,4 +22,4 @@ Content-Type: application/json
 }
 
 ### Delete a paper
-DELETE http://localhost:5139/api/Paper/1
+DELETE http://localhost:5139/api/Paper/4

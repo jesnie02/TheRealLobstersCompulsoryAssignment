@@ -9,9 +9,9 @@ namespace _service;
 
 public interface IPaperService
 {
-    PaperDto CreatePaper(CreatePaperDto createPaperDto);
-    PaperDto UpdatePaper(UpdatePaperDto updatePaperDto);
-    PaperDto DeletePaper(int paperId);
+    Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto);
+    Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
+    Task DeletePaperAsync(int paperId);
 }
 
 public class PaperService : IPaperService
@@ -36,45 +36,44 @@ public class PaperService : IPaperService
         _context = context;
     }
 
-    public PaperDto CreatePaper(CreatePaperDto createPaperDto)
+    public async Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto)
     {
-        _createPaperValidator.ValidateAndThrow(createPaperDto);
+        await _createPaperValidator.ValidateAndThrowAsync(createPaperDto);
         var paper = createPaperDto.ToPaper();
-        Paper newPaper = _paperRepository.InsertPaper(paper);
-        return new PaperDto().FromEntity(newPaper);
-    }
+        await _context.Papers.AddAsync(paper);
+        await _context.SaveChangesAsync();
 
-   public PaperDto UpdatePaper(UpdatePaperDto updatePaperDto)
-{
-    var paper = _context.Papers.Find(updatePaperDto.Id);
-    if (paper == null)
-    {
-        throw new Exception("Paper not found");
-    }
-
-    paper.Name = updatePaperDto.Name;
-    paper.Discontinued = updatePaperDto.Discontinued;
-    paper.Stock = updatePaperDto.Stock;
-    paper.Price = updatePaperDto.Price;
-
-    _context.Papers.Update(paper);
-    _context.SaveChanges();
-
-    return new PaperDto
-    {
-        Id = paper.Id,
-        Name = paper.Name,
-        Discontinued = paper.Discontinued,
-        Stock = paper.Stock,
-        Price = paper.Price
-    };
-}
-
-    public PaperDto DeletePaper(int paperId)
-    {
-        var paper = _context.Papers.Find(paperId);
-        _context.Papers.Remove(paper);
-        _context.SaveChanges();
         return new PaperDto().FromEntity(paper);
+    }
+
+    public async Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto)
+    {
+        var paper = await _context.Papers.FindAsync(updatePaperDto.Id);
+        if (paper == null)
+        {
+            throw new Exception("Paper not found");
+        }
+
+        paper.Name = updatePaperDto.Name ?? string.Empty;
+        paper.Discontinued = updatePaperDto.Discontinued;
+        paper.Stock = updatePaperDto.Stock;
+        paper.Price = updatePaperDto.Price;
+
+        _context.Papers.Update(paper);
+        await _context.SaveChangesAsync();
+
+        return new PaperDto().FromEntity(paper);
+    }
+
+    public async Task DeletePaperAsync(int paperId)
+    {
+        var paper = await _context.Papers.FindAsync(paperId);
+        if (paper == null)
+        {
+            throw new Exception("Paper not found");
+        }
+
+        _context.Papers.Remove(paper);
+        await _context.SaveChangesAsync();
     }
 }

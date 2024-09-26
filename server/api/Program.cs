@@ -1,33 +1,35 @@
 using dataAccess;
 using dataAccess.interfaces;
 using dataAccess.Models;
-using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using service;
 using service.Services;
 using _service;
 using _service.Validators;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddProblemDetails();
-builder.Services.AddOpenApiDocument();
+builder.Services.AddOpenApiDocument(configure =>
+{
+    configure.Title = "Lobster paper Shop";
+});
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<TraitService>();
+builder.Services.AddScoped<IPaper, PaperRepository>();
+builder.Services.AddScoped<IPaperService, PaperService>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
+
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {
     Options.UseNpgsql(builder.Configuration.GetConnectionString("MyDbConn"));
     
 });
-builder.Services.AddFluentValidation(fv => 
-{
-    fv.RegisterValidatorsFromAssemblyContaining<CreatePaperValidator>();
-    fv.RegisterValidatorsFromAssemblyContaining<UpdatePaperValidator>();
-});
-builder.Services.AddScoped<IPaper, PaperRepository>();
-builder.Services.AddScoped<IPaperService, PaperService>();
+
 
 var app = builder.Build();
 

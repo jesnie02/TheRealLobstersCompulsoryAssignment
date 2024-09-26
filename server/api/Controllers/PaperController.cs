@@ -19,28 +19,28 @@ public class PaperController : ControllerBase
 
     
     [HttpPost]
-    public ActionResult<PaperDto> CreatePaper(CreatePaperDto createPaperDto)
+    public async Task<ActionResult<PaperDto>> CreatePaperAsync(CreatePaperDto createPaperDto)
     {
-        var paper = _service.CreatePaper(createPaperDto);
+        var paper = await _service.CreatePaperAsync(createPaperDto);
         return Ok(paper);
     }
     
     [HttpPut("{id}")]
-    public ActionResult<PaperDto> UpdatePaper(int id, UpdatePaperDto updatePaperDto)
+    public async Task<ActionResult<PaperDto>> UpdatePaperAsync(int id, UpdatePaperDto updatePaperDto)
     {
         if (id != updatePaperDto.Id)
         {
             return BadRequest("Paper ID mismatch");
         }
 
-        var paper = _service.UpdatePaper(updatePaperDto);
+        var paper = await _service.UpdatePaperAsync(updatePaperDto);
         return Ok(paper);
     }
-    
+
     [HttpDelete("{paperId}")]
-    public ActionResult DeletePaper(int paperId)
+    public async Task<ActionResult> DeletePaperAsync(int paperId)
     {
-        _service.DeletePaper(paperId);
+        await _service.DeletePaperAsync(paperId);
         return NoContent();
     }
     
