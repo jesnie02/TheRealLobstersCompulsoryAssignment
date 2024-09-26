@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "orderDate": "2023-10-01T00:00:00Z",
   "deliveryDate": "2023-10-05",
-  "status": "Pending",
+  "status": "20papers",
   "totalAmount": 100.50,
   "customerId": 1
 }
@@ -13,3 +13,16 @@ Content-Type: application/json
 ### Get order history for a customer
 GET http://localhost:5139/api/order/customer/1/history
 Content-Type: application/json
+
+### Update an order by its id
+PUT http://localhost:5139/api/Order/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "orderDate": "2023-10-01T00:00:00Z",
+  "deliveryDate": "2023-10-05",
+  "status": "Shipped",
+  "totalAmount": 150.75,
+  "customerId": 1
+}
