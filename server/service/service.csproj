@@ -10,8 +10,4 @@
     <ProjectReference Include="..\dataAccess\dataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
 </Project>

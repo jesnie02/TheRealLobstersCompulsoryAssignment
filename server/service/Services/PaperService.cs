@@ -1,11 +1,10 @@
 ﻿using _service.dto;
 using dataAccess;
 using dataAccess.interfaces;
-using dataAccess.Models;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 
-namespace _service;
+namespace service.Services;
 
 public interface IPaperService
 {

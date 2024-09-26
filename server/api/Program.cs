@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using service.Services;
 using _service;
 using _service.Validators;
+using dataAccess.Repositories;
 using FluentValidation;
+using service.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +18,15 @@ builder.Services.AddOpenApiDocument(configure =>
 {
     configure.Title = "Lobster paper Shop";
 });
-builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrder, OrderRepository>();
 builder.Services.AddScoped<TraitService>();
 builder.Services.AddScoped<IPaper, PaperRepository>();
 builder.Services.AddScoped<IPaperService, PaperService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
 
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {
