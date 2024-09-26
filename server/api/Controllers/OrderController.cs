@@ -49,5 +49,18 @@ namespace api.Controllers
 
             return Ok(orders);
         }
+        
+        //Update a specific order
+        [HttpPut("{id}")]
+        public async Task<ActionResult<OrderDto>> UpdateOrder(int id, OrderDto updateOrderDto)
+        {
+            var order = await _orderService.UpdateOrderByIdAsync(id, updateOrderDto);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(order);
+        }
     }
 }
