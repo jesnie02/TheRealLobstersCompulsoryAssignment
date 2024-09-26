@@ -9,47 +9,42 @@ namespace api.Controllers
     [Route("api/traits")]
     public class TraitController : ControllerBase
     {
-        private readonly TraitService _traitService;
+        private readonly ITraitService _traitService;
 
-        public TraitController(TraitService traitService)
+        public TraitController(ITraitService traitService)
         {
             _traitService = traitService;
         }
-        
+
         // Create new trait
         [HttpPost]
         public async Task<IActionResult> CreateTrait(TraitDto traitDto)
         {
-            var trait = new Trait()
-            {
-                TraitName = traitDto.TraitName,
-                Id = traitDto.Id
-                
-            };
-
-            var createdTrait = await _traitService.CreateTraitAsync(trait);
+            var createdTrait = await _traitService.CreateTraitAsync(traitDto);
             return CreatedAtAction(nameof(GetTrait), new { id = createdTrait.Id }, createdTrait);
         }
-        
-        // Retrive trait by id
+
+        // Retrieve trait by id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTrait(int id)
         {
-            var trait = await _traitService.GetTraitByIdAsync(id);
-            if (trait == null)
+            var traitDto = await _traitService.GetTraitByIdAsync(id);
+            if (traitDto == null)
             {
                 return NotFound();
             }
-
-            var traitDto = new TraitDto()
-            {
-                TraitName = trait.TraitName,
-                Id = trait.Id
-            };
             return Ok(traitDto);
         }
-        
-        //delete trait by id 
+
+        // Retrieve all traits
+        [HttpGet]
+        public async Task<IActionResult> GetAllTraits()
+        {
+            var traits = await _traitService.GetAllTraitsAsync();
+            return Ok(traits);
+        }
+
+        // Delete trait by id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrait(int id)
         {
@@ -58,7 +53,6 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-
             return NoContent();
         }
     }
