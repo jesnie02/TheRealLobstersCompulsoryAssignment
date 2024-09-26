@@ -20,13 +20,15 @@ builder.Services.AddOpenApiDocument(configure =>
 });
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrder, OrderRepository>();
-builder.Services.AddScoped<TraitService>();
+builder.Services.AddScoped<ITrait, TraitRepository>();
+builder.Services.AddScoped<ITraitService, TraitService>();
 builder.Services.AddScoped<IPaper, PaperRepository>();
 builder.Services.AddScoped<IPaperService, PaperService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<TraitDtoValidator>();
 
 builder.Services.AddDbContext<MyDbContext>(Options =>
 {

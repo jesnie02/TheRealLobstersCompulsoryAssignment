@@ -1,51 +1,76 @@
-﻿using dataAccess.Models;
+﻿using dataAccess;
+using dataAccess.Models;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using service.dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using dataAccess;
 
 namespace service.Services
 {
-    public class TraitService
+    public interface ITraitService
+    {
+        Task<TraitDto> CreateTraitAsync(TraitDto traitDto);
+        Task<TraitDto?> GetTraitByIdAsync(int id);
+        Task<IEnumerable<TraitDto>> GetAllTraitsAsync();
+        Task<bool> DeleteTraitAsync(int id);
+    }
+    
+    public class TraitService : ITraitService
     {
         private readonly MyDbContext _context;
+        private readonly ILogger<TraitService> _logger;
+        private readonly IValidator<TraitDto> _traitValidator;
 
-        public TraitService(MyDbContext context)
+        public TraitService(MyDbContext context, ILogger<TraitService> logger, IValidator<TraitDto> traitValidator)
         {
             _context = context;
+            _logger = logger;
+            _traitValidator = traitValidator;
         }
 
-        // Creates a new trait
-        public async Task<Trait> CreateTraitAsync(Trait trait)
+        public async Task<TraitDto> CreateTraitAsync(TraitDto traitDto)
         {
+            _logger.LogInformation("Creating a new trait");
+            await _traitValidator.ValidateAndThrowAsync(traitDto);
+            var trait = new Trait
+            {
+                TraitName = traitDto.TraitName
+            };
             _context.Traits.Add(trait);
             await _context.SaveChangesAsync();
-            return trait;
+            _logger.LogInformation("Trait created successfully");
+            return new TraitDto().FromEntity(trait);
         }
 
-        // Retrieves a trait by its ID
-        public async Task<Trait?> GetTraitByIdAsync(int id)
+        public async Task<TraitDto?> GetTraitByIdAsync(int id)
         {
-            return await _context.Traits.FindAsync(id);
+            _logger.LogInformation($"Retrieving trait with ID {id}");
+            var trait = await _context.Traits.FindAsync(id);
+            return trait == null ? null : new TraitDto().FromEntity(trait);
         }
 
-        // Retrieves all traits
-        public async Task<IEnumerable<Trait>> GetAllTraitsAsync()
+        public async Task<IEnumerable<TraitDto>> GetAllTraitsAsync()
         {
-            return await _context.Traits.ToListAsync();
+            _logger.LogInformation("Retrieving all traits");
+            var traits = await _context.Traits.ToListAsync();
+            return traits.Select(trait => new TraitDto().FromEntity(trait)).ToList();
         }
-        
-       // Deletes a trait by its ID
+
         public async Task<bool> DeleteTraitAsync(int id)
         {
+            _logger.LogInformation($"Deleting trait with ID {id}");
             var trait = await _context.Traits.FindAsync(id);
             if (trait == null)
             {
+                _logger.LogWarning($"Trait with ID {id} not found");
                 return false;
             }
 
             _context.Traits.Remove(trait);
             await _context.SaveChangesAsync();
+            _logger.LogInformation($"Trait with ID {id} deleted successfully");
             return true;
         }
     }
