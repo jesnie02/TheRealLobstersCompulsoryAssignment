@@ -4,6 +4,7 @@ using _service.dto;
 using dataAccess;
 using Microsoft.AspNetCore.Mvc.Testing;
 using PgCtx;
+using service.dto;
 using Xunit.Abstractions;
 
 namespace ApiTest;
