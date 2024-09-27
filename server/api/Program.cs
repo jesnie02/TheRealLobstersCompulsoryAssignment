@@ -10,55 +10,62 @@ using dataAccess.Repositories;
 using FluentValidation;
 using service.Validators;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllers().AddJsonOptions(opt =>
+public class Program
 {
-    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
-builder.Services.AddProblemDetails();
-builder.Services.AddOpenApiDocument(configure =>
-{
-    configure.Title = "Lobster paper Shop";
-});
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IOrder, OrderRepository>();
-builder.Services.AddScoped<ITrait, TraitRepository>();
-builder.Services.AddScoped<ITraitService, TraitService>();
-builder.Services.AddScoped<IPaper, PaperRepository>();
-builder.Services.AddScoped<IPaperService, PaperService>();
+    public static void Main(string[] args)
+    {
+        
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<TraitDtoValidator>();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddControllers().AddJsonOptions(opt =>
+        {
+            opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
+        builder.Services.AddProblemDetails();
+        builder.Services.AddOpenApiDocument(configure =>
+        {
+            configure.Title = "Lobster paper Shop";
+        });
+        builder.Services.AddScoped<IOrderService, OrderService>();
+        builder.Services.AddScoped<IOrder, OrderRepository>();
+        builder.Services.AddScoped<ITrait, TraitRepository>();
+        builder.Services.AddScoped<ITraitService, TraitService>();
+        builder.Services.AddScoped<IPaper, PaperRepository>();
+        builder.Services.AddScoped<IPaperService, PaperService>();
 
-builder.Services.AddDbContext<MyDbContext>(Options =>
-{
-    Options.UseNpgsql(builder.Configuration.GetConnectionString("MyDbConn"));
+        builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
+        builder.Services.AddValidatorsFromAssemblyContaining<TraitDtoValidator>();
+
+        builder.Services.AddDbContext<MyDbContext>(Options =>
+        {
+            Options.UseNpgsql(Environment.GetEnvironmentVariable("DB") ?? builder.Configuration.GetConnectionString("MyDbConn"));
     
-});
+        });
 
 
-var app = builder.Build();
+        var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
-    dbContext.Database.EnsureCreated();
+        using (var scope = app.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+            dbContext.Database.EnsureCreated();
+        }
+
+
+        app.MapControllers();
+        app.UseOpenApi();
+        app.UseSwaggerUi();
+
+        app.UseCors(opts => {
+            opts.AllowAnyOrigin();
+            opts.AllowAnyMethod();
+            opts.AllowAnyHeader();
+        });
+
+
+        app.Run();
+    }
 }
-
-
-app.MapControllers();
-app.UseOpenApi();
-app.UseSwaggerUi();
-
-app.UseCors(opts => {
-    opts.AllowAnyOrigin();
-    opts.AllowAnyMethod();
-    opts.AllowAnyHeader();
-});
-
-
-app.Run();
