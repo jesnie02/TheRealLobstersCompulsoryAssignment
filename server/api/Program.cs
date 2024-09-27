@@ -9,6 +9,7 @@ using _service.Validators;
 using dataAccess.Repositories;
 using FluentValidation;
 using service.Validators;
+using api.Middleware;
 
 public class Program
 {
@@ -34,6 +35,7 @@ public class Program
         builder.Services.AddScoped<IPaper, PaperRepository>();
         builder.Services.AddScoped<IPaperService, PaperService>();
 
+
         builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<OrderDtoValidator>();
@@ -48,12 +50,14 @@ public class Program
 
         var app = builder.Build();
 
+
         using (var scope = app.Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<MyDbContext>();
             dbContext.Database.EnsureCreated();
         }
 
+app.UseMiddleware<RequestLoggingMiddleware>();
 
         app.MapControllers();
         app.UseOpenApi();
@@ -66,6 +70,8 @@ public class Program
         });
 
 
+
         app.Run();
     }
 }
+
