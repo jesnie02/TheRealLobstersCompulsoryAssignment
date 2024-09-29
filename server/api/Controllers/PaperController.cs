@@ -58,4 +58,11 @@ public class PaperController : ControllerBase
         return Ok(updatedPaper);
     }
     
+    [HttpGet]
+    public async Task<ActionResult<List<PaperDto>>> GetAllPapersAsync()
+    {
+        var papers = await _service.GetAllPapersAsync();
+        return Ok(papers);
+    }
+    
 }

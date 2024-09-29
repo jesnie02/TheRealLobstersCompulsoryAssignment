@@ -35,3 +35,7 @@ Content-Type: application/json
     2
   ]
 }
+
+### Get all papers
+GET http://localhost:5139/api/Paper
+
