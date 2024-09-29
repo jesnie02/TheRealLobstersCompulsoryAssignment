@@ -33,6 +33,7 @@ public class Program
         builder.Services.AddScoped<ITraitService, TraitService>();
         builder.Services.AddScoped<IPaper, PaperRepository>();
         builder.Services.AddScoped<IPaperService, PaperService>();
+        builder.Services.AddScoped<ICustomerService, CustomerService>();
 
         builder.Services.AddValidatorsFromAssemblyContaining<CreatePaperValidator>();
         builder.Services.AddValidatorsFromAssemblyContaining<UpdatePaperValidator>();
