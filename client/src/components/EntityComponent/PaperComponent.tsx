@@ -1,14 +1,31 @@
 import { useAtom } from "jotai";
 import { PapersAtom } from "../../Atoms/PapersAtom";
-import { useInitializeData } from "../../Hooks/useInitializeData";
-import { useEffect } from "react";
+import { useEffect, useCallback, useState } from "react";
+import { Api } from "../../Api.ts";
 
 export default function PaperComponent() {
-    const [papers] = useAtom(PapersAtom);
+    const [papers, setPapers] = useAtom(PapersAtom);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchPapers = useCallback(async () => {
+        setLoading(true);
+        try {
+            const api = new Api();
+            const response = await api.api.paperGetAllPapers();
+            if (response.status !== 200) throw new Error("Failed to fetch papers");
+
+            setPapers(response.data);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }, [setPapers]);
 
     useEffect(() => {
-        useInitializeData();
-    }, []);
+        fetchPapers();
+    }, [fetchPapers]);
 
     useEffect(() => {
         console.log("Papers state updated:", papers);
@@ -17,11 +34,16 @@ export default function PaperComponent() {
     return (
         <div>
             <h1 className="menu-title text-5xl m-5">Paper List</h1>
-            {papers && papers.length > 0 ? (
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : papers && papers.length > 0 ? (
                 <ul>
                     {papers.map((paper) => (
                         <li key={paper.id} className="paper-item">
                             <h2>{paper.name}</h2>
+                            <p>Traits: {paper.traits?.map(trait => trait.traitName).join(", ")}</p>
                             <p>Price: ${paper.price}</p>
                             <p>Stock: {paper.stock}</p>
                             <p>Discontinued: {paper.discontinued ? "Yes" : "No"}</p>
