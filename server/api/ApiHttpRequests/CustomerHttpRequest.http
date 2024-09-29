@@ -1,0 +1,10 @@
+﻿### Create a new customer
+POST http://localhost:5139/api/customer
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "address": "123 Main St",
+  "phone": "123-456-7890",
+  "email": "john.doe@example.com"
+}

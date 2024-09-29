@@ -16,6 +16,7 @@ public class PaperDto
     {
         return new PaperDto
         {
+            Id = paper.Id,
             Name = paper.Name,
             Discontinued = paper.Discontinued,
             Stock = paper.Stock,
