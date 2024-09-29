@@ -16,6 +16,7 @@ export default function PaperComponent() {
             if (response.status !== 200) throw new Error("Failed to fetch papers");
 
             setPapers(response.data);
+            localStorage.setItem("papers", JSON.stringify(response.data));
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -24,8 +25,13 @@ export default function PaperComponent() {
     }, [setPapers]);
 
     useEffect(() => {
-        fetchPapers();
-    }, [fetchPapers]);
+        const storedPapers = localStorage.getItem("papers");
+        if (storedPapers) {
+            setPapers(JSON.parse(storedPapers));
+        } else {
+            fetchPapers();
+        }
+    }, [fetchPapers, setPapers]);
 
     useEffect(() => {
         console.log("Papers state updated:", papers);
@@ -39,7 +45,7 @@ export default function PaperComponent() {
             ) : error ? (
                 <p>Error: {error}</p>
             ) : papers && papers.length > 0 ? (
-                <ul>
+                <ul className="paper-list">
                     {papers.map((paper) => (
                         <li key={paper.id || paper.name} className="paper-item">
                             <h2>{paper.name}</h2>
