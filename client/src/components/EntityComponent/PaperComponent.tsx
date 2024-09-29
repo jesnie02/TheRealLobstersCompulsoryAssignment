@@ -41,7 +41,7 @@ export default function PaperComponent() {
             ) : papers && papers.length > 0 ? (
                 <ul>
                     {papers.map((paper) => (
-                        <li key={paper.id} className="paper-item">
+                        <li key={paper.id || paper.name} className="paper-item">
                             <h2>{paper.name}</h2>
                             <p>Traits: {paper.traits?.map(trait => trait.traitName).join(", ")}</p>
                             <p>Price: ${paper.price}</p>
