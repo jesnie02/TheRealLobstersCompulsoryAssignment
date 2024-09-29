@@ -17,7 +17,8 @@ const App = () => {
         document.documentElement.setAttribute('data-theme', theme);
     }, [theme])
 
-    return (<>
+    return (
+        <div className={`app-container ${theme}`}>
 
         <Navigation/>
         <Toaster position={"bottom-center"}/>
@@ -27,6 +28,6 @@ const App = () => {
         </Routes>
         <DevTools/>
 
-    </>)
+    </div>)
 }
 export default App;
