@@ -5,9 +5,19 @@ Content-Type: application/json
 {
   "orderDate": "2023-10-01T00:00:00Z",
   "deliveryDate": "2023-10-05",
-  "status": "10papers",
+  "status": "Test",
   "totalAmount": 100.50,
-  "customerId": 1
+  "customerId": 1,
+  "orderEntries": [
+    {
+      "productId": 1,
+      "quantity": 10
+    },
+    {
+      "productId": 2,
+      "quantity": 5
+    }
+  ]
 }
 
 ### Get order history for a customer
@@ -15,13 +25,27 @@ GET http://localhost:5139/api/order/customer/1/history
 Content-Type: application/json
 
 ### Update an order by its id
-PUT http://localhost:5139/api/Order/11
+PUT http://localhost:5139/api/order/3
 Content-Type: application/json
 
 {
   "orderDate": "2023-10-01T00:00:00Z",
   "deliveryDate": "2023-10-05",
-  "status": "Shipped",
+  "status": "Update test 2",
   "totalAmount": 150.75,
-  "customerId": 1
+  "customerId": 1,
+  "orderEntries": [
+    {
+      "productId": 1,
+      "quantity": 30
+    },
+    {
+      "productId": 2,
+      "quantity": 30
+    }
+  ]
 }
+
+### Delete an order by its id 
+DELETE http://localhost:5139/api/order/3
+Content-Type: application/json
