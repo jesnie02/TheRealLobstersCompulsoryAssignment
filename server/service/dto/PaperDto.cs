@@ -1,7 +1,6 @@
 ﻿using dataAccess.Models;
-using service.dto;
 
-namespace _service.dto;
+namespace service.dto;
 
 public class PaperDto
 {

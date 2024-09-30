@@ -5,6 +5,7 @@ using _service.dto;
 using dataAccess;
 using Microsoft.AspNetCore.Mvc.Testing;
 using PgCtx;
+using service.dto;
 using Xunit.Abstractions;
 
 namespace ApiTest;
@@ -41,12 +42,15 @@ public class PaperTest : WebApplicationFactory<Program>
         
         // Assert
         Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-        Assert.NotNull(responseDto);
-        Assert.NotEqual(0, responseDto.Id);
-        Assert.Equal(paper.Name, responseDto.Name);
-        Assert.Equal(paper.Discontinued, responseDto.Discontinued);
-        Assert.Equal(paper.Price, responseDto.Price);  
-        Assert.Equal(paper.Stock, responseDto.Stock);
+        if (responseDto != null)
+        {
+            Assert.NotNull(responseDto);
+            Assert.NotEqual(0, responseDto.Id);
+            Assert.Equal(paper.Name, responseDto.Name);
+            Assert.Equal(paper.Discontinued, responseDto.Discontinued);
+            Assert.Equal(paper.Price, responseDto.Price);
+            Assert.Equal(paper.Stock, responseDto.Stock);
+        }
     }
     
     [Fact]

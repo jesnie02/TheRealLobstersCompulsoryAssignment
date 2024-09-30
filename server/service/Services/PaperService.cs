@@ -13,8 +13,8 @@ public interface IPaperService
     Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto);
     Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
     Task DeletePaperAsync(int paperId);
-    Task<PaperDto> TraitToPaperAsync(TraitToPaperDto traitsToPaperDto); 
-    
+    Task<PaperDto> TraitToPaperAsync(TraitToPaperDto traitsToPaperDto);
+    Task<List<PaperDto>> GetAllPapersAsync();
 }
 
 public class PaperService : IPaperService
@@ -102,5 +102,11 @@ public class PaperService : IPaperService
         }
         await _context.SaveChangesAsync();
         return PaperDto.FromEntity(paper);
+    }
+    
+    public async Task<List<PaperDto>> GetAllPapersAsync()
+    {
+        var papers = await _context.Papers.Include(p => p.Traits).ToListAsync();
+        return papers.Select(PaperDto.FromEntity).ToList();
     }
 }
