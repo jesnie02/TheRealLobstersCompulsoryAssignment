@@ -1,4 +1,5 @@
 ﻿using dataAccess;
+using dataAccess.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace service.Services
         Task<OrderDto?> GetOrderByIdAsync(int id);
         Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
         Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto);
+        Task<bool> DeleteOrderByIdAsync(int id);
     }
 
     public class OrderService : IOrderService
@@ -34,7 +36,24 @@ namespace service.Services
         {
             _logger.LogInformation("Creating a new order");
             await _orderValidator.ValidateAndThrowAsync(createOrderDto);
+
+            // Find the highest current ID and increment it by one
+            var maxOrderId = await _context.Orders.MaxAsync(o => (int?)o.Id) ?? 0;
+            var newOrderId = maxOrderId + 1;
+
             var order = createOrderDto.ToOrder();
+            order.Id = newOrderId; // Set the new ID
+
+            // Find the highest current ID for order entries
+            var maxOrderEntryId = await _context.OrderEntries.MaxAsync(oe => (int?)oe.Id) ?? 0;
+            var newOrderEntryId = maxOrderEntryId + 1;
+
+            // Set IDs for order entries
+            foreach (var entry in order.OrderEntries)
+            {
+                entry.Id = newOrderEntryId++;
+            }
+
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Order created successfully");
@@ -43,19 +62,19 @@ namespace service.Services
         
         public async Task<OrderDto?> GetOrderByIdAsync(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.Include(o => o.OrderEntries).FirstOrDefaultAsync(o => o.Id == id);
             return order == null ? null : new OrderDto().FromEntity(order);
         }
 
         public async Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId)
         {
-            var orders = await _context.Orders.Where(o => o.CustomerId == customerId).ToListAsync();
+            var orders = await _context.Orders.Where(o => o.CustomerId == customerId).Include(o => o.OrderEntries).ToListAsync();
             return orders.Select(order => new OrderDto().FromEntity(order)).ToList();
         }
 
         public async Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.Include(o => o.OrderEntries).FirstOrDefaultAsync(o => o.Id == id);
             if (order == null)
             {
                 return null;
@@ -68,11 +87,39 @@ namespace service.Services
             order.DeliveryDate = updateOrderDto.DeliveryDate;
             order.Status = updateOrderDto.Status;
 
+            // Remove existing order entries
+            _context.OrderEntries.RemoveRange(order.OrderEntries);
+
+            // Add new order entries
+            foreach (var entryDto in updateOrderDto.OrderEntries)
+            {
+                order.OrderEntries.Add(new OrderEntry
+                {
+                    ProductId = entryDto.ProductId,
+                    Quantity = entryDto.Quantity
+                });
+            }
+
             await _orderValidator.ValidateAndThrowAsync(updateOrderDto);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Order was successfully updated");
-            
+
             return new OrderDto().FromEntity(order);
+        }
+        
+        public async Task<bool> DeleteOrderByIdAsync(int id)
+        {
+            var order = await _context.Orders.Include(o => o.OrderEntries).FirstOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                return false;
+            }
+
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("Order and its entries were successfully deleted");
+
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using dataAccess.Models;
+using System.Collections.Generic;
 
 namespace service.dto
 {
@@ -10,6 +11,7 @@ namespace service.dto
         public string? Status { get; set; }
         public double TotalAmount { get; set; }
         public int CustomerId { get; set; }
+        public List<OrderEntryDto> OrderEntries { get; set; } = new List<OrderEntryDto>();
 
         public OrderDto FromEntity(Order order)
         {
@@ -20,7 +22,12 @@ namespace service.dto
                 DeliveryDate = order.DeliveryDate,
                 Status = order.Status,
                 TotalAmount = order.TotalAmount,
-                CustomerId = order.CustomerId
+                CustomerId = order.CustomerId,
+                OrderEntries = order.OrderEntries.Select(e => new OrderEntryDto
+                {
+                    ProductId = e.ProductId,
+                    Quantity = e.Quantity
+                }).ToList()
             };
         }
 
@@ -33,7 +40,12 @@ namespace service.dto
                 DeliveryDate = DeliveryDate,
                 Status = Status,
                 TotalAmount = TotalAmount,
-                CustomerId = CustomerId
+                CustomerId = CustomerId,
+                OrderEntries = OrderEntries.Select(e => new OrderEntry
+                {
+                    ProductId = e.ProductId,
+                    Quantity = e.Quantity
+                }).ToList()
             };
         }
     }

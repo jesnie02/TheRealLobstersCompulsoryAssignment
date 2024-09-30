@@ -62,5 +62,18 @@ namespace api.Controllers
 
             return Ok(order);
         }
+        
+        //Delete order by id
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            var result = await _orderService.DeleteOrderByIdAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
