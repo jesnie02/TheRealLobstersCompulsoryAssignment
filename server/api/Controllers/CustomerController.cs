@@ -16,9 +16,16 @@ public class CustomerController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<CustomerDto>> CreateCustomerAsync(CustomerDto customerDto)
+    public async Task<ActionResult<CreateCustomerDto>> CreateCustomerAsync(CreateCustomerDto createCustomerDto)
     {
-        var customer = await _customerService.CreateCustomerAsync(customerDto);
+        var customer = await _customerService.CreateCustomerAsync(createCustomerDto);
         return Ok(customer);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersAsync()
+    {
+        var customers = await _customerService.GetAllCustomersAsync();
+        return Ok(customers);
     }
 }

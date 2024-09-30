@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using dataAccess.Models;
 using service.dto;
 
@@ -6,6 +7,7 @@ namespace _service.dto;
 
 public class CreatePaperDto
 {
+    [Required(ErrorMessage = "Name cannot be null")]
     public string? Name { get; set; }
     public bool Discontinued { get; set; }
     public int Stock { get; set; }

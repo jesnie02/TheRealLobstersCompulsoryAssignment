@@ -2,7 +2,7 @@
 
 namespace service.dto;
 
-public class CustomerDto
+public class CreateCustomerDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;
@@ -10,16 +10,18 @@ public class CustomerDto
     public string? Phone { get; set; }
     public string? Email { get; set; }
     
-    public static CustomerDto FromCustomer(Customer customer)
+   
+    
+    public static CreateCustomerDto FromCustomer(Customer customer)
     {
-        return new CustomerDto
+        return new CreateCustomerDto
         {
             Id = customer.Id,
             Name = customer.Name,
             Address = customer.Address,
             Phone = customer.Phone,
             Email = customer.Email,
-        
+       
         };
     }
 }
