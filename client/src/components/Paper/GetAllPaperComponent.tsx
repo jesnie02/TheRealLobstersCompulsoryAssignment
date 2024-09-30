@@ -1,9 +1,9 @@
 import { useAtom } from "jotai";
-import { PapersAtom } from "../../Atoms/PapersAtom";
+import { PapersAtom } from "../../Atoms/PapersAtom.tsx";
 import { useEffect, useCallback, useState } from "react";
 import { Api } from "../../Api.ts";
 
-export default function PaperComponent() {
+export default function GetAllPaperComponent() {
     const [papers, setPapers] = useAtom(PapersAtom);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
