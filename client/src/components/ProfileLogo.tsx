@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";  // Use Link from react-router-dom
-import profileLogo from '../assets/ProfileLogo.png';
+import profileLogo from '../assets/ProfilePictures/ProfileLogo.png';
 
 const ProfileLogo = () => {
     const [isOpen, setIsOpen] = useState(false);
