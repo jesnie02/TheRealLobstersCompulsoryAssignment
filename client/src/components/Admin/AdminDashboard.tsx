@@ -1,11 +1,12 @@
-import GetAllPaperComponent from "../Paper/GetAllPaperComponent.tsx";
+
+import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
 
 const AdminDashboard = () => {
     return (
         <div>
             <h1>Admin Dashboard</h1>
             <p>Welcome, Admin! Here you can manage the application.</p>
-            <GetAllPaperComponent />
+            <GetAllCustomer />
         </div>
     );
 };

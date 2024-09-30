@@ -9,6 +9,24 @@
  * ---------------------------------------------------------------
  */
 
+export interface CreateCustomerDto {
+  /** @format int32 */
+  id?: number;
+  name?: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+
+export interface CustomerDto {
+  /** @format int32 */
+  id?: number;
+  name?: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+
 export interface OrderDto {
   /** @format int32 */
   id?: number;
@@ -42,7 +60,7 @@ export interface Trait {
    * @minLength 0
    * @maxLength 255
    */
-  traitName?: string;
+  traitName?: string | null;
   papers?: Paper[];
 }
 
@@ -123,7 +141,8 @@ export interface Customer {
 }
 
 export interface CreatePaperDto {
-  name?: string | null;
+  /** @minLength 1 */
+  name: string;
   discontinued?: boolean;
   /** @format int32 */
   stock?: number;
@@ -151,7 +170,7 @@ export interface TraitToPaperDto {
 export interface TraitDto {
   /** @format int32 */
   id?: number;
-  traitName?: string;
+  traitName?: string | null;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -295,6 +314,68 @@ export class HttpClient<SecurityDataType = unknown> {
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   api = {
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerCreateCustomer
+     * @request POST:/api/Customer
+     */
+    customerCreateCustomer: (data: CreateCustomerDto, params: RequestParams = {}) =>
+      this.request<CreateCustomerDto, any>({
+        path: `/api/Customer`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerGetCustomers
+     * @request GET:/api/Customer
+     */
+    customerGetCustomers: (params: RequestParams = {}) =>
+      this.request<CustomerDto[], any>({
+        path: `/api/Customer`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerGetCustomerById
+     * @request GET:/api/Customer/{id}
+     */
+    customerGetCustomerById: (id: number, params: RequestParams = {}) =>
+      this.request<CustomerDto, any>({
+        path: `/api/Customer/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerGetOrdersByCustomerId
+     * @request GET:/api/Customer/{customerId}/orders
+     */
+    customerGetOrdersByCustomerId: (customerId: number, params: RequestParams = {}) =>
+      this.request<OrderDto[], any>({
+        path: `/api/Customer/${customerId}/orders`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
     /**
      * No description
      *
