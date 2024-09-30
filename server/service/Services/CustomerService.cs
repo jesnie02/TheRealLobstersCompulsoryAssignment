@@ -1,5 +1,6 @@
 ﻿using dataAccess;
 using dataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using service.dto;
 
@@ -9,10 +10,10 @@ namespace service.Services;
 
 public interface ICustomerService
 {
-    Task<CustomerDto> CreateCustomerAsync(CustomerDto customerDto);
-    Task<CustomerDto?> GetCustomerByIdAsync(int id);
+    Task<CreateCustomerDto> CreateCustomerAsync(CreateCustomerDto createCustomerDto);
+    Task<CreateCustomerDto?> GetCustomerByIdAsync(int id);
     Task<List<CustomerDto>> GetAllCustomersAsync();
-    Task<CustomerDto?> UpdateCustomerAsync(int id, CustomerDto customerDto);
+    Task<CreateCustomerDto?> UpdateCustomerAsync(int id, CreateCustomerDto createCustomerDto);
     Task<bool> DeleteCustomerAsync(int id);
 }
 
@@ -29,34 +30,31 @@ public class CustomerService : ICustomerService
         _context = context;
     }
 
-    public async Task<CustomerDto> CreateCustomerAsync(CustomerDto customerDto)
+    public async Task<CreateCustomerDto> CreateCustomerAsync(CreateCustomerDto createCustomerDto)
     {
         _logger.LogInformation("Creating a new customer");
         var customer = new Customer
         {
-            Name = customerDto.Name,
-            Address = customerDto.Address,
-            Phone = customerDto.Phone,
-            Email = customerDto.Email
+            Name = createCustomerDto.Name,
+            Address = createCustomerDto.Address,
+            Phone = createCustomerDto.Phone,
+            Email = createCustomerDto.Email
         };
         await _context.Customers.AddAsync(customer);
         await _context.SaveChangesAsync();
         _logger.LogInformation("Customer created successfully");
-        return CustomerDto.FromCustomer(customer);
+        return CreateCustomerDto.FromCustomer(customer);
 
     }
 
-    public Task<CustomerDto?> GetCustomerByIdAsync(int id)
+    public Task<CreateCustomerDto?> GetCustomerByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<List<CustomerDto>> GetAllCustomersAsync()
-    {
-        throw new NotImplementedException();
-    }
+  
 
-    public Task<CustomerDto?> UpdateCustomerAsync(int id, CustomerDto customerDto)
+    public Task<CreateCustomerDto?> UpdateCustomerAsync(int id, CreateCustomerDto createCustomerDto)
     {
         throw new NotImplementedException();
     }
@@ -64,5 +62,11 @@ public class CustomerService : ICustomerService
     public Task<bool> DeleteCustomerAsync(int id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<List<CustomerDto>> GetAllCustomersAsync()
+    {
+        var customers = await _context.Customers.ToListAsync();
+        return customers.Select(CustomerDto.FromCustomer).ToList();
     }
 }

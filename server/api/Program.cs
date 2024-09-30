@@ -27,6 +27,7 @@ public class Program
         builder.Services.AddOpenApiDocument(configure =>
         {
             configure.Title = "Lobster paper Shop";
+         
         });
         builder.Services.AddScoped<IOrderService, OrderService>();
         builder.Services.AddScoped<IOrder, OrderRepository>();

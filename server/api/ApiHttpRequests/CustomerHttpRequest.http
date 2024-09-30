@@ -8,3 +8,6 @@ Content-Type: application/json
   "phone": "123-456-7890",
   "email": "john.doe@example.com"
 }
+
+### Get all customers
+GET http://localhost:5139/api/customer

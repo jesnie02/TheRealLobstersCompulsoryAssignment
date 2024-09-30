@@ -14,4 +14,21 @@ public class TestObjects
             .RuleFor(p => p.Stock, f => f.Random.Int(1, 100));
 
     }
+    
+    public static Customer GetCustomer()
+    {
+        return new Faker<Customer>()
+            .RuleFor(c => c.Name, f => f.Person.FullName)
+            .RuleFor(c => c.Address, f => f.Address.FullAddress())
+            .RuleFor(c => c.Phone, f => f.Phone.PhoneNumber())
+            .RuleFor(c => c.Email, f => f.Person.Email);
+    }
+    
+    public static Trait GetTrait()
+    {
+        return new Faker<Trait>()
+            .RuleFor(t => t.TraitName, f => f.Commerce.ProductAdjective());
+    }
+    
+    
 }

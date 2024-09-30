@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dataAccess", "server\dataAc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "ApiTest\ApiTest.csproj", "{D6A0AD4C-88BE-4F2B-B0B5-718AD0A0C2D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatorTest", "server\ValidatorTest\ValidatorTest.csproj", "{2B879B25-C042-4039-A8A2-67B11F10A193}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{D6A0AD4C-88BE-4F2B-B0B5-718AD0A0C2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6A0AD4C-88BE-4F2B-B0B5-718AD0A0C2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6A0AD4C-88BE-4F2B-B0B5-718AD0A0C2D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B879B25-C042-4039-A8A2-67B11F10A193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B879B25-C042-4039-A8A2-67B11F10A193}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B879B25-C042-4039-A8A2-67B11F10A193}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B879B25-C042-4039-A8A2-67B11F10A193}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4DF612A4-2051-4EDA-AA3B-4A6C0E116794} = {ECA05A2F-0776-4ACB-8AFB-739B07C9CDDC}
