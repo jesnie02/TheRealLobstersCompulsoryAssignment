@@ -357,6 +357,36 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Customer
+     * @name CustomerGetCustomerById
+     * @request GET:/api/Customer/{id}
+     */
+    customerGetCustomerById: (id: number, params: RequestParams = {}) =>
+      this.request<CustomerDto, any>({
+        path: `/api/Customer/${id}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerGetOrdersByCustomerId
+     * @request GET:/api/Customer/{customerId}/orders
+     */
+    customerGetOrdersByCustomerId: (customerId: number, params: RequestParams = {}) =>
+      this.request<OrderDto[], any>({
+        path: `/api/Customer/${customerId}/orders`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Order
      * @name OrderCreateOrder
      * @request POST:/api/Order
@@ -367,6 +397,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
+     * @name OrderGetAllOrders
+     * @request GET:/api/Order
+     */
+    orderGetAllOrders: (params: RequestParams = {}) =>
+      this.request<OrderDto[], any>({
+        path: `/api/Order`,
+        method: "GET",
         format: "json",
         ...params,
       }),
