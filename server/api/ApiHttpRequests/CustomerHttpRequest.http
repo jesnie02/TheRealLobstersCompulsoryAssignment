@@ -11,3 +11,6 @@ Content-Type: application/json
 
 ### Get all customers
 GET http://localhost:5139/api/customer
+
+### Get orders from a customer by ID
+GET http://localhost:5139/api/customer/1/orders

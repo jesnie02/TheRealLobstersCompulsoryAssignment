@@ -36,5 +36,18 @@ namespace service.dto
                 CustomerId = CustomerId
             };
         }
+        
+        public static OrderDto FromOrder(Order order)
+        {
+            return new OrderDto
+            {
+                Id = order.Id,
+                OrderDate = order.OrderDate,
+                DeliveryDate = order.DeliveryDate,
+                Status = order.Status,
+                TotalAmount = order.TotalAmount,
+                CustomerId = order.CustomerId
+            };
+        }
     }
 }

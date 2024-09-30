@@ -15,6 +15,7 @@ public interface ICustomerService
     Task<List<CustomerDto>> GetAllCustomersAsync();
     Task<CreateCustomerDto?> UpdateCustomerAsync(int id, CreateCustomerDto createCustomerDto);
     Task<bool> DeleteCustomerAsync(int id);
+    Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
 }
 
 
@@ -68,5 +69,14 @@ public class CustomerService : ICustomerService
     {
         var customers = await _context.Customers.ToListAsync();
         return customers.Select(CustomerDto.FromCustomer).ToList();
+    }
+    
+    // se orders from a specific customer
+    public async Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId)
+    {
+        var orders = await _context.Orders
+            .Where(o => o.CustomerId == customerId)
+            .ToListAsync();
+        return orders.Select(OrderDto.FromOrder).ToList();
     }
 }

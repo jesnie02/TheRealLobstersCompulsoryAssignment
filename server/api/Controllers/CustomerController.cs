@@ -28,4 +28,28 @@ public class CustomerController : ControllerBase
         var customers = await _customerService.GetAllCustomersAsync();
         return Ok(customers);
     }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CustomerDto>> GetCustomerByIdAsync(int id)
+    {
+        var customer = await _customerService.GetCustomerByIdAsync(id);
+        if (customer == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(customer);
+    }
+    
+    [HttpGet("{customerId}/orders")]
+    public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrdersByCustomerIdAsync(int customerId)
+    {
+        var orders = await _customerService.GetOrdersByCustomerIdAsync(customerId);
+        if (orders == null || !orders.Any())
+        {
+            return NotFound();
+        }
+
+        return Ok(orders);
+    }
 }
