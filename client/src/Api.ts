@@ -9,6 +9,24 @@
  * ---------------------------------------------------------------
  */
 
+export interface CreateCustomerDto {
+  /** @format int32 */
+  id?: number;
+  name?: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+
+export interface CustomerDto {
+  /** @format int32 */
+  id?: number;
+  name?: string;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+}
+
 export interface OrderDto {
   /** @format int32 */
   id?: number;
@@ -21,6 +39,14 @@ export interface OrderDto {
   totalAmount?: number;
   /** @format int32 */
   customerId?: number;
+  orderEntries?: OrderEntryDto[];
+}
+
+export interface OrderEntryDto {
+  /** @format int32 */
+  productId?: number;
+  /** @format int32 */
+  quantity?: number;
 }
 
 export interface PaperDto {
@@ -42,7 +68,7 @@ export interface Trait {
    * @minLength 0
    * @maxLength 255
    */
-  traitName?: string;
+  traitName?: string | null;
   papers?: Paper[];
 }
 
@@ -69,7 +95,7 @@ export interface OrderEntry {
   /** @format int32 */
   quantity?: number;
   /** @format int32 */
-  productId?: number | null;
+  productId?: number;
   /** @format int32 */
   orderId?: number | null;
   order?: Order | null;
@@ -123,7 +149,8 @@ export interface Customer {
 }
 
 export interface CreatePaperDto {
-  name?: string | null;
+  /** @minLength 1 */
+  name: string;
   discontinued?: boolean;
   /** @format int32 */
   stock?: number;
@@ -151,7 +178,7 @@ export interface TraitToPaperDto {
 export interface TraitDto {
   /** @format int32 */
   id?: number;
-  traitName?: string;
+  traitName?: string | null;
 }
 
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
@@ -298,6 +325,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Customer
+     * @name CustomerCreateCustomer
+     * @request POST:/api/Customer
+     */
+    customerCreateCustomer: (data: CreateCustomerDto, params: RequestParams = {}) =>
+      this.request<CreateCustomerDto, any>({
+        path: `/api/Customer`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Customer
+     * @name CustomerGetCustomers
+     * @request GET:/api/Customer
+     */
+    customerGetCustomers: (params: RequestParams = {}) =>
+      this.request<CustomerDto[], any>({
+        path: `/api/Customer`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Order
      * @name OrderCreateOrder
      * @request POST:/api/Order
@@ -341,6 +400,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
+     * @name OrderDeleteOrder
+     * @request DELETE:/api/Order/{id}
+     */
+    orderDeleteOrder: (id: number, params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/api/Order/${id}`,
+        method: "DELETE",
         ...params,
       }),
 

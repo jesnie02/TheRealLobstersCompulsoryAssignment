@@ -14,6 +14,7 @@ namespace service.Services
         Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
         Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto);
         Task<bool> DeleteOrderByIdAsync(int id);
+        Task<List<OrderDto>> GetAllOrdersAsync();
     }
 
     public class OrderService : IOrderService
@@ -71,6 +72,12 @@ namespace service.Services
             var orders = await _context.Orders.Where(o => o.CustomerId == customerId).Include(o => o.OrderEntries).ToListAsync();
             return orders.Select(order => new OrderDto().FromEntity(order)).ToList();
         }
+        
+        public async Task<List<OrderDto>> GetAllOrdersAsync()
+        {
+            var orders = await _context.Orders.Include(o => o.OrderEntries).ToListAsync();
+            return orders.Select(order => new OrderDto().FromEntity(order)).ToList();
+        }
 
         public async Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto)
         {
@@ -121,5 +128,7 @@ namespace service.Services
 
             return true;
         }
+
+       
     }
 }

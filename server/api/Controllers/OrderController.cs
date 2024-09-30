@@ -50,6 +50,19 @@ namespace api.Controllers
             return Ok(orders);
         }
         
+        // Retrieves all orders
+        [HttpGet]
+        public async Task<ActionResult<List<OrderDto>>> GetAllOrdersAsync()
+        {
+            var orders = await _orderService.GetAllOrdersAsync();
+            if (orders == null || !orders.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(orders);
+        }
+        
         //Update a specific order
         [HttpPut("{id}")]
         public async Task<ActionResult<OrderDto>> UpdateOrder(int id, OrderDto updateOrderDto)
