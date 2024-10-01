@@ -1,9 +1,8 @@
-import {useAtom} from "jotai";
-import {OrdersAtom} from "../../../Atoms/OrdersAtom.tsx";
-import {useCallback, useEffect, useState} from "react";
-import {PapersAtom} from "../../../Atoms/PapersAtom.tsx";
-import {Api} from "../../../Api.ts";
-
+import { useAtom } from "jotai";
+import { OrdersAtom } from "../../../Atoms/OrdersAtom.tsx";
+import { useCallback, useEffect, useState } from "react";
+import { PapersAtom } from "../../../Atoms/PapersAtom.tsx";
+import { Api } from "../../../Api.ts";
 
 export const useOrderData = () => {
     const [orders, setOrders] = useAtom(OrdersAtom);
