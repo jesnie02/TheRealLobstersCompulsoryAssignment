@@ -11,7 +11,7 @@ namespace service.Services
     {
         Task<OrderDto> CreateOrderAsync(OrderDto createOrderDto);
         Task<OrderDto?> GetOrderByIdAsync(int id);
-        Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
+        Task<List<OrderWithUserDto>> GetOrdersByCustomerIdAsync(int customerId);
         Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto);
         Task<bool> DeleteOrderByIdAsync(int id);
         Task<List<OrderDto>> GetAllOrdersAsync();
@@ -67,10 +67,14 @@ namespace service.Services
             return order == null ? null : new OrderDto().FromEntity(order);
         }
 
-        public async Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId)
+        public async Task<List<OrderWithUserDto>> GetOrdersByCustomerIdAsync(int customerId)
         {
-            var orders = await _context.Orders.Where(o => o.CustomerId == customerId).Include(o => o.OrderEntries).ToListAsync();
-            return orders.Select(order => new OrderDto().FromEntity(order)).ToList();
+            var orders = await _context
+                .Orders
+                .Include(o => o.Customer)
+                .Where(o => o.CustomerId == customerId)
+                .Include(o => o.OrderEntries).ToListAsync();
+            return orders.Select(order => new OrderWithUserDto().FromEntity(order)).ToList();
         }
         
         public async Task<List<OrderDto>> GetAllOrdersAsync()

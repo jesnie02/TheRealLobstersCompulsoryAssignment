@@ -49,6 +49,22 @@ export interface OrderEntryDto {
   quantity?: number;
 }
 
+export interface OrderWithUserDto {
+  /** @format int32 */
+  id?: number;
+  /** @format date-time */
+  orderDate?: string;
+  /** @format date */
+  deliveryDate?: string | null;
+  status?: string | null;
+  /** @format double */
+  totalAmount?: number;
+  /** @format int32 */
+  customerId?: number;
+  customer?: CustomerDto;
+  orderEntries?: OrderEntryDto[];
+}
+
 export interface PaperDto {
   /** @format int32 */
   id?: number;
@@ -470,7 +486,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/api/Order/customer/{customerId}/history
      */
     orderGetOrderHistory: (customerId: number, params: RequestParams = {}) =>
-      this.request<OrderDto[], any>({
+      this.request<OrderWithUserDto[], any>({
         path: `/api/Order/customer/${customerId}/history`,
         method: "GET",
         format: "json",

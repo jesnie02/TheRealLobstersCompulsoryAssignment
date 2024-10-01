@@ -27,12 +27,14 @@ export default function GetAllOrdersComponent() {
         }
     }, [setOrders]);
 
-    const fetchCustomer = useCallback(async (customerId: string) => {
+    const fetchCustomer = useCallback(async (customerId: number) => {
         try {
             const api = new Api();
-            const response = await api.api.customerGetCustomerById(customerId);
+            const response = await api.api.orderGetOrderHistory(customerId);
             if (response.status === 200) {
-                setCustomers(prev => ({ ...prev, [customerId]: response.data.name }));
+                const customerOrders = response.data;
+                const customerName = customerOrders.length > 0 ? customerOrders[0].customer?.name : "Unknown";
+                setCustomers(prev => ({ ...prev, [customerId]: customerName }));
             }
         } catch (err: any) {
             console.error(`Failed to fetch customer ${customerId}:`, err.message);
@@ -50,8 +52,9 @@ export default function GetAllOrdersComponent() {
 
     useEffect(() => {
         orders.forEach(order => {
-            if (!customers[order.customerId]) {
-                fetchCustomer(order.customerId);
+            const customerId = order.customerId;
+            if (customerId && !customers[customerId.toString()]) {
+                fetchCustomer(customerId);
             }
         });
     }, [orders, customers, fetchCustomer]);
@@ -70,7 +73,7 @@ export default function GetAllOrdersComponent() {
                             <h2>Order ID: {order.id}</h2>
                             <p>Order date: {order.orderDate}</p>
                             <p>Delivery date: {order.deliveryDate}</p>
-                            <p>Customer: {customers[order.customerId] || "Loading..."}</p>
+                            <p>Customer: {customers[order.customerId?.toString() ?? ""] || "Loading..."}</p>
                             <p>Total: ${order.totalAmount}</p>
                             <p>Status: {order.status}</p>
                             <p>Order entries:</p>

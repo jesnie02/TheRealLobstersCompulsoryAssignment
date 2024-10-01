@@ -39,7 +39,7 @@ namespace api.Controllers
 
         // Retrieves the order history for a specific customer
         [HttpGet("customer/{customerId}/history")]
-        public async Task<ActionResult<List<OrderDto>>> GetOrderHistory(int customerId)
+        public async Task<ActionResult<List<OrderWithUserDto>>> GetOrderHistory(int customerId)
         {
             var orders = await _orderService.GetOrdersByCustomerIdAsync(customerId);
             if (orders == null || !orders.Any())
@@ -90,3 +90,4 @@ namespace api.Controllers
         }
     }
 }
+
