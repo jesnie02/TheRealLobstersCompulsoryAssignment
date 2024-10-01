@@ -1,6 +1,6 @@
 
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
-import GetAllOrdersComponent from "../Order/GetOrderHistoryComponent.tsx";
+import GetAllOrdersComponent from "../Order/GetOrderHistory/GetAllOrdersComponent.tsx";
 
 const AdminDashboard = () => {
     return (
