@@ -53,13 +53,10 @@ const GetAllCustomer = () => {
 
     return (
         <>
-            <div className="flex flex-col items-center">
-                <h1 className="menu-title text-5xl m-5">Welcome to LobsterPaper!</h1>
-                <p className="font-bold">The best paper in the world!</p>
-            </div>
 
-            <div className="flex flex-wrap justify-center mt-4">
-                <h1 className="w-full text-center font-bold text-2xl">Customers</h1>
+
+            <div className="flex flex-wrap justify-center mt-12">
+                <h1 className="w-full text-center font-bold text-3xl mb-12">Customers</h1>
                 <div>
                     <ul className="flex flex-wrap justify-center">
                         {customers.map((customer, index) => (
