@@ -16,9 +16,8 @@ const ProfileLogo = () => {
             </button>
             {isOpen && (
                 <div className="dropdown-menu">
-                    <Link to="/">Home</Link>
-                    <Link to="/customerDash">Customer Dashboard</Link>
-                    <Link to="/adminDash">Admin Dashboard</Link>
+                    <Link to="/customerDash">Customer Login</Link>
+                    <Link to="/adminDash">Admin Login</Link>
                 </div>
             )}
         </div>
