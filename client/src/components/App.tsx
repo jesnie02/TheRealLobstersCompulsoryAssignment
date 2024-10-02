@@ -9,6 +9,8 @@ import AdminApp from './Admin/AdminApp.tsx';
 import Home from "./Home.tsx";
 import CustomerApp from "./Customer/CustomerApp.tsx";
 import { useEffect } from "react";
+import LoginCustomer from "./Customer/LoginCustomer.tsx";
+import CustomerById from "./Customer/CustomerById.tsx";
 
 const App = () => {
     const [theme] = useAtom(ThemeAtom);
@@ -26,6 +28,8 @@ const App = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/adminDash/*" element={<AdminApp />} />
                 <Route path="/customerDash/*" element={<CustomerApp />} />
+                <Route path="/login-customer" element={<LoginCustomer />} />
+                <Route path="/customer/:id" element={<CustomerById />} />
             </Routes>
             <DevTools />
         </div>

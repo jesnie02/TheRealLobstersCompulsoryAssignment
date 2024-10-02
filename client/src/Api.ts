@@ -403,6 +403,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Customer
+     * @name CustomerGetCustomerIdByEmail
+     * @request GET:/api/Customer/email/{email}
+     */
+    customerGetCustomerIdByEmail: (email: string, params: RequestParams = {}) =>
+      this.request<number, any>({
+        path: `/api/Customer/email/${email}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Order
      * @name OrderCreateOrder
      * @request POST:/api/Order

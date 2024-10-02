@@ -28,13 +28,13 @@ Content-Type: application/json
 GET http://localhost:5139/api/order
 
 ### Update an order by its id
-PUT http://localhost:5139/api/order/3
+PUT http://localhost:5139/api/Order/11
 Content-Type: application/json
 
 {
   "orderDate": "2023-10-01T00:00:00Z",
   "deliveryDate": "2023-10-05",
-  "status": "Update test 2",
+  "status": "Shipped",
   "totalAmount": 150.75,
   "customerId": 1,
   "orderEntries": [
