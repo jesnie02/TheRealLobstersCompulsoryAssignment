@@ -16,6 +16,7 @@ public interface ICustomerService
     Task<CreateCustomerDto?> UpdateCustomerAsync(int id, CreateCustomerDto createCustomerDto);
     Task<bool> DeleteCustomerAsync(int id);
     Task<List<OrderDto>> GetOrdersByCustomerIdAsync(int customerId);
+    Task<int> GetCustomerIdByEmailAsync(string email);
 }
 
 
@@ -78,5 +79,13 @@ public class CustomerService : ICustomerService
             .Where(o => o.CustomerId == customerId)
             .ToListAsync();
         return orders.Select(OrderDto.FromOrder).ToList();
+    }
+
+    public async Task<int> GetCustomerIdByEmailAsync(string email)
+    {
+        // Implementer logikken for at hente kunde-ID baseret på e-mail
+        // Dette er blot et eksempel
+        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Email == email);
+        return customer?.Id ?? 0;
     }
 }
