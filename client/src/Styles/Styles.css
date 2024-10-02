@@ -15,24 +15,9 @@
     background-color: #fff;
 }
 
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
-}
 
 .theme-switcher {
     margin-left: auto;
-}
-
-/* Add this to your CSS file */
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .profile-logo {
