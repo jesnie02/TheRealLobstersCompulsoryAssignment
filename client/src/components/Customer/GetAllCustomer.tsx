@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { CustomersAtom } from '../../Atoms/CostumersAtom.tsx';
+import { CustomersAtom } from '../../Atoms/CustomersAtom.tsx';
 import { useEffect, useState } from 'react';
 import { http } from '../../http.ts';
 
@@ -59,7 +59,7 @@ const GetAllCustomer = () => {
             </div>
 
             <div className="flex flex-wrap justify-center mt-4">
-                <h1 className="w-full text-center font-bold text-2xl">Costumers</h1>
+                <h1 className="w-full text-center font-bold text-2xl">Customers</h1>
                 <div>
                     <ul className="flex flex-wrap justify-center">
                         {customers.map((customer, index) => (

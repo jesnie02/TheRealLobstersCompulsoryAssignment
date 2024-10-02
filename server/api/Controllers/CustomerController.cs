@@ -52,4 +52,17 @@ public class CustomerController : ControllerBase
 
         return Ok(orders);
     }
+    
+    
+    [HttpGet("email/{email}")]
+    public async Task<ActionResult<int>> GetCustomerIdByEmailAsync(string email)
+    {
+        var customerId = await _customerService.GetCustomerIdByEmailAsync(email);
+        if (customerId == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(customerId);
+    }
 }
