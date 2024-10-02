@@ -1,11 +1,11 @@
 import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/CartAtom"; // Make sure the path is correct
+import { CartAtom } from "../../Atoms/CartAtom";
 
 export default function CartContainer() {
     const [cart, setCart] = useAtom(CartAtom);
 
     const removeItem = (index: number) => {
-        setCart(cart.filter((_, i) => i !== index)); // Remove item by index
+        setCart(cart.filter((_, i) => i !== index));
     };
 
     return (

@@ -15,8 +15,8 @@ const CartLogo = () => {
 
     return (
         <div className="cart-logo">
-            <button onClick={toggleDropdown} className="profile-button">
-                <img src={cartLogo} alt="Cart" className="profile-image" />
+            <button onClick={toggleDropdown} className="Cart-button">
+                <img src={cartLogo} alt="Cart" className="cart-image" />
                 <span className="cart-count">{cart.length}</span>
             </button>
             {isOpen && (
