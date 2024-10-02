@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import CustomerDashboard from "./CustomerDashboard.tsx";
-import GetAllPaperComponent from '../Paper/GetAllPaperComponent.tsx';
+import GetAllPaperComponent from '../Paper/GetAllPapers/GetAllPaperComponent.tsx';
 
 const CustomerApp = () => {
     return (

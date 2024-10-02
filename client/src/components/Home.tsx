@@ -1,4 +1,4 @@
-import GetAllPaperComponent from "./Paper/GetAllPaperComponent.tsx";
+import GetAllPaperComponent from "./Paper/GetAllPapers/GetAllPaperComponent.tsx";
 
 export default function Home() {
   return (

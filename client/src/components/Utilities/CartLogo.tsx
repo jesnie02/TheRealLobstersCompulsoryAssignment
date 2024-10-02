@@ -1,22 +1,27 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useAtom } from "jotai";
+import { CartAtom } from "../../Atoms/CartAtom";
 import cartLogo from '/assets/CartLogo.png';
+import { useState } from "react";
+import CartContainer from "../Cart/CartContainer.tsx";
 
 const CartLogo = () => {
+    const [cart] = useAtom(CartAtom);
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
+        console.log("Dropdown toggled");
         setIsOpen(!isOpen);
     };
 
     return (
-        <div className="Cart-logo">
+        <div className="cart-logo">
             <button onClick={toggleDropdown} className="profile-button">
                 <img src={cartLogo} alt="Cart" className="profile-image" />
+                <span className="cart-count">{cart.length}</span>
             </button>
             {isOpen && (
-                <div className="dropdown-menu">
-                    <Link to="/cart">Cart</Link> {/* Updated link to cart */}
+                <div className="cart-dropdown-menu">
+                    <CartContainer/>
                 </div>
             )}
         </div>

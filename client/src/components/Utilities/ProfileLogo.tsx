@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";  // Use Link from react-router-dom
+import { Link } from "react-router-dom";
 import profileLogo from '/assets/ProfilePictures/ProfileLogo.png';
 
 const ProfileLogo = () => {
@@ -15,7 +15,7 @@ const ProfileLogo = () => {
                 <img src={profileLogo} alt="Profile" className="profile-image" />
             </button>
             {isOpen && (
-                <div className="dropdown-menu">
+                <div className="profile-dropdown-menu">
                     <Link to="/customerDash">Customer Login</Link>
                     <Link to="/adminDash">Admin Login</Link>
                 </div>
