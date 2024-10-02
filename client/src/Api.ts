@@ -39,6 +39,30 @@ export interface OrderDto {
   totalAmount?: number;
   /** @format int32 */
   customerId?: number;
+  orderEntries?: OrderEntryDto[];
+}
+
+export interface OrderEntryDto {
+  /** @format int32 */
+  productId?: number;
+  /** @format int32 */
+  quantity?: number;
+}
+
+export interface OrderWithUserDto {
+  /** @format int32 */
+  id?: number;
+  /** @format date-time */
+  orderDate?: string;
+  /** @format date */
+  deliveryDate?: string | null;
+  status?: string | null;
+  /** @format double */
+  totalAmount?: number;
+  /** @format int32 */
+  customerId?: number;
+  customer?: CustomerDto;
+  orderEntries?: OrderEntryDto[];
 }
 
 export interface PaperDto {
@@ -87,7 +111,7 @@ export interface OrderEntry {
   /** @format int32 */
   quantity?: number;
   /** @format int32 */
-  productId?: number | null;
+  productId?: number;
   /** @format int32 */
   orderId?: number | null;
   order?: Order | null;
@@ -412,6 +436,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Order
+     * @name OrderGetAllOrders
+     * @request GET:/api/Order
+     */
+    orderGetAllOrders: (params: RequestParams = {}) =>
+      this.request<OrderDto[], any>({
+        path: `/api/Order`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
      * @name OrderGetOrder
      * @request GET:/api/Order/{id}
      */
@@ -444,11 +483,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Order
+     * @name OrderDeleteOrder
+     * @request DELETE:/api/Order/{id}
+     */
+    orderDeleteOrder: (id: number, params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/api/Order/${id}`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
      * @name OrderGetOrderHistory
      * @request GET:/api/Order/customer/{customerId}/history
      */
     orderGetOrderHistory: (customerId: number, params: RequestParams = {}) =>
-      this.request<OrderDto[], any>({
+      this.request<OrderWithUserDto[], any>({
         path: `/api/Order/customer/${customerId}/history`,
         method: "GET",
         format: "json",

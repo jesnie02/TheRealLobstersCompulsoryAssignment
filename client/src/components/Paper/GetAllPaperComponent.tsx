@@ -57,6 +57,7 @@ export default function GetAllPaperComponent() {
                         </li>
                     ))}
                 </ul>
+
             ) : (
                 <p>No papers available</p>
             )}

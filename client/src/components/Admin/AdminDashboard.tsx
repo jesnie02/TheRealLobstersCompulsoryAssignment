@@ -1,5 +1,6 @@
 
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
+import GetAllOrderHistory from "../Order/GetOrderHistory/GetAllOrderHistory.tsx";
 
 const AdminDashboard = () => {
     return (
@@ -7,6 +8,7 @@ const AdminDashboard = () => {
             <h1>Admin Dashboard</h1>
             <p>Welcome, Admin! Here you can manage the application.</p>
             <GetAllCustomer />
+            <GetAllOrderHistory/>
         </div>
     );
 };

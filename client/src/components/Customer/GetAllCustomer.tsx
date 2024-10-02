@@ -11,7 +11,7 @@ const GetAllCustomer = () => {
     const [customers, setCustomers] = useAtom(CustomersAtom);
     const navigate = useNavigate();
 
-    const imagesContext = import.meta.glob('/src/assets/ProfilePictures/*.png');
+    const imagesContext = import.meta.glob('../../assets/ProfilePictures/*.png');
 
     useEffect(() => {
         const loadImages = async () => {
