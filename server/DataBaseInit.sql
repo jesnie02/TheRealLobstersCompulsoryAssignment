@@ -64,27 +64,3 @@ CREATE INDEX "IX_orders_customer_id" ON orders (customer_id);
 CREATE UNIQUE INDEX unique_product_name ON paper (name);
 CREATE INDEX "IX_paper_traits_trait_id" ON paper_traits (trait_id);
 
--- Insert data
-INSERT INTO customers (name, address, phone, email) VALUES
-    ('Customer 1', 'Address 1', 'Phone 1', 'customer1@example.com'),
-    ('Customer 2', 'Address 2', 'Phone 2', 'customer2@example.com');
-
-INSERT INTO paper (name, discontinued, stock, price) VALUES
-    ('Paper 1', FALSE, 100, 10.0),
-    ('Paper 2', FALSE, 200, 20.0);
-
-INSERT INTO traits (trait_name) VALUES
-    ('Trait 1'),
-    ('Trait 2');
-
-INSERT INTO orders (order_date, delivery_date, status, total_amount, customer_id) VALUES
-    ('2023-10-01T00:00:00Z', '2023-10-05', 'Pending', 100.50, 1),
-    ('2023-10-02T00:00:00Z', '2023-10-06', 'Pending', 200.75, 2);
-
-INSERT INTO paper_traits (paper_id, trait_id) VALUES
-    (1, 1),
-    (2, 2);
-
-INSERT INTO order_entries (quantity, product_id, order_id) VALUES
-    (10, 1, 1),
-    (20, 2, 2);
