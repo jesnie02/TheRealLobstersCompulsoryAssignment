@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useOrderData } from "./useGetOrderHistoryDataHook.ts";
+import React, {useEffect, useState} from "react";
+import { useFetchAllOrders } from '../../../Hooks/useFetchAllOrders';
+import { useFetchCustomerOrderHistory } from '../../../Hooks/useFetchCustomerOrderHistory';
+import { useFetchAllPapers } from '../../../Hooks/useFetchAllPapers';
 import SearchBar from "../../Utilities/SearchBar.tsx";
 import A4CopyPaper from "/assets/PaperImages/A4CopyPaper.jpg";
 
@@ -78,8 +80,18 @@ class GetOrderList extends React.Component<OrderListProps> {
 }
 
 export default function GetAllOrder() {
-    const { orders, loading, error, customers, papers } = useOrderData();
+    const { orders, loading, error } = useFetchAllOrders();
+    const { customers, error: customerError, fetchCustomer } = useFetchCustomerOrderHistory();
+    const { papers, error: paperError } = useFetchAllPapers();
     const [searchQuery, setSearchQuery] = useState("");
+
+    useEffect(() => {
+        orders.forEach(order => {
+            if (order.customerId !== undefined) {
+                fetchCustomer(order.customerId);
+            }
+        });
+    }, [orders, fetchCustomer]);
 
     return (
         <div>
@@ -87,8 +99,8 @@ export default function GetAllOrder() {
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             {loading ? (
                 <p>Loading...</p>
-            ) : error ? (
-                <p>Error: {error}</p>
+            ) : error || customerError || paperError ? (
+                <p>Error: {error || customerError || paperError}</p>
             ) : orders && orders.length > 0 ? (
                 <GetOrderList orders={orders} customers={customers} papers={papers} searchQuery={searchQuery} />
             ) : (

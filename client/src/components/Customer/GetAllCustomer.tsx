@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useAtom } from 'jotai';
-import { CustomersAtom } from '../../Atoms/CustomersAtom.tsx';
-import { useEffect, useState } from 'react';
-import { http } from '../../http.ts';
+import { useFetchAllCustomers} from "../../Hooks/useFetchAllCustomers.ts";
+import {useEffect, useState} from "react";
 
 const GetAllCustomer = () => {
-    const [images, setImages] = useState<string[]>([]);
-    const [customers, setCustomers] = useAtom(CustomersAtom);
+    const { customers, } = useFetchAllCustomers();
     const navigate = useNavigate();
+    const [images, setImages] = useState<string[]>([]);
 
     const imagesContext = import.meta.glob('/src/assets/RandomProfileImg/*.jpg');
 
@@ -35,18 +33,6 @@ const GetAllCustomer = () => {
     const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
         event.currentTarget.src = '/assets/ProfilePictures/ProfileLogo.png';
     };
-
-    useEffect(() => {
-        http.api.customerGetCustomers().then((response) => {
-            const customersWithStringId = response.data.map((customer: any) => ({
-                ...customer,
-                id: customer.id.toString(),
-            }));
-            setCustomers(customersWithStringId);
-        }).catch(e => {
-            console.log(e);
-        });
-    }, [setCustomers]);
 
     const handleViewCustomer = (customerId: number | undefined) => {
         navigate(`/customer/${customerId}`);
