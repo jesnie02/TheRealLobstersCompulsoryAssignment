@@ -1,15 +1,9 @@
-import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/CartAtom.tsx";
-import { useFetchAllPapers } from "../../Hooks/useFetchAllPapers.ts";
+import {useFetchAllPapers} from "../../Hooks/useFetchAllPapers.ts";
+import AddToCartButton from "../Utilities/AddToCarButton.tsx";
+
 
 export default function GetAllPaperComponent() {
     const { papers, loading, error } = useFetchAllPapers();
-    const [, setCart] = useAtom(CartAtom);
-
-    const addToCart = (paper: any) => {
-        setCart((prevCart) => [...prevCart, paper]);
-        alert(`${paper.name} added to cart!`);
-    };
 
     return (
         <div>
@@ -28,9 +22,7 @@ export default function GetAllPaperComponent() {
                             <p>Price: ${paper.price}</p>
                             <p>Stock: {paper.stock}</p>
                             <p>Discontinued: {paper.discontinued ? "Yes" : "No"}</p>
-                            <button className="btn btn-outline mt-1" onClick={() => addToCart(paper)}>
-                                Add to cart
-                            </button>
+                            <AddToCartButton paper={paper} />
                         </li>
                     ))}
                 </ul>
