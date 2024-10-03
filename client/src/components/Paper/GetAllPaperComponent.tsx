@@ -1,5 +1,5 @@
 import {useFetchAllPapers} from "../../Hooks/useFetchAllPapers.ts";
-import AddToCartButton from "../Utilities/AddToCarButton.tsx";
+import AddToCartButton from "../Utilities/AddToCartButton.tsx";
 
 
 export default function GetAllPaperComponent() {
