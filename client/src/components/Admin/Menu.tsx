@@ -1,8 +1,8 @@
 ﻿import {useAtom} from 'jotai';
 import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
-import GetAllOrderHistory from "../Order/GetOrderHistoryItem.tsx";
 import CreateTraits from "../Traits/CreateTraits.tsx";
+import GetAllOrders from "../Order/GetAllOrders.tsx";
 
 
 
@@ -46,7 +46,7 @@ const Menu = () => {
             </div>
             <div>
                 {selectedContent === 'Content 1' && <GetAllCustomer />}
-                {selectedContent === 'Content 2' && <GetAllOrderHistory />}
+                {selectedContent === 'Content 2' && <GetAllOrders/>}
                 {selectedContent === 'Content 3' && < CreateTraits/>}
                 {selectedContent === 'Content 4' && <div>Content 4</div>}
             </div>

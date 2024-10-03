@@ -1,5 +1,4 @@
 import { Api } from './Api.ts';
-import 'react-toastify/dist/ReactToastify.css';
 import toast from "react-hot-toast";
 
 export const baseUrl = 'http://localhost:5139';

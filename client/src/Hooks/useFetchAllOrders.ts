@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
 import { OrdersAtom } from '../Atoms/OrdersAtom.tsx';
 import { http } from '../http.ts';
+import { Order } from '../Api.ts'; // Ensure this import is correct
 
 export const useFetchAllOrders = () => {
     const [orders, setOrders] = useAtom(OrdersAtom);
@@ -14,8 +15,9 @@ export const useFetchAllOrders = () => {
             const response = await http.api.orderGetAllOrders();
             if (response.status !== 200) throw new Error("Failed to fetch orders");
 
-            setOrders(response.data);
-            localStorage.setItem("Orders", JSON.stringify(response.data));
+            const orders: Order[] = response.data;
+            setOrders(orders);
+            localStorage.setItem("Orders", JSON.stringify(orders));
         } catch (err: any) {
             setError(err.message);
         } finally {
