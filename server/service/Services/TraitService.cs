@@ -14,6 +14,7 @@ namespace service.Services
         Task<TraitDto> CreateTraitAsync(TraitDto traitDto);
         Task<TraitDto?> GetTraitByIdAsync(int id);
         Task<IEnumerable<TraitDto>> GetAllTraitsAsync();
+        Task<TraitDto> UpdateTraitAsync(TraitDto traitDto);
         Task<bool> DeleteTraitAsync(int id);
     }
     
@@ -56,6 +57,25 @@ namespace service.Services
             _logger.LogInformation("Retrieving all traits");
             var traits = await _context.Traits.ToListAsync();
             return traits.Select(trait => new TraitDto().FromEntity(trait)).ToList();
+        }
+
+        public async Task<TraitDto> UpdateTraitAsync(TraitDto traitDto)
+        {
+            var trait = await _context.Traits.FindAsync(traitDto.Id);
+            if (trait == null)
+            {
+                return null;
+            }
+
+            trait.TraitName = traitDto.TraitName;
+            _context.Traits.Update(trait);
+            await _context.SaveChangesAsync();
+
+            return new TraitDto
+            {
+                Id = trait.Id,
+                TraitName = trait.TraitName
+            };
         }
 
         public async Task<bool> DeleteTraitAsync(int id)

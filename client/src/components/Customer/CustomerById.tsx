@@ -28,16 +28,24 @@ const CustomerById = () => {
         <div className="flex flex-col items-center mt-16">
             <h1 className="menu-title text-5xl m-5 mt-12 mb-12">Customer Orders</h1>
             {error && <p className="text-red-500 mt-4">{error}</p>}
-            <ul className="list-disc">
-                {orders.map((order) => (
-                    <li key={order.id} className="mb-4">
-                        <h2 className="font-bold">Order ID: {order.id}</h2>
-                        <p className="font-bold">Order Date: {order.deliveryDate}</p>
-                        <p className="font-bold">Total: {order.status}</p>
-                        <p className="font-bold">Status: {order.totalAmount}</p>
-                    </li>
-                ))}
-            </ul>
+            <div className="card bg-base-100 w-96 shadow-xl">
+                <div className="card-body">
+                    <h2 className="card-title">Customer Orders</h2>
+                    <ul className="list-disc">
+                        {orders.map((order) => (
+                            <li key={order.id} className="mb-4">
+                                <h2 className="font-bold">Order ID: {order.id}</h2>
+                                <p className="font-bold">Order Date: {order.deliveryDate}</p>
+                                <p className="font-bold">Total: {order.status}</p>
+                                <p className="font-bold">Status: {order.totalAmount}</p>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="card-actions justify-end">
+                        <button className="btn btn-primary">Update Order</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

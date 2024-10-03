@@ -635,6 +635,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Trait
+     * @name TraitUpdateTrait
+     * @request PUT:/api/traits/{id}
+     */
+    traitUpdateTrait: (id: number, data: TraitDto, params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/api/traits/${id}`,
+        method: "PUT",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Trait
      * @name TraitDeleteTrait
      * @request DELETE:/api/traits/{id}
      */
