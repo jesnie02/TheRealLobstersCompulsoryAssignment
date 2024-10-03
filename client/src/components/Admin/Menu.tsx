@@ -1,7 +1,7 @@
 ﻿import {useAtom} from 'jotai';
 import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
-import GetAllOrderHistory from "../Order/GetOrderHistory/GetAllOrderHistory.tsx";
+import GetAllOrderHistory from "../Order/GetOrderHistoryItem.tsx";
 import CreateTraits from "../Traits/CreateTraits.tsx";
 
 

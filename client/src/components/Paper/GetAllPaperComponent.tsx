@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
-import { CartAtom } from "../../../Atoms/CartAtom.tsx";
-import { useFetchAllPapers } from "../../../Hooks/useFetchAllPapers.ts";
+import { CartAtom } from "../../Atoms/CartAtom.tsx";
+import { useFetchAllPapers } from "../../Hooks/useFetchAllPapers.ts";
 
 export default function GetAllPaperComponent() {
     const { papers, loading, error } = useFetchAllPapers();
