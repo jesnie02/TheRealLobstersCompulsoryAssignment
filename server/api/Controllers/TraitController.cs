@@ -43,6 +43,24 @@ namespace api.Controllers
             var traits = await _traitService.GetAllTraitsAsync();
             return Ok(traits);
         }
+        
+        // Update trait by id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTrait(int id, TraitDto traitDto)
+        {
+            if (id != traitDto.Id)
+            {
+                return BadRequest("Trait ID mismatch");
+            }
+
+            var updatedTrait = await _traitService.UpdateTraitAsync(traitDto);
+            if (updatedTrait == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedTrait);
+        }
 
         // Delete trait by id
         [HttpDelete("{id}")]

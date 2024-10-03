@@ -17,3 +17,12 @@ Content-Type: application/json
 ### Get all traits
 GET http://localhost:5139/api/traits
 Content-Type: application/json
+
+### Update a trait
+PUT http://localhost:5139/api/traits/38
+Content-Type: application/json
+
+{
+  "id": 38,
+  "traitName": "Silver"
+}
