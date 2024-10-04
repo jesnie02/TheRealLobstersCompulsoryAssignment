@@ -87,7 +87,7 @@ namespace service.Services
                 _logger.LogWarning($"Trait with ID {id} not found");
                 return false;
             }
-
+            
             _context.Traits.Remove(trait);
             await _context.SaveChangesAsync();
             _logger.LogInformation($"Trait with ID {id} deleted successfully");

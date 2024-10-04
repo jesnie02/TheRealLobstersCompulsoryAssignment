@@ -164,16 +164,6 @@ export interface Customer {
   orders?: Order[];
 }
 
-export interface CreatePaperDto {
-  /** @minLength 1 */
-  name: string;
-  discontinued?: boolean;
-  /** @format int32 */
-  stock?: number;
-  /** @format double */
-  price?: number;
-}
-
 export interface UpdatePaperDto {
   /** @format int32 */
   id?: number;
@@ -185,10 +175,34 @@ export interface UpdatePaperDto {
   price?: number;
 }
 
-export interface TraitToPaperDto {
+export interface PaperDetailViewModel {
   /** @format int32 */
-  paperId?: number;
-  traitIds?: number[];
+  id?: number;
+  name?: string | null;
+  discontinued?: boolean;
+  /** @format int32 */
+  stock?: number;
+  /** @format double */
+  price?: number;
+  traits?: PaperTraitDetailViewModel[] | null;
+}
+
+export interface PaperTraitDetailViewModel {
+  /** @format int32 */
+  id?: number;
+  traitName?: string | null;
+  paperTraitsDetails?: PaperDetailViewModel[] | null;
+}
+
+export interface CreatePaperDto {
+  /** @minLength 1 */
+  name: string;
+  discontinued?: boolean;
+  /** @format int32 */
+  stock?: number;
+  /** @format double */
+  price?: number;
+  traitIds?: number[] | null;
 }
 
 export interface TraitDto {
@@ -512,38 +526,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Paper
-     * @name PaperCreatePaper
-     * @request POST:/api/Paper
-     */
-    paperCreatePaper: (data: CreatePaperDto, params: RequestParams = {}) =>
-      this.request<PaperDto, any>({
-        path: `/api/Paper`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Paper
-     * @name PaperGetAllPapers
-     * @request GET:/api/Paper
-     */
-    paperGetAllPapers: (params: RequestParams = {}) =>
-      this.request<PaperDto[], any>({
-        path: `/api/Paper`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Paper
      * @name PaperUpdatePaper
      * @request PUT:/api/Paper/{id}
      */
@@ -575,12 +557,44 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Paper
-     * @name PaperAddTraitToPaper
-     * @request POST:/api/Paper/{id}/traits
+     * @name PaperGetAllPapers
+     * @request GET:/api/Paper
      */
-    paperAddTraitToPaper: (id: number, data: TraitToPaperDto, params: RequestParams = {}) =>
+    paperGetAllPapers: (params: RequestParams = {}) =>
+      this.request<PaperDto[], any>({
+        path: `/api/Paper`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperCreateNewPaper
+     * @request POST:/api/Paper
+     */
+    paperCreateNewPaper: (data: CreatePaperDto, params: RequestParams = {}) =>
+      this.request<PaperDetailViewModel, any>({
+        path: `/api/Paper`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperAddTraitsToPaper
+     * @request POST:/api/Paper/{paperId}/traits
+     */
+    paperAddTraitsToPaper: (paperId: number, data: number[], params: RequestParams = {}) =>
       this.request<File, any>({
-        path: `/api/Paper/${id}/traits`,
+        path: `/api/Paper/${paperId}/traits`,
         method: "POST",
         body: data,
         type: ContentType.Json,

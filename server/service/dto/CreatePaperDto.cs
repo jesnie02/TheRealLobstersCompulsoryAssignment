@@ -8,17 +8,19 @@ namespace _service.dto;
 public class CreatePaperDto
 {
     [Required(ErrorMessage = "Name cannot be null")]
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public bool Discontinued { get; set; }
     public int Stock { get; set; }
     public double Price { get; set; }
+    
+    public List<int>? TraitIds { get; set; } 
     
     public Paper ToPaper()
     {
         return new Paper
         {
-            Name = Name ?? string.Empty,
-            Discontinued = Discontinued,
+            Name = Name,
+            Discontinued = false,
             Stock = Stock,
             Price = Price,
             
