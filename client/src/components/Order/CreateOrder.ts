@@ -1,16 +1,17 @@
 import { Api } from '../../Api';
+import { OrderDto, CreateCustomerDto } from '../../Api';
 
 const api = new Api();
 
 export const handleCreateOrder = async (
-    cart,
-    customerName,
-    customerEmail,
-    customerPhone,
-    customerAddress,
-    deliveryDate,
-    setOrders,
-    onClose
+    cart: { id: number; price: number; quantity?: number }[],
+    customerName: string,
+    customerEmail: string,
+    customerPhone: string,
+    customerAddress: string,
+    deliveryDate: string,
+    setOrders: React.Dispatch<React.SetStateAction<OrderDto[]>>,
+    onClose: () => void
 ) => {
     try {
         // Validate input before proceeding
@@ -18,14 +19,14 @@ export const handleCreateOrder = async (
             throw new Error('Cart is empty');
         }
 
-        let customerId;
+        let customerId: number;
         try {
             const response = await api.api.customerGetCustomerIdByEmail(customerEmail);
             customerId = response.data;
-        } catch (error) {
+        } catch (error: any) {
             if (error.response && error.response.status === 404) {
                 // If customer not found, create a new one
-                const newCustomer = {
+                const newCustomer: CreateCustomerDto = {
                     name: customerName,
                     email: customerEmail,
                     phone: customerPhone,
@@ -51,7 +52,7 @@ export const handleCreateOrder = async (
         }
 
         // Create the order with valid customerId and totalAmount
-        const newOrder = {
+        const newOrder: OrderDto = {
             customerId: customerId,
             totalAmount: cart.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0), // Multiply price with quantity
             orderEntries: orderEntries,
@@ -66,7 +67,7 @@ export const handleCreateOrder = async (
         setOrders(prevOrders => [...prevOrders, createdOrder.data]);
 
         onClose();
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating order:', error);
         alert('Error creating order: ' + error.message);  // Inform the user of the error
     }
