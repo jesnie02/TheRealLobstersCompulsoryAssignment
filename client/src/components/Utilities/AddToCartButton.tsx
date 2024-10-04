@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { CartAtom } from "../../Atoms/CartAtom.tsx";
+import { PapersAtom } from "../../Atoms/PapersAtom.tsx";
 
 interface AddToCartButtonProps {
     paper: any;
@@ -8,11 +9,18 @@ interface AddToCartButtonProps {
 
 export default function AddToCartButton({ paper }: AddToCartButtonProps) {
     const [, setCart] = useAtom(CartAtom);
-    const [quantity, setQuantity] = useState<number | "">(1); // Initialize quantity state
+    const [quantity, setQuantity] = useState<number | "">(1);
+    const [papers, setPapers] = useAtom(PapersAtom);
 
-    const addToCart = (paper: any) => {
-        const paperWithQuantity = { ...paper, quantity: Number(quantity) }; // Add quantity to paper object
+    const addToCart = async (paper: any) => {
+        const paperWithQuantity = { ...paper, quantity: Number(quantity) };
         setCart((prevCart) => [...prevCart, paperWithQuantity]);
+        const newStock = paper.stock - Number(quantity);
+        setPapers(papers.map(p =>
+            p.id === paper.id
+                ? { ...p, stock: newStock }
+                : p
+        ));
         alert(`${paper.name} added to cart!`);
     };
 
@@ -37,7 +45,7 @@ export default function AddToCartButton({ paper }: AddToCartButtonProps) {
                 />
             </div>
 
-            <button className="btn btn-outline mt-1" onClick={() => addToCart(paper)}>
+            <button className="btn btn-outline mt-1" onClick={() => addToCart(paper)} disabled={paper.stock < quantity}>
                 Add to cart
             </button>
         </div>

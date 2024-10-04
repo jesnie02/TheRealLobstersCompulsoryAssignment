@@ -1,11 +1,20 @@
 import { useAtom } from "jotai";
 import { CartAtom } from "../../Atoms/CartAtom";
+import { PapersAtom} from "../../Atoms/PapersAtom.tsx";
 
 export default function CartContainer() {
     const [cart, setCart] = useAtom(CartAtom);
+    const [papers, setPapers] = useAtom(PapersAtom);
 
     const removeItem = (index: number) => {
+        const paperToRemove = cart[index];
         setCart(cart.filter((_, i) => i !== index));
+        // Restore the stock count when an item is removed from the cart
+        setPapers(papers.map(paper =>
+            paper.id === paperToRemove.id
+                ? { ...paper, stock: paper.stock + paperToRemove.quantity }
+                : paper
+        ));
     };
 
     const calculateTotalPrice = () => {
