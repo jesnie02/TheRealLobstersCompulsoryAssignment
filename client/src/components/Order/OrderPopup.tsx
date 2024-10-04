@@ -10,7 +10,7 @@ interface OrderPopupProps {
 }
 
 const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
-    const [cart] = useAtom(CartAtom);
+    const [cart, setCart] = useAtom(CartAtom);
     const [, setOrders] = useAtom(OrdersAtom);
     const [customerName, setCustomerName] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
@@ -29,6 +29,7 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
             setOrders,
             onClose
         );
+        setCart([]); // Clear the cart after creating the order
     };
 
     if (!isOpen) return null;
