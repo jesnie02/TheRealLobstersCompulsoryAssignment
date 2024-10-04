@@ -9,7 +9,7 @@ const GetAllOrders = () => {
     if (ordersError) return <div>Error: {ordersError}</div>;
     if (customersError) return <div>Error: {customersError}</div>;
 
-    const getCustomerName = (customerId) => {
+    const getCustomerName = (customerId: any) => {
         const customer = customers.find(c => c.id === customerId.toString());
         return customer ? customer.name : "Unknown";
     };
