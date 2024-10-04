@@ -16,6 +16,7 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
     const [customerEmail, setCustomerEmail] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerAddress, setCustomerAddress] = useState('');
+    const [deliveryDate, setDeliveryDate] = useState('');
 
     const handleCreateOrderWrapper = async () => {
         await handleCreateOrder(
@@ -24,6 +25,7 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
             customerEmail,
             customerPhone,
             customerAddress,
+            deliveryDate,
             setOrders,
             onClose
         );
@@ -54,6 +56,9 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
                            className="input input-bordered w-full mb-2"/>
                     <input type="text" placeholder="Address" value={customerAddress}
                            onChange={(e) => setCustomerAddress(e.target.value)}
+                           className="input input-bordered w-full mb-2"/>
+                    <input type="date" placeholder="Delivery Date" value={deliveryDate}
+                           onChange={(e) => setDeliveryDate(e.target.value)}
                            className="input input-bordered w-full mb-2"/>
                 </div>
                 <button onClick={handleCreateOrderWrapper} className="btn btn-primary">Create Order</button>
