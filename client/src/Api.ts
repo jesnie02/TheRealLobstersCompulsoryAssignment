@@ -195,8 +195,7 @@ export interface PaperTraitDetailViewModel {
 }
 
 export interface CreatePaperDto {
-  /** @minLength 1 */
-  name: string;
+  name?: string;
   discontinued?: boolean;
   /** @format int32 */
   stock?: number;

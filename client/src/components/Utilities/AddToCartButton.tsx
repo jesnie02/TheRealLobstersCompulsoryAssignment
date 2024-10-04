@@ -1,4 +1,3 @@
-// client/src/components/Utilities/AddToCartButton.tsx
 import { useAtom } from "jotai";
 import { CartAtom } from "../../Atoms/CartAtom.tsx";
 
