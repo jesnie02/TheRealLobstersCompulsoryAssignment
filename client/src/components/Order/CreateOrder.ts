@@ -19,7 +19,7 @@ export const handleCreateOrder = async (
             throw new Error('Cart is empty');
         }
 
-        let customerId: number;
+        let customerId: number | undefined;
         try {
             const response = await api.api.customerGetCustomerIdByEmail(customerEmail);
             customerId = response.data;

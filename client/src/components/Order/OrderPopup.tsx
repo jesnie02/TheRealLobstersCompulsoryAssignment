@@ -42,7 +42,9 @@ const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
                 <h2 className="text-xl font-semibold mb-4">Confirm Order</h2>
                 <ul className="mb-4">
                     {cart.map((item, index) => (
-                        <li key={index} className="mb-2">{item.name} - ${item.price}</li>
+                        <li key={index} className="mb-2">
+                            {item.quantity} x {item.name} - ${(item.price * item.quantity).toFixed(2)}
+                        </li>
                     ))}
                 </ul>
                 <div className="mb-4">
