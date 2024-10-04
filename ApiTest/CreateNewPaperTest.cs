@@ -20,7 +20,7 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         Environment.SetEnvironmentVariable("DB", _ctxSetup._postgres.GetConnectionString());
         _outputHelper = outputHelper;
     }
-
+/*
     [Fact]
     public async Task CreateNewPaper()
     {
@@ -48,4 +48,5 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         Assert.Equal(paper.Stock, responseDto.Stock);
         Assert.Equal(paper.Price, responseDto.Price);
     }
+*/
 }

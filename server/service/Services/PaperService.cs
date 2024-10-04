@@ -10,7 +10,7 @@ namespace service.Services;
 
 public interface IPaperService
 {
-    Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto);
+
     Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
     Task DeletePaperAsync(int paperId);
    
@@ -40,7 +40,7 @@ public class PaperService : IPaperService
         _updatePaperValidator = updatePaperValidator;
         _context = context;
     }
-
+/*
     public async Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto)
     {
         await _createPaperValidator.ValidateAndThrowAsync(createPaperDto);
@@ -50,7 +50,7 @@ public class PaperService : IPaperService
 
         return PaperDto.FromEntity(paper);
     }
-    
+*/
     
     
 
@@ -120,6 +120,7 @@ public class PaperService : IPaperService
 
     public async Task<paperDetailViewModel> CreateNewPaper(CreatePaperDto createPaperDto)
     {
+        await _createPaperValidator.ValidateAndThrowAsync(createPaperDto);
         var newPaper = createPaperDto.ToPaper();
         var exists = await _context.Papers.AnyAsync(p => p.Name.ToLower() ==newPaper.Name.ToLower());
         

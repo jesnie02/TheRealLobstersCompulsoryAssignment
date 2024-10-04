@@ -7,7 +7,7 @@ namespace _service.dto;
 
 public class CreatePaperDto
 {
-    [Required(ErrorMessage = "Name cannot be null")]
+    
     public string Name { get; set; } = string.Empty;
     public bool Discontinued { get; set; }
     public int Stock { get; set; }
