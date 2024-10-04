@@ -24,13 +24,8 @@ export const useFetchAllPapers = () => {
     }, [setPapers]);
 
     useEffect(() => {
-        const storedPapers = localStorage.getItem("papers");
-        if (storedPapers) {
-            setPapers(JSON.parse(storedPapers));
-        } else {
-            fetchPapers();
-        }
-    }, [fetchPapers, setPapers]);
+        fetchPapers(); // Always fetch the latest data from the API
+    }, [fetchPapers]);
 
     return { papers, loading, error, fetchPapers };
 };
