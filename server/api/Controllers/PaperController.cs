@@ -19,13 +19,15 @@ public class PaperController : ControllerBase
         _service = service;
     }
 
-    
+    /*
     [HttpPost]
     public async Task<ActionResult<PaperDto>> CreatePaperAsync(CreatePaperDto createPaperDto)
     {
         var paper = await _service.CreatePaperAsync(createPaperDto);
         return Ok(paper);
     }
+    */
+    
     
     [HttpPut("{id}")]
     public async Task<ActionResult<PaperDto>> UpdatePaperAsync(int id, UpdatePaperDto updatePaperDto)
@@ -47,16 +49,7 @@ public class PaperController : ControllerBase
     }
     
     
-    [HttpPost("{id}/traits")]
-    public async Task<IActionResult> AddTraitToPaper(int id, TraitToPaperDto traitToPaperDto)
-    {
-        if (id != traitToPaperDto.PaperId)
-        {
-            return BadRequest(new { message = "Paper ID mismatch" });
-        }
-        var updatedPaper = await _service.TraitToPaperAsync(traitToPaperDto);
-        return Ok(updatedPaper);
-    }
+    
     
     [HttpGet]
     public async Task<ActionResult<List<PaperDto>>> GetAllPapersAsync()
@@ -65,4 +58,31 @@ public class PaperController : ControllerBase
         return Ok(papers);
     }
     
+    [HttpPost("{paperId}/traits")]
+    public async Task<IActionResult> AddTraitsToPaper(int paperId, [FromBody] List<int> traitIds)
+    {
+        var traitToPaperDto = new TraitToPaperDto
+        {
+            PaperId = paperId,
+            TraitIds = traitIds
+        };
+
+        try
+        {
+            await _service.AddTraitsToPaperAsync(traitToPaperDto);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+    
+    
+    [HttpPost]
+    public async Task<ActionResult<paperDetailViewModel>> CreateNewPaper([FromBody] CreatePaperDto createPaperDto)
+    {
+        var createdPaper = await _service.CreateNewPaper(createPaperDto);
+        return CreatedAtAction(nameof(CreateNewPaper), new { id = createdPaper.Id }, createdPaper);
+    }
 }
