@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById.ts';
 import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
+import {OrderEntry} from "../../Api.ts";
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
@@ -13,6 +14,20 @@ const OrderDetail = () => {
 
     const getPaperDetails = (productId: number) => {
         return papers.find(paper => paper.id === productId);
+    };
+
+    const calculateTotals = (orderEntries: OrderEntry[] | undefined) => {
+        if (!orderEntries) return { totalQuantity: 0, totalPrice: 0 };
+        return orderEntries.reduce(
+            (totals, entry) => {
+                const paper = getPaperDetails(entry.productId!);
+                const price = paper?.price ?? 0;
+                totals.totalQuantity += entry.quantity ?? 0;
+                totals.totalPrice += (entry.quantity ?? 0) * price;
+                return totals;
+            },
+            { totalQuantity: 0, totalPrice: 0 }
+        );
     };
 
     return (
@@ -46,6 +61,11 @@ const OrderDetail = () => {
                         </tr>
                     );
                 })}
+                <tr className="font-bold">
+                    <td className="py-2 px-4 border-b" colSpan={2}>Totals</td>
+                    <td className="py-2 px-4 border-b">{calculateTotals(order?.orderEntries).totalQuantity}</td>
+                    <td className="py-2 px-4 border-b">{calculateTotals(order?.orderEntries).totalPrice}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
