@@ -5,7 +5,7 @@ import HomeLogo from "./Utilities/HomeLogo.tsx";
 
 const Navigation = () => {
     return (
-        <nav className="navigation flex justify-between items-center m-3">
+        <nav className="navigation fixed top-0 left-0 right-0 flex justify-between items-center bg-white text-black p-3 shadow-lg z-50">
             <div className="flex items-center">
                 <div>Logo</div>
                 <HomeLogo />
