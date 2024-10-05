@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAtom } from 'jotai';
 import { CartAtom } from '../../Atoms/CartAtom';
 import { OrdersAtom } from '../../Atoms/OrdersAtom';
-import { handleCreateOrder } from './CreateOrder';
+import { handleCreateOrder } from './CreateOrder.tsx';
 
 interface OrderPopupProps {
     isOpen: boolean;
