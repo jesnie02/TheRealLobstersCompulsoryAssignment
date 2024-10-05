@@ -1,6 +1,8 @@
+// client/src/components/Order/GetAllOrders.tsx
 import { useFetchAllOrders } from "../../Hooks/useFetchAllOrders";
 import { useFetchAllCustomers } from "../../Hooks/useFetchAllCustomers";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
+import StatusBadge from "../Utilities/StatusBadge.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,19 +32,6 @@ const GetAllOrders = () => {
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-
-    const renderStatusBadge = (status: string) => {
-        switch (status) {
-            case 'Cancelled':
-                return <span className="bg-red-100 text-red-600 px-2 py-1 rounded">Cancelled</span>;
-            case 'Booked':
-                return <span className="bg-green-100 text-green-600 px-2 py-1 rounded">Booked</span>;
-            case 'Delayed':
-                return <span className="bg-yellow-100 text-yellow-600 px-2 py-1 rounded">Delayed</span>;
-            default:
-                return <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded">{status}</span>;
-        }
-    };
 
     const handleRowDoubleClick = (orderId: number) => {
         navigate(`/order/${orderId}`);
@@ -74,7 +63,7 @@ const GetAllOrders = () => {
                         <td className="py-2 px-4 border-b">{order.totalAmount}</td>
                         <td className="py-2 px-4 border-b">{order.orderDate}</td>
                         <td className="py-2 px-4 border-b">{order.deliveryDate}</td>
-                        <td className="py-2 px-4 border-b">{renderStatusBadge(order.status ?? "Unknown")}</td>
+                        <td className="py-2 px-4 border-b"><StatusBadge status={order.status ?? "Unknown"} /></td>
                         <td className="py-2 px-4 border-b"><CancelOrderButton orderId={order.id!}/></td>
                     </tr>
                 ))}

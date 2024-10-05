@@ -1,0 +1,46 @@
+/* styles.css */
+.bg-red-100 {
+    background-color: #fee2e2;
+}
+
+.text-red-600 {
+    color: #dc2626;
+}
+
+.bg-green-100 {
+    background-color: #d1fae5;
+}
+
+.text-green-600 {
+    color: #16a34a;
+}
+
+.bg-yellow-100 {
+    background-color: #fef3c7;
+}
+
+.text-yellow-600 {
+    color: #ca8a04;
+}
+
+.bg-gray-100 {
+    background-color: #f3f4f6;
+}
+
+.text-gray-600 {
+    color: #4b5563;
+}
+
+.px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.py-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
