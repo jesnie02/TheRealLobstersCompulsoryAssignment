@@ -1,13 +1,13 @@
 import { useFetchAllOrders } from "../../Hooks/useFetchAllOrders";
 import { useFetchAllCustomers } from "../../Hooks/useFetchAllCustomers";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
-import {useState} from "react";
-
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GetAllOrders = () => {
     const { orders, loading: ordersLoading, error: ordersError } = useFetchAllOrders();
     const { customers, error: customersError } = useFetchAllCustomers();
+    const navigate = useNavigate();
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +44,10 @@ const GetAllOrders = () => {
         }
     };
 
+    const handleRowDoubleClick = (orderId: number) => {
+        navigate(`/order/${orderId}`);
+    };
+
     return (
         <div className="p-4">
             <h2 className="text-2xl font-bold mb-4">All Orders</h2>
@@ -63,14 +67,15 @@ const GetAllOrders = () => {
                 </thead>
                 <tbody>
                 {currentOrders.map(order => (
-                    <tr key={order.id} className="hover:bg-gray-100">
+                    <tr key={order.id} className="hover:bg-gray-100"
+                        onDoubleClick={() => handleRowDoubleClick(order.id!)}>
                         <td className="py-2 px-4 border-b">{order.id}</td>
                         <td className="py-2 px-4 border-b">{getCustomerName(order.customerId)}</td>
                         <td className="py-2 px-4 border-b">{order.totalAmount}</td>
                         <td className="py-2 px-4 border-b">{order.orderDate}</td>
                         <td className="py-2 px-4 border-b">{order.deliveryDate}</td>
                         <td className="py-2 px-4 border-b">{renderStatusBadge(order.status ?? "Unknown")}</td>
-                        <td className="py-2 px-4 border-b"><CancelOrderButton orderId={order.id}/></td>
+                        <td className="py-2 px-4 border-b"><CancelOrderButton orderId={order.id!}/></td>
                     </tr>
                 ))}
                 </tbody>
