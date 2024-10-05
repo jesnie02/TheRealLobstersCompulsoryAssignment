@@ -5,10 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-nav': '#1C212D',
+      },
+    },
   },
+  variants: {},
   plugins: [
-    // eslint-disable-next-line no-undef
-      require('daisyui'),
+    require('daisyui'),
   ],
 }
