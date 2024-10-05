@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById.ts';
 import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
 import {OrderEntry} from "../../Api.ts";
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
+    const navigate = useNavigate();
     const { order, loading: orderLoading, error: orderError } = useFetchOrderById(orderId ?? '');
     const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
 
@@ -28,6 +29,10 @@ const OrderDetail = () => {
             },
             { totalQuantity: 0, totalPrice: 0 }
         );
+    };
+
+    const handleBackClick = () => {
+        navigate(-1);
     };
 
     return (
@@ -68,6 +73,12 @@ const OrderDetail = () => {
                 </tr>
                 </tbody>
             </table>
+            <button
+                onClick={handleBackClick}
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+            >
+                Go Back
+            </button>
         </div>
     );
 };
