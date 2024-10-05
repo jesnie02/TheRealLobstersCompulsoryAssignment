@@ -45,7 +45,7 @@ export default function AddToCartButton({ paper }: AddToCartButtonProps) {
                 />
             </div>
 
-            <button className="btn btn-outline mt-1" onClick={() => addToCart(paper)} disabled={paper.stock < quantity}>
+            <button className="btn btn-outline mt-4" onClick={() => addToCart(paper)} disabled={paper.stock < quantity}>
                 Add to cart
             </button>
         </div>
