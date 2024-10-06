@@ -1,4 +1,4 @@
-﻿import {useAtom} from 'jotai';
+import {useAtom} from 'jotai';
 import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
 import CreateTraits from "../Traits/CreateTraits.tsx";

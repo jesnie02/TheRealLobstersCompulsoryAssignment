@@ -38,26 +38,28 @@ const GetAllCustomer = () => {
         navigate(`/customer/${customerId}`);
     };
 
+
     return (
         <div className="overflow-x-auto m-14 border border-gray-300">
-            <table className="table">
+            <table className="table border">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th></th>
+                    <th className="border">Name</th>
+                    <th className="border">Address</th>
+                    <th className="border">Email</th>
+                    <th className="border">Phone</th>
+                    <th className="border">Customer details</th>
                 </tr>
                 </thead>
                 <tbody>
                 {customers.map((customer, index) => (
                     <tr key={index}>
-                        <td>
+                        <td className="border">
                             <div className="flex items-center gap-3">
                                 <div className="avatar">
                                     <div className="mask mask-squircle h-12 w-12">
-                                        <img src={getRandomProfilePicture()} alt={customer.name} onError={handleImageError} />
+                                        <img src={getRandomProfilePicture()} alt={customer.name}
+                                             onError={handleImageError}/>
                                     </div>
                                 </div>
                                 <div>
@@ -65,23 +67,24 @@ const GetAllCustomer = () => {
                                 </div>
                             </div>
                         </td>
-                        <td>{customer.address}</td>
-                        <td>{customer.email}</td>
-                        <td>{customer.phone}</td>
-                        <th>
-                            <button className="btn btn-outline btn-xs" onClick={() => handleViewCustomer(customer.id)}>details</button>
+                        <td className="border">{customer.address}</td>
+                        <td className="border">{customer.email}</td>
+                        <td className="border">{customer.phone}</td>
+                        <th className="border">
+                            <button className="btn btn-outline btn-xs"
+                                    onClick={() => handleViewCustomer(customer.id)}>details
+                            </button>
                         </th>
                     </tr>
                 ))}
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th></th>
+                    <th className="border">Name</th>
+                    <th className="border">Address</th>
+                    <th className="border">Email</th>
+                    <th className="border">Phone</th>
+                    <th className="border">Customer details</th>
                 </tr>
                 </tfoot>
             </table>

@@ -26,7 +26,7 @@ public class PaperController : ControllerBase
         var paper = await _service.CreatePaperAsync(createPaperDto);
         return Ok(paper);
     }
-    */
+   
     
     
     [HttpPut("{id}")]
@@ -40,15 +40,15 @@ public class PaperController : ControllerBase
         var paper = await _service.UpdatePaperAsync(updatePaperDto);
         return Ok(paper);
     }
-
+ */
+    
+    
     [HttpDelete("{paperId}")]
     public async Task<ActionResult> DeletePaperAsync(int paperId)
     {
         await _service.DeletePaperAsync(paperId);
         return NoContent();
     }
-    
-    
     
     
     [HttpGet]
@@ -84,5 +84,25 @@ public class PaperController : ControllerBase
     {
         var createdPaper = await _service.CreateNewPaper(createPaperDto);
         return CreatedAtAction(nameof(CreateNewPaper), new { id = createdPaper.Id }, createdPaper);
+    }
+    
+    
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<paperDetailViewModel>> UpdateExistingPaper(int id, UpdatePaperDto updatePaperDto)
+    {
+        if (id != updatePaperDto.Id)
+        {
+            return BadRequest("Paper ID mismatch");
+        }
+
+        try
+        {
+            var updatedPaper = await _service.UpdateExistingPaper(updatePaperDto);
+            return Ok(updatedPaper);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
 }

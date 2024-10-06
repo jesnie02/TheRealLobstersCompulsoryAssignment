@@ -20,7 +20,7 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         Environment.SetEnvironmentVariable("DB", _ctxSetup._postgres.GetConnectionString());
         _outputHelper = outputHelper;
     }
-/*
+
     [Fact]
     public async Task CreateNewPaper()
     {
@@ -30,7 +30,8 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
             Name = "Test",
             Discontinued = false,
             Stock = 10,
-            Price = 10.0
+            Price = 10.0,
+            TraitIds = new List<int>{1, 2, 3}
         };
 
         // Act
@@ -40,7 +41,7 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         result.EnsureSuccessStatusCode();
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.Equal(HttpStatusCode.Created, result.StatusCode);
         Assert.NotNull(responseDto);
         Assert.NotEqual(0, responseDto.Id);
         Assert.Equal(paper.Name, responseDto.Name);
@@ -48,5 +49,5 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         Assert.Equal(paper.Stock, responseDto.Stock);
         Assert.Equal(paper.Price, responseDto.Price);
     }
-*/
+
 }

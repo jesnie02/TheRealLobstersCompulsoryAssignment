@@ -17,6 +17,7 @@ public interface IPaperService
     Task<List<PaperDto>> GetAllPapersAsync();
     Task AddTraitsToPaperAsync(TraitToPaperDto traitToPaperDto);
     Task<paperDetailViewModel> CreateNewPaper(CreatePaperDto createPaperDto);
+    Task<paperDetailViewModel> UpdateExistingPaper(UpdatePaperDto updatePaperDto);
 }
 
 public class PaperService : IPaperService
@@ -146,5 +147,40 @@ public class PaperService : IPaperService
            throw new DbUpdateException("An error occurred while saving the paper", e);
         }
         return paperDetailViewModel.FromEntity(newPaper);
+    }
+    
+    
+    public async Task<paperDetailViewModel> UpdateExistingPaper(UpdatePaperDto updatePaperDto)
+    {
+        await _updatePaperValidator.ValidateAndThrowAsync(updatePaperDto);
+        var paper = await _context.Papers.Include(p => p.Traits).FirstOrDefaultAsync(p => p.Id == updatePaperDto.Id);
+    
+        if (paper == null)
+            throw new InvalidOperationException($"Paper with ID {updatePaperDto.Id} not found");
+
+        paper.Name = updatePaperDto.Name ?? paper.Name;
+        paper.Discontinued = updatePaperDto.Discontinued;
+        paper.Stock = updatePaperDto.Stock;
+        paper.Price = updatePaperDto.Price;
+
+        if (updatePaperDto.TraitIds != null && updatePaperDto.TraitIds.Count != 0)
+        {
+            var uniqueTraitIds = updatePaperDto.TraitIds.Distinct().ToList();
+            var traits = await _context.Traits.Where(t => uniqueTraitIds.Contains(t.Id)).ToListAsync();
+        
+            paper.Traits = traits;
+        }
+
+        _context.Papers.Update(paper);
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException e)
+        {
+            throw new DbUpdateException("An error occurred while updating the paper", e);
+        }
+        return paperDetailViewModel.FromEntity(paper);
     }
 }

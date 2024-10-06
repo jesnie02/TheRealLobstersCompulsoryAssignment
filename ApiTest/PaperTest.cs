@@ -52,7 +52,7 @@ public class PaperTest : WebApplicationFactory<Program>
             Assert.Equal(paper.Stock, responseDto.Stock);
         }
     }
-    
+   */ 
     [Fact]
     public async Task UpdatePaperTest()
     {
@@ -102,6 +102,6 @@ public class PaperTest : WebApplicationFactory<Program>
         Assert.Equal(HttpStatusCode.NoContent, deleteResult.StatusCode);
     }
     
-*/
+
    
 }
