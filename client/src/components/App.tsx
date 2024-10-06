@@ -4,13 +4,13 @@ import { DevTools } from 'jotai-devtools';
 import Navigation from './Navigation.tsx';
 import { useAtom } from 'jotai';
 import { ThemeAtom } from '../Atoms/ThemeAtom.tsx';
-
+import {useEffect} from "react";
 import AdminApp from './Admin/AdminApp.tsx';
 import Home from "./Home.tsx";
 import CustomerApp from "./Customer/CustomerApp.tsx";
-import { useEffect } from "react";
 import LoginCustomer from "./Customer/LoginCustomer.tsx";
 import CustomerById from "./Customer/CustomerById.tsx";
+import OrderDetail from "./Order/OrderDetail.tsx";
 
 const App = () => {
     const [theme] = useAtom(ThemeAtom);
@@ -30,6 +30,7 @@ const App = () => {
                 <Route path="/customerDash/*" element={<CustomerApp />} />
                 <Route path="/login-customer" element={<LoginCustomer />} />
                 <Route path="/customer/:id" element={<CustomerById />} />
+                <Route path="/order/:orderId" element={<OrderDetail />} />
             </Routes>
             <DevTools />
         </div>

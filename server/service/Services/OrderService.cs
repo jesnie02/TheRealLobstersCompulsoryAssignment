@@ -38,12 +38,29 @@ namespace service.Services
             _logger.LogInformation("Creating a new order");
             await _orderValidator.ValidateAndThrowAsync(createOrderDto);
 
+            var order = createOrderDto.ToOrder();
+
+            // Update stock for each order entry
+            foreach (var entry in order.OrderEntries)
+            {
+                var paper = await _context.Papers.FindAsync(entry.ProductId);
+                if (paper == null)
+                {
+                    throw new Exception($"Paper with ID {entry.ProductId} not found.");
+                }
+
+                if (paper.Stock < entry.Quantity)
+                {
+                    throw new Exception($"Not enough stock for paper with ID {entry.ProductId}. Available: {paper.Stock}, Requested: {entry.Quantity}");
+                }
+
+                paper.Stock -= entry.Quantity;
+                _context.Papers.Update(paper);
+            }
+
             // Find the highest current ID and increment it by one
             var maxOrderId = await _context.Orders.MaxAsync(o => (int?)o.Id) ?? 0;
-            var newOrderId = maxOrderId + 1;
-
-            var order = createOrderDto.ToOrder();
-            order.Id = newOrderId; // Set the new ID
+            order.Id = maxOrderId + 1;
 
             // Find the highest current ID for order entries
             var maxOrderEntryId = await _context.OrderEntries.MaxAsync(oe => (int?)oe.Id) ?? 0;
@@ -58,7 +75,7 @@ namespace service.Services
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Order created successfully");
-            return new OrderDto().FromEntity(order);
+            return OrderDto.FromOrder(order);
         }
         
         public async Task<OrderDto?> GetOrderByIdAsync(int id)
