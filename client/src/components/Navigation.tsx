@@ -1,21 +1,21 @@
-import ThemeSwitcher from './ThemeSwitcher';
 import ProfileLogo from "./Utilities/ProfileLogo.tsx";
 import CartLogo from "./Utilities/CartLogo.tsx";
 import HomeLogo from "./Utilities/HomeLogo.tsx";
 
 const Navigation = () => {
     return (
-        <nav className="navigation flex justify-between items-center m-3">
-            <div className="flex items-center">
-                <div>Logo</div>
-                <HomeLogo />
-            </div>
-            <div className="profile-center">
-                <ProfileLogo />
-            </div>
-            <div className="flex items-center">
-                <CartLogo />
-                <ThemeSwitcher className="theme-switcher" />
+        <nav className="navigation top-0 left-0 right-0 flex justify-between items-center bg-lightPink text-black p-3 shadow-lg z-50 h-16">
+            <div className="flex items-center w-full mx-8">
+                <div>
+                    <img src="/assets/LobsterPaperLogo.png" alt="Lobster Paper Logo" className="h-20 w-auto object-contain"/>
+                </div>
+                <div className="flex-grow flex justify-center">
+                    <HomeLogo/>
+                </div>
+                <div className="flex items-center space-x-8 m-8">
+                    <ProfileLogo/>
+                    <CartLogo/>
+                </div>
             </div>
         </nav>
     );

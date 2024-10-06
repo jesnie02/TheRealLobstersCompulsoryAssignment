@@ -21,6 +21,10 @@ namespace api.Controllers
         public async Task<ActionResult<OrderDto>> CreateOrderAsync(OrderDto createOrderDto)
         {
             var order = await _orderService.CreateOrderAsync(createOrderDto);
+            if (order == null)
+            {
+                return BadRequest("Order creation failed.");
+            }
             return Ok(order);
         }
 
