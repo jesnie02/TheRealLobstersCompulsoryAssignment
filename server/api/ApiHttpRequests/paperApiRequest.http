@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ### Delete a paper
-DELETE http://localhost:5139/api/Paper/4
+DELETE http://localhost:5139/api/Paper/1
 
 
 ### Get all papers

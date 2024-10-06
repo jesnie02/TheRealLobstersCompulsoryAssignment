@@ -164,17 +164,6 @@ export interface Customer {
   orders?: Order[];
 }
 
-export interface UpdatePaperDto {
-  /** @format int32 */
-  id?: number;
-  name?: string | null;
-  discontinued?: boolean;
-  /** @format int32 */
-  stock?: number;
-  /** @format double */
-  price?: number;
-}
-
 export interface PaperDetailViewModel {
   /** @format int32 */
   id?: number;
@@ -195,8 +184,19 @@ export interface PaperTraitDetailViewModel {
 }
 
 export interface CreatePaperDto {
-  /** @minLength 1 */
-  name: string;
+  name?: string;
+  discontinued?: boolean;
+  /** @format int32 */
+  stock?: number;
+  /** @format double */
+  price?: number;
+  traitIds?: number[] | null;
+}
+
+export interface UpdatePaperDto {
+  /** @format int32 */
+  id?: number;
+  name?: string;
   discontinued?: boolean;
   /** @format int32 */
   stock?: number;
@@ -481,12 +481,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Order
      * @name OrderUpdateOrder
-     * @request PUT:/api/Order/{id}
+     * @request PATCH:/api/Order/{id}
      */
     orderUpdateOrder: (id: number, data: OrderDto, params: RequestParams = {}) =>
       this.request<OrderDto, any>({
         path: `/api/Order/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
         type: ContentType.Json,
         format: "json",
@@ -518,23 +518,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<OrderWithUserDto[], any>({
         path: `/api/Order/customer/${customerId}/history`,
         method: "GET",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Paper
-     * @name PaperUpdatePaper
-     * @request PUT:/api/Paper/{id}
-     */
-    paperUpdatePaper: (id: number, data: UpdatePaperDto, params: RequestParams = {}) =>
-      this.request<PaperDto, any>({
-        path: `/api/Paper/${id}`,
-        method: "PUT",
-        body: data,
-        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -598,6 +581,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: data,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Paper
+     * @name PaperUpdateExistingPaper
+     * @request PATCH:/api/Paper/{id}
+     */
+    paperUpdateExistingPaper: (id: number, data: UpdatePaperDto, params: RequestParams = {}) =>
+      this.request<PaperDetailViewModel, any>({
+        path: `/api/Paper/${id}`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -672,6 +672,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<File, any>({
         path: `/api/traits/${id}`,
         method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Trait
+     * @name TraitGetTraitsByPaperId
+     * @request GET:/api/traits/byPaper/{paperId}
+     */
+    traitGetTraitsByPaperId: (paperId: number, params: RequestParams = {}) =>
+      this.request<File, any>({
+        path: `/api/traits/byPaper/${paperId}`,
+        method: "GET",
         ...params,
       }),
   };

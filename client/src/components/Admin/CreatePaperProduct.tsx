@@ -4,9 +4,12 @@ import { traitsAtom } from '../../Atoms/traitsAtom';
 import { http } from '../../http.ts';
 import {Trait} from "../../Api.ts";
 
+interface CreatePaperProductProps {
+    closeModal: () => void;
+}
 
 
-const CreatePaperProduct = () => {
+const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: createCloseModal }) => {
     const [productName, setProductName] = useState('');
     const [discontinued, setDiscontinued] = useState(false);
     const [stock, setStock] = useState(0);
@@ -46,6 +49,11 @@ const CreatePaperProduct = () => {
             });
             if (response.status === 201) {
                 alert('Paper created successfully');
+                setProductName('');
+                setDiscontinued(true);
+                setStock(0);
+                setPrice(0.0);
+                setAddedTraits([]);
             } else {
                 alert('Failed to create paper');
             }
@@ -61,14 +69,15 @@ const CreatePaperProduct = () => {
         }
     };
 
-    const handleSelectTrait = () => {
-        const selectedTrait = traits.find(trait => trait.traitName === (document.getElementById('traits') as HTMLSelectElement)?.value);
+    const handleSelectTrait = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedTrait = traits.find(trait => trait.traitName === e.target.value);
         setSelectedTrait(selectedTrait || null);
     };
 
     const filteredTraits = (traits ?? []).filter(trait =>
         trait.traitName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
 
     return (
         <div className="container mx-auto p-4">
@@ -143,10 +152,10 @@ const CreatePaperProduct = () => {
                                 <span className="label-text font-bold">Traits</span>
                             </div>
                             <div className="flex items-center">
-                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered">
+                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered" defaultValue="">
                                     <option disabled value="">Pick one</option>
                                     {filteredTraits.map((trait) => (
-                                        <option key={trait.id}>{trait.traitName}</option>
+                                        <option key={trait.id} value={trait.traitName || ''}>{trait.traitName}</option>
                                     ))}
                                 </select>
                                 <button
@@ -161,21 +170,41 @@ const CreatePaperProduct = () => {
                     </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-4 mb-4">
                     <h2 className="text-xl font-bold mb-2">Added traits</h2>
                     <ul className="list-disc pl-5">
                         {addedTraits.map((trait) => (
-                            <li key={trait.id}>{trait.traitName}</li>
+                            <li key={trait.id} className="flex items-center">
+                                {trait.traitName}
+                                <button
+                                    type="button"
+                                    onClick={() => setAddedTraits(addedTraits.filter(t => t.id !== trait.id))}
+                                    className="ml-2"
+                                >
+                                    <img src="/assets/reddelete.png" alt="Remove" className="h-4 w-4 mr-2"/>
+
+                                </button>
+                            </li>
                         ))}
                     </ul>
                 </div>
+                <div className="flex">
+                    <button
+                        type="submit"
+                        className="  bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
+                    >
+                        Create Product
+                    </button>
 
-                <button
-                    type="submit"
-                    className=" mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                    Create Product
-                </button>
+                    <button
+                        type="button"
+                        onClick={createCloseModal}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
+                    >
+                        Close
+                    </button>
+
+                </div>
             </form>
         </div>
     );

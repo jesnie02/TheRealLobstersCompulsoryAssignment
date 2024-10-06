@@ -7,7 +7,7 @@ const Navigation = () => {
     return (
         <nav className="navigation flex justify-between items-center m-3">
             <div className="flex items-center">
-                <div>Logo</div>
+                <div className="fill-base-content">Logo</div>
                 <HomeLogo />
             </div>
             <div className="profile-center">

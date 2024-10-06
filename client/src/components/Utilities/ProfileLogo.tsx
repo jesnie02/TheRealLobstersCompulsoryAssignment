@@ -12,7 +12,7 @@ const ProfileLogo = () => {
     return (
         <div className="profile-logo">
             <button onClick={toggleDropdown} className="profile-button">
-                <img src={profileLogo} alt="Profile" className="profile-image" />
+                <img src={profileLogo} alt="Profile" className="profile-image"  />
             </button>
             {isOpen && (
                 <div className="profile-dropdown-menu">

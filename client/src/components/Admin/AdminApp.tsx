@@ -5,7 +5,6 @@ const AdminApp = () => {
     return (
         <div>
             <Routes>
-                {/* This path is relative to /adminDash */}
                 <Route path="/" element={<AdminDashboard />} />
             </Routes>
         </div>

@@ -73,5 +73,17 @@ namespace api.Controllers
             }
             return NoContent();
         }
+        
+        [HttpGet("byPaper/{paperId}")]
+        public async Task<IActionResult> GetTraitsByPaperId(int paperId)
+        {
+            var traits = await _traitService.GetTraitsByPaperIdAsync(paperId);
+            if (traits == null || !traits.Any())
+            {
+                return NotFound();
+            }
+            return Ok(traits);
+        }
+        
     }
 }

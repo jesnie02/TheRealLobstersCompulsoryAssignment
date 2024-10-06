@@ -64,7 +64,7 @@ namespace api.Controllers
         }
         
         //Update a specific order
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public async Task<ActionResult<OrderDto>> UpdateOrder(int id, OrderDto updateOrderDto)
         {
             var order = await _orderService.UpdateOrderByIdAsync(id, updateOrderDto);

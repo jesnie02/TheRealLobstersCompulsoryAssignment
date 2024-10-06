@@ -16,6 +16,7 @@ namespace service.Services
         Task<IEnumerable<TraitDto>> GetAllTraitsAsync();
         Task<TraitDto> UpdateTraitAsync(TraitDto traitDto);
         Task<bool> DeleteTraitAsync(int id);
+        Task<IEnumerable<TraitDto>> GetTraitsByPaperIdAsync(int paperId);
     }
     
     public class TraitService : ITraitService
@@ -93,5 +94,16 @@ namespace service.Services
             _logger.LogInformation($"Trait with ID {id} deleted successfully");
             return true;
         }
+        
+        public async Task<IEnumerable<TraitDto>> GetTraitsByPaperIdAsync(int paperId)
+        {
+            _logger.LogInformation($"Retrieving traits for paper ID {paperId}");
+            var traits = await _context.Traits
+                .Where(t => t.Papers.Any(p => p.Id == paperId))
+                .ToListAsync();
+            return traits.Select(trait => new TraitDto().FromEntity(trait)).ToList();
+        }
     }
+    
+   
 }

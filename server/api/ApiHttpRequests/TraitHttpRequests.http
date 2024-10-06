@@ -26,3 +26,7 @@ Content-Type: application/json
   "id": 38,
   "traitName": "Silver"
 }
+
+### Get traits by paper ID
+GET http://localhost:5139/api/traits/byPaper/1
+Content-Type: application/json
