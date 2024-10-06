@@ -3,7 +3,7 @@ import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
 import CreateTraits from "../Traits/CreateTraits.tsx";
 import GetAllOrders from "../Order/GetAllOrders.tsx";
-import CreatePaperProduct from "./CreatePaperProduct.tsx";
+import AllProducts from "./AllProducts.tsx";
 
 
 
@@ -49,7 +49,7 @@ const Menu = () => {
                 {selectedContent === 'Content 1' && <GetAllCustomer />}
                 {selectedContent === 'Content 2' && <GetAllOrders/>}
                 {selectedContent === 'Content 3' && < CreateTraits/>}
-                {selectedContent === 'Content 4' && <CreatePaperProduct />}
+                {selectedContent === 'Content 4' && <AllProducts />}
             </div>
         </div>
     );

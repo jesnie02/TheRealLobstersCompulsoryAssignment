@@ -49,5 +49,8 @@ public class CreateNewPaperTest : WebApplicationFactory<Program>
         Assert.Equal(paper.Stock, responseDto.Stock);
         Assert.Equal(paper.Price, responseDto.Price);
     }
+    
+    
+    
 
 }

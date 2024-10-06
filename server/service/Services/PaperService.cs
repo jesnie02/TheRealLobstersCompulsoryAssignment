@@ -11,7 +11,7 @@ namespace service.Services;
 public interface IPaperService
 {
 
-    Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
+    //Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto);
     Task DeletePaperAsync(int paperId);
    
     Task<List<PaperDto>> GetAllPapersAsync();
@@ -51,8 +51,7 @@ public class PaperService : IPaperService
 
         return PaperDto.FromEntity(paper);
     }
-*/
-    
+
     
 
     public async Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto)
@@ -73,6 +72,8 @@ public class PaperService : IPaperService
 
         return PaperDto.FromEntity(paper);
     }
+    */
+        
 
     public async Task DeletePaperAsync(int paperId)
     {

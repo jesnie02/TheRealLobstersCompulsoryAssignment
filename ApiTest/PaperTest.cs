@@ -52,7 +52,7 @@ public class PaperTest : WebApplicationFactory<Program>
             Assert.Equal(paper.Stock, responseDto.Stock);
         }
     }
-   */ 
+   
     [Fact]
     public async Task UpdatePaperTest()
     {
@@ -86,7 +86,7 @@ public class PaperTest : WebApplicationFactory<Program>
         Assert.Equal(updatePaper.Price, updateResponseDto.Price);  
         Assert.Equal(updatePaper.Stock, updateResponseDto.Stock);
     }
-    
+    */ 
     [Fact]
     public async Task DeletePaperTest()
     {
