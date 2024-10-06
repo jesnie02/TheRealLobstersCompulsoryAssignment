@@ -18,9 +18,10 @@ const CustomerById = () => {
                         {orders.map((order) => (
                             <li key={order.id} className="mb-4">
                                 <h2 className="font-bold">Order ID: {order.id}</h2>
-                                <p className="font-bold">Order Date: {order.deliveryDate}</p>
-                                <p className="font-bold">Total: {order.status}</p>
-                                <p className="font-bold">Status: {order.totalAmount}</p>
+                                <p className="font-bold">Order Date: {order.orderDate}</p>
+                                <p className="font-bold">Delivery Date {order.deliveryDate}</p>
+                                <p className="font-bold">Total: {order.totalAmount}</p>
+                                <p className="font-bold">Status: {order.status}</p>
                             </li>
                         ))}
                     </ul>

@@ -3,7 +3,6 @@ import { CartAtom } from "../../Atoms/CartAtom";
 import cartLogo from '/assets/CartLogo.png';
 import { useState } from "react";
 import CartContainer from "../Cart/CartContainer.tsx";
-import CreateOrderButton from "./CreateOrderButton.tsx";
 
 const CartLogo = () => {
     const [cart] = useAtom(CartAtom);
@@ -23,7 +22,6 @@ const CartLogo = () => {
             {isOpen && (
                 <div className="cart-dropdown-menu">
                     <CartContainer/>
-                    <CreateOrderButton/>
                 </div>
             )}
         </div>
