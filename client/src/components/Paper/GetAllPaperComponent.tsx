@@ -10,7 +10,7 @@ export default function GetAllPaperComponent() {
 
     return (
         <div>
-            <h1 className="menu-title text-6xl m-5 text-white bg-black bg-opacity-50 p-10 rounded-lg shadow-lg">Product
+            <h1 className="menu-title text-6xl m-5 text-black bg-lightPink bg-opacity-50 p-10 rounded-lg shadow-lg">Product
                 Catalogue</h1>
             <div className="card-body">
                 {loading ? (
