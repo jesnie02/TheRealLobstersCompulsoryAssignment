@@ -18,7 +18,7 @@ namespace api.Controllers
 
         // Create new trait
         [HttpPost]
-        public async Task<IActionResult> CreateTrait(TraitDto traitDto)
+        public async Task<ActionResult<TraitDto>> CreateTrait(TraitDto traitDto)
         {
             var createdTrait = await _traitService.CreateTraitAsync(traitDto);
             return CreatedAtAction(nameof(GetTrait), new { id = createdTrait.Id }, createdTrait);

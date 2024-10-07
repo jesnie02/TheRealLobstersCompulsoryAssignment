@@ -609,11 +609,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/api/traits
      */
     traitCreateTrait: (data: TraitDto, params: RequestParams = {}) =>
-      this.request<File, any>({
+      this.request<TraitDto, any>({
         path: `/api/traits`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 

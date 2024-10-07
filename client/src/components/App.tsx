@@ -11,6 +11,7 @@ import CustomerApp from "./Customer/CustomerApp.tsx";
 import LoginCustomer from "./Customer/LoginCustomer.tsx";
 import CustomerById from "./Customer/CustomerById.tsx";
 import OrderDetail from "./Order/OrderDetail.tsx";
+import {useInitializeData} from "../Hooks/useInitializeData.ts";
 
 const App = () => {
     const [theme] = useAtom(ThemeAtom);
@@ -19,6 +20,8 @@ const App = () => {
         localStorage.setItem('theme', theme);
         document.documentElement.setAttribute('data-theme', theme);
     }, [theme]);
+
+    useInitializeData();
 
     return (
         <div className={`app-container ${theme}`}>
