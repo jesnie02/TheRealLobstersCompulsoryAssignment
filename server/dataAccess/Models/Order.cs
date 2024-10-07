@@ -18,11 +18,11 @@ public partial class Order
     public DateTime OrderDate { get; set; }
 
     [Column("delivery_date")]
-    public DateOnly? DeliveryDate { get; set; }
+    public DateOnly DeliveryDate { get; set; }
 
     [Column("status")]
     [StringLength(50)]
-    public string? Status { get; set; } = null!;
+    public string Status { get; set; } = null!;
 
     [Column("total_amount")]
     public double TotalAmount { get; set; }
@@ -32,7 +32,7 @@ public partial class Order
 
     [ForeignKey("CustomerId")]
     [InverseProperty("Orders")]
-    public virtual Customer? Customer { get; set; }
+    public virtual Customer Customer { get; set; } = null!;
 
     [InverseProperty("Order")]
     public virtual ICollection<OrderEntry> OrderEntries { get; set; } = new List<OrderEntry>();

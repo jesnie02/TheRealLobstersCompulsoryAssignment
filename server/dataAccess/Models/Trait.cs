@@ -15,7 +15,7 @@ public partial class Trait
 
     [Column("trait_name")]
     [StringLength(255)]
-    public string? TraitName { get; set; } = null!;
+    public string TraitName { get; set; } = null!;
 
     [ForeignKey("TraitId")]
     [InverseProperty("Traits")]

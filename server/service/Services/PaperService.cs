@@ -77,7 +77,10 @@ public class PaperService : IPaperService
 
     public async Task DeletePaperAsync(int paperId)
     {
-        var paper = await _context.Papers.FindAsync(paperId);
+        var paper = await _context.Papers
+            .Include(p => p.Traits)
+            .FirstOrDefaultAsync(p => p.Id == paperId);
+
         if (paper == null)
         {
             throw new Exception("Paper not found");

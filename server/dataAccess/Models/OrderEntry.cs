@@ -22,13 +22,13 @@ public partial class OrderEntry
     public int ProductId { get; set; }
 
     [Column("order_id")]
-    public int? OrderId { get; set; }
+    public int OrderId { get; set; }
 
     [ForeignKey("OrderId")]
     [InverseProperty("OrderEntries")]
-    public virtual Order? Order { get; set; }
+    public virtual Order Order { get; set; } = null!;
 
     [ForeignKey("ProductId")]
     [InverseProperty("OrderEntries")]
-    public virtual Paper? Product { get; set; }
+    public virtual Paper Product { get; set; } = null!;
 }

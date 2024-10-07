@@ -36,9 +36,7 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.OrderDate).HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.Status).HasDefaultValueSql("'pending'::character varying");
 
-            entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("orders_customer_id_fkey");
+            entity.HasOne(d => d.Customer).WithMany(p => p.Orders).HasConstraintName("orders_customer_id_fkey");
         });
 
         modelBuilder.Entity<OrderEntry>(entity =>
@@ -66,7 +64,6 @@ public partial class MyDbContext : DbContext
                         .HasConstraintName("paper_traits_trait_id_fkey"),
                     l => l.HasOne<Paper>().WithMany()
                         .HasForeignKey("PaperId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("paper_traits_paper_id_fkey"),
                     j =>
                     {

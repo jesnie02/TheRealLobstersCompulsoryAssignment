@@ -37,7 +37,7 @@ public class OrderWithUserDto
         {
             Id = Id,
             OrderDate = OrderDate,
-            DeliveryDate = DeliveryDate,
+            DeliveryDate = DeliveryDate ?? new DateOnly(),
             Status = Status,
             TotalAmount = TotalAmount,
             CustomerId = CustomerId,

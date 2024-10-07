@@ -20,15 +20,15 @@ public partial class Customer
 
     [Column("address")]
     [StringLength(255)]
-    public string? Address { get; set; }
+    public string Address { get; set; } = null!;
 
     [Column("phone")]
     [StringLength(50)]
-    public string? Phone { get; set; }
+    public string Phone { get; set; } = null!;
 
     [Column("email")]
     [StringLength(255)]
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [InverseProperty("Customer")]
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

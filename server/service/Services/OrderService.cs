@@ -113,7 +113,7 @@ namespace service.Services
             order.CustomerId = updateOrderDto.CustomerId;
             order.OrderDate = updateOrderDto.OrderDate;
             order.TotalAmount = updateOrderDto.TotalAmount;
-            order.DeliveryDate = updateOrderDto.DeliveryDate;
+            order.DeliveryDate = updateOrderDto.DeliveryDate ?? new DateOnly();
             order.Status = updateOrderDto.Status;
 
             // Remove existing order entries
