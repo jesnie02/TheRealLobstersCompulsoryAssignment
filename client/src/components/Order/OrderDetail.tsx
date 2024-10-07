@@ -5,6 +5,7 @@ import { useFetchCustomerById } from '../../Hooks/useFetchCustomerById.ts';
 import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
+import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
 
 
 const OrderDetail = () => {
@@ -46,7 +47,6 @@ const OrderDetail = () => {
             {/* Header Section */}
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold">Order Details</h2>
-                <StatusBadge status={order?.status ?? "Unknown"}/>
             </div>
 
             {/* Main Order Information Section */}
@@ -117,6 +117,7 @@ const OrderDetail = () => {
                     Go Back
                 </button>
                 {order && <CancelOrderButton orderId={order.id!}/>}
+                <OrderStatusSelect/>
             </div>
         </div>
     );
