@@ -6,6 +6,7 @@ import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 
+
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const navigate = useNavigate();
