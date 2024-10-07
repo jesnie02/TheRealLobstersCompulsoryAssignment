@@ -1,7 +1,5 @@
-// client/src/components/Order/GetAllOrders.tsx
 import { useFetchAllOrders } from "../../Hooks/useFetchAllOrders";
 import { useFetchAllCustomers } from "../../Hooks/useFetchAllCustomers";
-import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +49,6 @@ const GetAllOrders = () => {
                     <th className="py-2 px-4 border-b text-left">Order Date</th>
                     <th className="py-2 px-4 border-b text-left">Delivery Date</th>
                     <th className="py-2 px-4 border-b text-left">Status</th>
-                    <th className="py-2 px-4 border-b text-left">Cancel Order</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,29 +61,30 @@ const GetAllOrders = () => {
                         <td className="py-2 px-4 border-b">{order.orderDate}</td>
                         <td className="py-2 px-4 border-b">{order.deliveryDate}</td>
                         <td className="py-2 px-4 border-b"><StatusBadge status={order.status ?? "Unknown"} /></td>
-                        <td className="py-2 px-4 border-b"><CancelOrderButton orderId={order.id!}/></td>
                     </tr>
                 ))}
                 </tbody>
             </table>
 
             {/* Pagination */}
-            <div className="mt-4">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="mr-2 bg-gray-200 px-3 py-1 rounded"
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={indexOfLastOrder >= orders.length}
-                    className="bg-gray-200 px-3 py-1 rounded"
-                >
-                    Next
-                </button>
-            </div>
+            {orders.length >= ordersPerPage && (
+                <div className="mt-4">
+                    <button
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="mr-2 bg-gray-200 px-3 py-1 rounded"
+                    >
+                        Previous
+                    </button>
+                    <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={indexOfLastOrder >= orders.length}
+                        className="bg-gray-200 px-3 py-1 rounded"
+                    >
+                        Next
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

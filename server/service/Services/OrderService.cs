@@ -74,6 +74,7 @@ namespace service.Services
 
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            order.Status = "Pending";
             _logger.LogInformation("Order created successfully");
             return OrderDto.FromOrder(order);
         }
@@ -143,13 +144,28 @@ namespace service.Services
                 return false;
             }
 
-            _context.Orders.Remove(order);
+            // Update stock for each order entry
+            foreach (var entry in order.OrderEntries)
+            {
+                var paper = await _context.Papers.FindAsync(entry.ProductId);
+                if (paper == null)
+                {
+                    throw new Exception($"Paper with ID {entry.ProductId} not found.");
+                }
+
+                paper.Stock += entry.Quantity;
+                Console.WriteLine(paper.Stock);
+                _context.Papers.Update(paper);
+                //_context.SaveChanges();
+            }
+
+            order.Status = "Cancelled";
+            //_context.Orders.Remove(order);
+            _context.Orders.Update(order);
             await _context.SaveChangesAsync();
-            _logger.LogInformation("Order and its entries were successfully deleted");
+            _logger.LogInformation("Order and its entries were successfully deleted, and stock was updated");
 
             return true;
         }
-
-       
     }
 }
