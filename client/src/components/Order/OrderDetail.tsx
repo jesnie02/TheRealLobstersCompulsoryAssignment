@@ -61,17 +61,19 @@ const OrderDetail = () => {
                 {/* Order Info */}
                 <div className="bg-white p-4 rounded-lg shadow">
                     <h3 className="font-bold text-xl mb-2">Order Info</h3>
-                    <div><strong>Shipping:</strong></div>
+                    <div><strong>Shipping Method:</strong></div>
                     <div><strong>Payment Method:</strong></div>
                     <div><strong>Status:</strong> <StatusBadge status={order?.status ?? "Unknown"}/></div>
                 </div>
 
                 {/* Payment Info */}
                 <div className="bg-white p-4 rounded-lg shadow">
-                    <h3 className="font-bold text-xl mb-2">Payment Info</h3>
-                    <div><strong>Card:</strong> **** ****</div>
-                    <div><strong>Business:</strong></div>
-                    <div><strong>Phone:</strong></div>
+                    <div>
+                        <h3 className="font-bold text-xl mb-2">Payment Info</h3>
+                    </div>
+                    <div className="flex justify-start mt-8">
+                        <strong className="text-2xl">Card:</strong> <span className="text-4xl">**** ****</span>
+                    </div>
                 </div>
             </div>
 
@@ -80,7 +82,7 @@ const OrderDetail = () => {
             <table className="min-w-full bg-white rounded-lg shadow border">
                 <thead>
                 <tr>
-                    <th className="py-2 px-4 border-b text-left">Product Name</th>
+                <th className="py-2 px-4 border-b text-left">Product Name</th>
                     <th className="py-2 px-4 border-b text-left">Unit Price</th>
                     <th className="py-2 px-4 border-b text-left">Quantity</th>
                 </tr>
