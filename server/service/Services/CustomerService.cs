@@ -11,7 +11,7 @@ namespace service.Services;
 public interface ICustomerService
 {
     Task<CreateCustomerDto> CreateCustomerAsync(CreateCustomerDto createCustomerDto);
-    Task<CreateCustomerDto?> GetCustomerByIdAsync(int id);
+    Task<CustomerDto?> GetCustomerByIdAsync(int id);
     Task<List<CustomerDto>> GetAllCustomersAsync();
     Task<CreateCustomerDto?> UpdateCustomerAsync(int id, CreateCustomerDto createCustomerDto);
     Task<bool> DeleteCustomerAsync(int id);
@@ -49,9 +49,25 @@ public class CustomerService : ICustomerService
 
     }
 
-    public Task<CreateCustomerDto?> GetCustomerByIdAsync(int id)
+    public async Task<CustomerDto?> GetCustomerByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var customer = await _context.Customers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (customer == null)
+        {
+            return null;
+        }
+
+        return new CustomerDto
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Address = customer.Address,
+            Phone = customer.Phone,
+            Email = customer.Email
+        };
     }
 
   
