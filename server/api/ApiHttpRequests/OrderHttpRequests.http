@@ -50,5 +50,5 @@ Content-Type: application/json
 }
 
 ### Delete an order by its id 
-DELETE http://localhost:5139/api/order/3
+DELETE http://localhost:5139/api/order/1
 Content-Type: application/json

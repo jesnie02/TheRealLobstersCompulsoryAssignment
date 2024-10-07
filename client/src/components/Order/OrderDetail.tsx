@@ -2,12 +2,13 @@ import {useNavigate, useParams} from 'react-router-dom';
 import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById.ts';
 import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
 import {OrderEntry} from "../../Api.ts";
+import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 
 const OrderDetail = () => {
-    const { orderId } = useParams<{ orderId: string }>();
+    const {orderId} = useParams<{ orderId: string }>();
     const navigate = useNavigate();
-    const { order, loading: orderLoading, error: orderError } = useFetchOrderById(orderId ?? '');
-    const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
+    const {order, loading: orderLoading, error: orderError} = useFetchOrderById(orderId ?? '');
+    const {papers, loading: papersLoading, error: papersError} = useFetchAllPapers();
 
     if (orderLoading || papersLoading) return <div>Loading...</div>;
     if (orderError) return <div>Error: {orderError}</div>;
@@ -18,7 +19,7 @@ const OrderDetail = () => {
     };
 
     const calculateTotals = (orderEntries: OrderEntry[] | undefined) => {
-        if (!orderEntries) return { totalQuantity: 0, totalPrice: 0 };
+        if (!orderEntries) return {totalQuantity: 0, totalPrice: 0};
         return orderEntries.reduce(
             (totals, entry) => {
                 const paper = getPaperDetails(entry.productId!);
@@ -27,7 +28,7 @@ const OrderDetail = () => {
                 totals.totalPrice += (entry.quantity ?? 0) * price;
                 return totals;
             },
-            { totalQuantity: 0, totalPrice: 0 }
+            {totalQuantity: 0, totalPrice: 0}
         );
     };
 
@@ -79,6 +80,9 @@ const OrderDetail = () => {
             >
                 Go Back
             </button>
+            <div>
+                {order && <CancelOrderButton orderId={order.id!}/>}
+            </div>
         </div>
     );
 };

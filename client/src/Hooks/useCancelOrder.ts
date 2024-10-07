@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {http} from "../http.ts";
+import { http } from "../http.ts";
 
 const useCancelOrder = () => {
     const [loading, setLoading] = useState(false);
@@ -10,13 +10,14 @@ const useCancelOrder = () => {
         setError(null);
         try {
             const response = await http.api.orderDeleteOrder(orderId);
-            if (response.status === 200) {
+            console.log('Response:', response);
+            if (response.status === 200 || response.status === 204) {
                 alert(`Order ${orderId} has been canceled successfully.`);
             } else {
-                alert(`Failed to cancel order ${orderId}.`);
+                alert(`Failed to cancel order ${orderId}. Status: ${response.status}`);
             }
-        } catch (error) {
-            console.error('Error canceling order:', error);
+        } catch (err) {
+            console.error('Error canceling order:', err);
             setError(`An error occurred while canceling order ${orderId}.`);
         } finally {
             setLoading(false);

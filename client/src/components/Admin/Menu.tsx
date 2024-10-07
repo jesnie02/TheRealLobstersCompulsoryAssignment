@@ -48,7 +48,7 @@ const Menu = () => {
             <div>
                 {selectedContent === 'Content 1' && <GetAllCustomer />}
                 {selectedContent === 'Content 2' && <GetAllOrders/>}
-                {selectedContent === 'Content 3' && < CreateTraits/>}
+                {selectedContent === 'Content 3' && <CreateTraits/>}
                 {selectedContent === 'Content 4' && <AllProducts />}
             </div>
         </div>
