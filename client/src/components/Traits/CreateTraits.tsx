@@ -1,12 +1,11 @@
 ﻿import { useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
 import { Api } from "../../Api.ts";
-import { FaPencilAlt, FaTrash } from 'react-icons/fa';
+import {allTraitsAtom} from "./AllTraitsAtom.tsx";
 
 // Define atoms
 const traitAtom = atom('');
 const traitsAtom = atom<string[]>(['', '', '', '', '']);
-const allTraitsAtom = atom<{ id: number, traitName: string }[]>([]);
 const selectedTraitAtom = atom<string | null>(null);
 
 const CreateTraits = () => {
@@ -55,42 +54,13 @@ const CreateTraits = () => {
         setTraits(traits.map(t => t === traitToDelete ? '' : t));
     };
 
-    const handleDeleteAllTrait = async (traitToDelete: { id: number, traitName: string }) => {
-        try {
-            await api.api.traitDeleteTrait(traitToDelete.id);
-            setAllTraits(allTraits.filter(t => t.id !== traitToDelete.id));
-        } catch (error) {
-            console.error('Error deleting trait:', error);
-        }
-    };
-
-    type TraitDto = {
-        id?: number;
-        traitName: string;
-    };
-
-    const handleUpdateAllTrait = async (index: number) => {
-        const updatedTraitName = prompt("Update trait:", allTraits[index].traitName);
-        if (updatedTraitName !== null && updatedTraitName.trim()) {
-            const updatedTrait: TraitDto = { traitName: updatedTraitName, id: allTraits[index].id };
-            try {
-                console.log('Updating trait with ID:', allTraits[index].id); // Log the ID being sent
-                await api.api.traitUpdateTrait(allTraits[index].id, updatedTrait);
-                const updatedAllTraits = [...allTraits];
-                updatedAllTraits[index].traitName = updatedTraitName;
-                setAllTraits(updatedAllTraits);
-            } catch (error) {
-                console.error('Error updating trait:', error);
-            }
-        }
-    };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             for (const trait of traits.filter(t => t.trim())) {
                 const response = await api.api.traitCreateTrait({ traitName: trait });
                 console.log('Trait submitted:', response.data);
+                setAllTraits([...allTraits, { id: response.data.id!, traitName: trait }]);
             }
             setTraits(['', '', '', '', '']);
             await fetchTraits();
@@ -102,10 +72,10 @@ const CreateTraits = () => {
     return (
         <div className="flex flex-col items-center mt-12">
             <h1 className="text-3xl font-bold mb-6">Create Trait</h1>
-            <div className="flex w-full max-w-4xl gap-28 ">
+            <div className="flex items-center w-full max-w-4xl ">
                 <div className="rounded p-4 border border-gray-300 h-fit">
                     <form onSubmit={handleSubmit} className="w-full">
-                        <div className="flex items-center justify-between  ">
+                        <div className="flex items-center  ">
                             <input
                                 type="text"
                                 id="trait"
@@ -170,33 +140,7 @@ const CreateTraits = () => {
                         </div>
                     </form>
                 </div>
-                <div className="w-1/2 overflow-y-auto border border-gray-300 rounded p-4" style={{ maxHeight: '600px' }}>
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Trait</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {allTraits.slice(0, 20).map((trait, index) => (
-                            <tr key={index}>
-                                <th>{index + 1}</th>
-                                <td>{trait.traitName}</td>
-                                <td>
-                                    <button onClick={() => handleUpdateAllTrait(index)} className="mr-2">
-                                        <FaPencilAlt/>
-                                    </button>
-                                    <button onClick={() => handleDeleteAllTrait(trait)}>
-                                        <FaTrash/>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+
             </div>
         </div>
     );
