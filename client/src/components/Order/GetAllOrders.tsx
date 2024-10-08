@@ -57,9 +57,9 @@ const GetAllOrders = () => {
                         onDoubleClick={() => handleRowDoubleClick(order.id!)}>
                         <td className="py-2 px-4 border-b">{order.id}</td>
                         <td className="py-2 px-4 border-b">{getCustomerName(order.customerId)}</td>
-                        <td className="py-2 px-4 border-b">{order.totalAmount}</td>
-                        <td className="py-2 px-4 border-b">{order.orderDate}</td>
-                        <td className="py-2 px-4 border-b">{order.deliveryDate}</td>
+                        <td className="py-2 px-4 border-b">{order.totalAmount ? order.totalAmount.toFixed(2) : "N/A"}</td>
+                        <td className="py-2 px-4 border-b">{order.orderDate ? new Date(order.orderDate).toLocaleDateString() : "N/A"}</td>
+                        <td className="py-2 px-4 border-b">{order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString() : "N/A"}</td>
                         <td className="py-2 px-4 border-b"><StatusBadge status={order.status ?? "Unknown"} /></td>
                     </tr>
                 ))}
