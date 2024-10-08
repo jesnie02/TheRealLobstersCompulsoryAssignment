@@ -8,7 +8,7 @@ interface OrderStatusSelectProps {
     onChange: (status: string) => void;
 }
 
-const statusOptions = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+const statusOptions = ["Pending", "Booked", "Shipped", "Delivered", "Cancelled"];
 
 const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({ orderId, status, onChange }) => {
     const { patchOrderStatus, loading } = usePatchOrderStatus();
