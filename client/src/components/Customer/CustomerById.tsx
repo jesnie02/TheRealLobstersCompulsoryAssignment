@@ -1,31 +1,113 @@
 ﻿import { useParams } from 'react-router-dom';
-import {useFetchOrdersByCustomerId} from "../../Hooks/useFetchOrdersByCustomerId.ts";
-
+import { Api, CustomerDto } from '../../Api.ts';
+import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
+import OrderItem from '../Order/OrderItem.tsx';
+import { useEffect, useState } from 'react';
 
 const CustomerById = () => {
     const { id } = useParams<{ id: string }>();
     const customerId = parseInt(id as string, 10);
-    const { orders, error } = useFetchOrdersByCustomerId(customerId);
+    const { orders, error: ordersError } = useFetchOrdersByCustomerId(customerId);
+    const [customer, setCustomer] = useState<CustomerDto | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [images, setImages] = useState<string[]>([]);
+
+    const imagesContext = import.meta.glob('/src/assets/RandomProfileImg/*.jpg');
+
+    useEffect(() => {
+        const loadImages = async () => {
+            try {
+                const imagePaths = Object.keys(imagesContext);
+                if (imagePaths.length === 0) {
+                    return;
+                }
+                const imageUrls = await Promise.all(imagePaths.map(path => imagesContext[path]().then(() => new URL(path, import.meta.url).href)));
+                setImages(imageUrls);
+            } catch (error) {
+                console.error("Error loading images:", error);
+            }
+        };
+        loadImages();
+    }, []);
+
+    const getRandomProfilePicture = () => {
+        const defaultImage = '/assets/ProfilePictures/ProfileLogo.png';
+        return images.length > 0 ? images[Math.floor(Math.random() * images.length)] : defaultImage;
+    };
+
+    useEffect(() => {
+        const fetchCustomer = async () => {
+            try {
+                const response = await new Api().api.customerGetCustomerById(customerId);
+                setCustomer(response.data);
+            } catch (err: any) {
+                setError(err.message);
+            }
+        };
+
+        fetchCustomer();
+    }, [customerId]);
+
+    const handleRemoveOrder = (orderId: number) => {
+        // Implement the logic to remove the order
+        console.log(`Remove order with ID: ${orderId}`);
+    };
+
+    if (error) {
+        return <p className="text-red-500 mt-4">{error}</p>;
+    }
+
+    if (!customer) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className="flex flex-col items-center mt-16">
-            <h1 className="menu-title text-5xl m-5 mt-12 mb-12">Customer Orders</h1>
-            {error && <p className="text-red-500 mt-4">{error}</p>}
-            <div className="card bg-base-100 w-96 shadow-xl">
-                <div className="card-body">
-                    <h2 className="card-title">Customer Orders</h2>
-                    <ul className="list-disc">
-                        {orders.map((order) => (
-                            <li key={order.id} className="mb-4">
-                                <h2 className="font-bold">Order ID: {order.id}</h2>
-                                <p className="font-bold">Order Date: {order.orderDate}</p>
-                                <p className="font-bold">Delivery Date {order.deliveryDate}</p>
-                                <p className="font-bold">Total: {order.totalAmount}</p>
-                                <p className="font-bold">Status: {order.status}</p>
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="card-actions justify-end">
+            <div className="flex w-full max-w-5xl shadow-lg">
+                {/* Left profile section */}
+                <div className="w-1/3 bg-white p-8 border-r">
+                    <div className="text-center">
+                        <img
+                            src={getRandomProfilePicture()}
+                            alt="Customer Profile"
+                            className="rounded-full w-32 h-32 mx-auto"
+                        />
+                        <h2 className="text-2xl font-bold mt-4">{customer.name}</h2>
+                        <p className="text-gray-600">Customer</p>
+                    </div>
+                </div>
+
+                {/* Right order details section */}
+                <div className="w-2/3 bg-white p-8">
+                    <h2 className="text-2xl font-bold">Official Information</h2>
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <p className="font-bold">Email</p>
+                            <p className="text-gray-600">{customer.email}</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">Phone Number</p>
+                            <p className="text-gray-600">{customer.phone}</p>
+                        </div>
+                        <div>
+                            <p className="font-bold">Address</p>
+                            <p className="text-gray-600">{customer.address}</p>
+                        </div>
+                    </div>
+
+                    <h2 className="text-2xl font-bold mt-8">Order History</h2>
+                    <div className="mt-4 max-h-96 overflow-y-auto">
+                        {ordersError && <p className="text-red-500 mt-4">{ordersError}</p>}
+                        <ul className="cart-list space-y-4">
+                            {orders
+                                .filter(order => order.status !== 'cancelled')
+                                .map((order) => (
+                                    <OrderItem key={order.id} order={order} onRemove={handleRemoveOrder}/>
+                                ))}
+                        </ul>
+                    </div>
+
+                    <div className="card-actions justify-end mt-4">
                         <button className="btn btn-primary">Update Order</button>
                     </div>
                 </div>
