@@ -6,7 +6,7 @@ import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
@@ -69,8 +69,8 @@ const OrderDetail = () => {
                 {/* Order Info */}
                 <div className="bg-white p-4 rounded-lg shadow">
                     <h3 className="font-bold text-xl mb-2">Order Info</h3>
-                    <div><strong>Shipping Method:</strong></div>
-                    <div><strong>Payment Method:</strong></div>
+                    <div><strong>Shipping Method:</strong> FedEx</div>
+                    <div><strong>Payment Method:</strong> Debit Card</div>
                     <div><strong>Status:</strong> <StatusBadge status={orderStatus}/></div>
                 </div>
 
@@ -108,9 +108,8 @@ const OrderDetail = () => {
                 })}
                 <tr className="font-bold">
                     <td className="py-2 px-4 border-b">Totals</td>
-                    <td className="py-2 px-4 border-b"></td>
-                    <td className="py-2 px-4 border-b">{calculateTotals(order?.orderEntries).totalQuantity}</td>
                     <td className="py-2 px-4 border-b">${calculateTotals(order?.orderEntries).totalPrice}</td>
+                    <td className="py-2 px-4 border-b">{calculateTotals(order?.orderEntries).totalQuantity}</td>
                 </tr>
                 </tbody>
             </table>

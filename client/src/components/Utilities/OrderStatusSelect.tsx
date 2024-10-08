@@ -28,13 +28,14 @@ const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({ orderId, status, 
         <div className="relative">
             <button
                 onClick={() => !loading && status !== "Cancelled" && setIsOpen(!isOpen)}
-                className={`bg-white border border-gray-300 rounded-lg px-4 py-2 ${status ? `status-${status.toLowerCase()}` : ''}`}
+                className={`bg-white px-4 py-2 bg-opacity-0 ${status ? `status-${status.toLowerCase()}` : ''}`}
                 disabled={loading || status === "Cancelled"}
             >
                 <StatusBadge status={status} />
+                <span className="ml-2">&#9662;</span> {/* Unicode down arrow */}
             </button>
             {isOpen && (
-                <ul className="absolute border border-gray-300 rounded-lg mt-1 w-full z-10 bg-transparent">
+                <ul className="absolute border border-gray-300 rounded-lg mt-1 w-full z-10 bg-white">
                     {statusOptions
                         .filter(statusOption => statusOption !== "Cancelled")
                         .map((statusOption) => (
