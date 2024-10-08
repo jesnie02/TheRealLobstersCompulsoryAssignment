@@ -6,7 +6,7 @@ import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
-
+import { useState } from 'react';
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
@@ -14,6 +14,7 @@ const OrderDetail = () => {
     const { order, loading: orderLoading, error: orderError } = useFetchOrderById(orderId ?? '');
     const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
     const { customer, loading: customerLoading, error: customerError } = useFetchCustomerById(order?.customerId ?? 0);
+    const [orderStatus, setOrderStatus] = useState(order?.status ?? '');
 
     if (orderLoading || papersLoading || customerLoading) return <div>Loading...</div>;
     if (orderError) return <div>Error: {orderError}</div>;
@@ -64,7 +65,7 @@ const OrderDetail = () => {
                     <h3 className="font-bold text-xl mb-2">Order Info</h3>
                     <div><strong>Shipping Method:</strong></div>
                     <div><strong>Payment Method:</strong></div>
-                    <div><strong>Status:</strong> <StatusBadge status={order?.status ?? "Unknown"}/></div>
+                    <div><strong>Status:</strong> <StatusBadge status={orderStatus}/></div>
                 </div>
 
                 {/* Payment Info */}
@@ -83,7 +84,7 @@ const OrderDetail = () => {
             <table className="min-w-full bg-white rounded-lg shadow border">
                 <thead>
                 <tr>
-                <th className="py-2 px-4 border-b text-left">Product Name</th>
+                    <th className="py-2 px-4 border-b text-left">Product Name</th>
                     <th className="py-2 px-4 border-b text-left">Unit Price</th>
                     <th className="py-2 px-4 border-b text-left">Quantity</th>
                 </tr>
@@ -117,7 +118,7 @@ const OrderDetail = () => {
                     Go Back
                 </button>
                 {order && <CancelOrderButton orderId={order.id!}/>}
-                <OrderStatusSelect/>
+                {order && <OrderStatusSelect orderId={order.id!} status={orderStatus} onChange={setOrderStatus} />}
             </div>
         </div>
     );

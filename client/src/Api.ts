@@ -65,6 +65,10 @@ export interface OrderWithUserDto {
   orderEntries?: OrderEntryDto[];
 }
 
+export interface UpdateOrderStatusDto {
+  status?: string;
+}
+
 export interface PaperDto {
   /** @format int32 */
   id?: number;
@@ -518,6 +522,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<OrderWithUserDto[], any>({
         path: `/api/Order/customer/${customerId}/history`,
         method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
+     * @name OrderUpdateOrderStatus
+     * @request PATCH:/api/Order/{id}/status
+     */
+    orderUpdateOrderStatus: (id: number, data: UpdateOrderStatusDto, params: RequestParams = {}) =>
+      this.request<OrderDto, any>({
+        path: `/api/Order/${id}/status`,
+        method: "PATCH",
+        body: data,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

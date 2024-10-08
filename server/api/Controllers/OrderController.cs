@@ -80,6 +80,19 @@ namespace api.Controllers
             return Ok(order);
         }
         
+        // Update the status of a specific order
+        [HttpPatch("{id}/status")]
+        public async Task<ActionResult<OrderDto>> UpdateOrderStatus(int id, UpdateOrderStatusDto updateOrderStatusDto)
+        {
+            var order = await _orderService.UpdateOrderStatusByIdAsync(id, updateOrderStatusDto.Status);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(order);
+        }
+        
         //Delete order by id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
