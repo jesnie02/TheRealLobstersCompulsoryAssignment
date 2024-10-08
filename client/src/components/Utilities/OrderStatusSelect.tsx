@@ -29,7 +29,7 @@ const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({ orderId, status, 
             <button
                 onClick={() => !loading && status !== "Cancelled" && setIsOpen(!isOpen)}
                 className={`bg-white px-4 py-2 bg-opacity-0 ${status ? `status-${status.toLowerCase()}` : ''}`}
-                disabled={loading || status === "Cancelled"}
+                disabled={loading || status === "Cancelled"} //dissable badge sellect if order is originally cancelled
             >
                 <StatusBadge status={status} />
                 <span className="ml-2">&#9662;</span> {/* Unicode down arrow */}

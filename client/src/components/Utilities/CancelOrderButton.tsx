@@ -1,12 +1,12 @@
 import React from 'react';
 import useCancelOrder from "../../Hooks/useCancelOrder.ts";
 
-
 interface CancelOrderButtonProps {
     orderId: number;
+    status: string;
 }
 
-const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({ orderId }) => {
+const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({ orderId, status }) => {
     const { cancelOrder, loading, error } = useCancelOrder();
 
     const handleCancel = () => {
@@ -15,12 +15,14 @@ const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({ orderId }) => {
         }
     };
 
+    const isDisabled = loading || status === "Shipped" || status === "Delivered";
+
     return (
         <div>
             <button
                 onClick={handleCancel}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                disabled={loading}
+                className={`px-4 py-2 rounded-lg text-white ${isDisabled ? 'bg-gray-500' : 'bg-red-500'}`}
+                disabled={isDisabled}
             >
                 {loading ? 'Cancelling...' : 'Cancel Order'}
             </button>

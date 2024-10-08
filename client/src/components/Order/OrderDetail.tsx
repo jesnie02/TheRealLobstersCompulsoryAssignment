@@ -122,7 +122,7 @@ const OrderDetail = () => {
                 >
                     Go Back
                 </button>
-                {order && <CancelOrderButton orderId={order.id!}/>}
+                {order && <CancelOrderButton orderId={order.id!} status={orderStatus} />}
                 {order && <OrderStatusSelect orderId={order.id!} status={orderStatus} onChange={setOrderStatus} />}
             </div>
         </div>
