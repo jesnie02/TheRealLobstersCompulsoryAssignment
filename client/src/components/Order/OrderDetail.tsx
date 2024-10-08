@@ -6,7 +6,7 @@ import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
@@ -15,6 +15,12 @@ const OrderDetail = () => {
     const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
     const { customer, loading: customerLoading, error: customerError } = useFetchCustomerById(order?.customerId ?? 0);
     const [orderStatus, setOrderStatus] = useState(order?.status ?? '');
+
+    useEffect(() => {
+        if (order) {
+            setOrderStatus(order.status ?? '');
+        }
+    }, [order]);
 
     if (orderLoading || papersLoading || customerLoading) return <div>Loading...</div>;
     if (orderError) return <div>Error: {orderError}</div>;
