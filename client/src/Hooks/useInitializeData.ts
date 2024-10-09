@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { http } from "../http";
 import {PapersAtom} from "../Atoms/PapersAtom.tsx";
-import {allTraitsAtom} from "../components/Traits/AllTraitsAtom.tsx";
+import {allTraitsAtom} from "../Atoms/AllTraitsAtom.tsx";
 
 export function useInitializeData() {
     const [, setPapers] = useAtom(PapersAtom);

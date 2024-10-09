@@ -2,7 +2,7 @@ import {useAtom} from 'jotai';
 import {Api, TraitDto} from "../../Api.ts";
 import {FaPencilAlt, FaTrash} from 'react-icons/fa';
 import CreateTraits from "./CreateTraits.tsx";
-import {allTraitsAtom} from "./AllTraitsAtom.tsx";
+import {allTraitsAtom} from "../../Atoms/AllTraitsAtom.tsx";
 
 const GetAllTraits = () => {
     const [allTraits, setAllTraits] = useAtom(allTraitsAtom);
