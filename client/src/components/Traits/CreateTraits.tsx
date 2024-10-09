@@ -1,7 +1,7 @@
 ﻿import { useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
 import { Api } from "../../Api.ts";
-import {allTraitsAtom} from "./AllTraitsAtom.tsx";
+import {allTraitsAtom} from "../../Atoms/AllTraitsAtom.tsx";
 
 // Define atoms
 const traitAtom = atom('');

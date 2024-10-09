@@ -8,6 +8,7 @@ import GetAllTraits from "../Traits/GetAllTraits.tsx";
 
 
 
+
 const Menu = () => {
     const [selectedContent, setSelectedContent] = useAtom(selectedContentAtom);
 
@@ -33,23 +34,19 @@ const Menu = () => {
                     Orders
                 </button>
                 <button className="btn mx-2" onClick={() => setSelectedContent('Content 3')}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048"><path fill="currentColor" d="M896 1537V936L256 616v880l544 273l-31 127l-641-320V472L960 57l832 415v270q-70 11-128 45V616l-640 320v473zM754 302l584 334l247-124l-625-313zm206 523l240-120l-584-334l-281 141zm888 71q42 0 78 15t64 41t42 63t16 79q0 39-15 76t-43 65l-717 717l-377 94l94-377l717-716q29-29 65-43t76-14m51 249q21-21 21-51q0-31-20-50t-52-20q-14 0-27 4t-23 15l-692 692l-34 135l135-34z"/></svg>
-                    Traits
-                </button>
-                <button className="btn mx-2" onClick={() => setSelectedContent('Content 4')}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048">
                         <path fill="currentColor"
                               d="M128 1920h1792v128H128v-128zm1792-1152v1024H128V768h1792zm-128 896V896H256v768h1536zm-384-640
                                  l-128 128H640l-128-128H128V256h1792v928z"/>
                     </svg>
-                   Create Product
+                    Inventory
                 </button>
             </div>
             <div>
                 {selectedContent === 'Content 1' && <GetAllCustomer />}
                 {selectedContent === 'Content 2' && <GetAllOrders/>}
-                {selectedContent === 'Content 3' && <GetAllTraits/>}
-                {selectedContent === 'Content 4' && <AllProducts />}
+                {selectedContent === 'Content 3' && <AllProducts />}
+                {selectedContent === 'Content 4' && <GetAllTraits />}
             </div>
         </div>
     );
