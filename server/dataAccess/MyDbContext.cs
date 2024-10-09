@@ -62,11 +62,9 @@ public partial class MyDbContext : DbContext
                     "PaperTrait",
                     r => r.HasOne<Trait>().WithMany()
                         .HasForeignKey("TraitId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("paper_traits_trait_id_fkey"),
                     l => l.HasOne<Paper>().WithMany()
                         .HasForeignKey("PaperId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("paper_traits_paper_id_fkey"),
                     j =>
                     {
