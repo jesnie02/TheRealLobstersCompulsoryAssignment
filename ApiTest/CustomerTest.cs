@@ -78,4 +78,30 @@ public class CustomerTest : WebApplicationFactory<Program>
         Assert.NotEmpty(responseDto);
     }
     
+    
+    [Fact]
+    public async Task GetCustomerIdByEmailAsyncTest()
+    {
+        // Arrange
+        var customer = new Customer { 
+            Name = "John Doe", 
+            Address = "123 Main St", 
+            Phone = "123-456-7890", 
+            Email = "test@test.dk"
+        };
+        
+        _ctxSetup.DbContextInstance.Customers.Add(customer);
+        _ctxSetup.DbContextInstance.SaveChanges();
+        
+        // Act
+        var result = await CreateClient().GetAsync($"/api/customer/email/{customer.Email}");
+        var responseDto = await result.Content.ReadFromJsonAsync<int>();
+        _outputHelper.WriteLine(JsonSerializer.Serialize(responseDto));
+        result.EnsureSuccessStatusCode();
+        
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        Assert.NotEqual(0, responseDto);
+        
+    }
 }

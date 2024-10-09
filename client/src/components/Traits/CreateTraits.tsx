@@ -1,9 +1,10 @@
-﻿import { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
 import { Api } from "../../Api.ts";
 import {allTraitsAtom} from "../../Atoms/AllTraitsAtom.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
-// Define atoms
+
 const traitAtom = atom('');
 const traitsAtom = atom<string[]>(['', '', '', '', '']);
 const selectedTraitAtom = atom<string | null>(null);
@@ -64,13 +65,16 @@ const CreateTraits = () => {
             }
             setTraits(['', '', '', '', '']);
             await fetchTraits();
+            toast.success('Traits created successfully');
         } catch (error) {
             console.error('Error submitting traits:', error);
+            toast.error('Failed to create traits');
         }
     };
 
     return (
         <div className="flex flex-col items-center mt-12">
+            <Toaster />
             <h1 className="text-3xl font-bold mb-6">Create Trait</h1>
             <div className="flex items-center w-full max-w-4xl ">
                 <div className="rounded p-4 border border-gray-300 h-fit">

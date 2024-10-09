@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { traitsAtom } from '../../Atoms/traitsAtom';
 import { http } from '../../http.ts';
-import {Trait} from "../../Api.ts";
+import { Trait } from "../../Api.ts";
+import toast, { Toaster } from "react-hot-toast";
 
 interface CreatePaperProductProps {
     closeModal: () => void;
 }
-
 
 const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: createCloseModal }) => {
     const [productName, setProductName] = useState('');
@@ -48,18 +48,18 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
                 traitIds: addedTraits.map(trait => trait.id).filter((id): id is number => id !== undefined),
             });
             if (response.status === 201) {
-                alert('Paper created successfully');
+                toast.success('Paper created successfully');
                 setProductName('');
                 setDiscontinued(true);
                 setStock(0);
                 setPrice(0.0);
                 setAddedTraits([]);
             } else {
-                alert('Failed to create paper');
+                toast.error('Failed to create paper');
             }
         } catch (error) {
             console.error('Error creating paper:', error);
-            alert('Failed to create paper');
+            toast.error('Failed to create paper');
         }
     };
 
@@ -78,9 +78,9 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
         trait.traitName?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-
     return (
         <div className="container mx-auto p-4">
+            <Toaster />
             <h1 className="text-2xl font-bold mb-4">Create Paper Product</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -182,7 +182,6 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
                                     className="ml-2"
                                 >
                                     <img src="/assets/reddelete.png" alt="Remove" className="h-4 w-4 mr-2"/>
-
                                 </button>
                             </li>
                         ))}
@@ -203,7 +202,6 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
                     >
                         Close
                     </button>
-
                 </div>
             </form>
         </div>

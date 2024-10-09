@@ -47,11 +47,12 @@ export default function GetAllPaperComponent() {
         );
     };
 
-    // Collect all unique traits from non-discontinued papers
+
     const allTraits = Array.from(new Set(filteredPapers.flatMap(paper => paper.traits?.map(t => t.traitName) ?? []) ?? []));
 
-    // Calculate the maximum price from the papers
+
     const maxPrice = Math.max(0, ...papers.map(paper => paper.price ?? 0));
+    const minPrice = Math.min(0, ...papers.map(paper => paper.price ?? 0));
 
     return (
         <div>
@@ -82,7 +83,7 @@ export default function GetAllPaperComponent() {
                         value={priceRange}
                         onChange={(_, newValue) => setPriceRange(newValue as [number, number])}
                         valueLabelDisplay="auto"
-                        min={0}
+                        min={minPrice}
                         max={maxPrice}
                         className="ml-2 w-full max-w-xs"
                     />
@@ -121,12 +122,12 @@ export default function GetAllPaperComponent() {
                                     <h2 className="card-title">{paper.name}</h2>
                                     <p className="label">Price: ${paper.price}</p>
                                     <p className="label">Stock: {paper.stock}</p>
-                                    <div className="badges">
+                                    <div className="badges grid grid-cols-2 ">
                                         {paper.traits?.map((trait) => (
                                             <span key={trait.traitName ?? 'unknown'}
                                                   className="badge badge-primary m-1">
-                                            {trait.traitName ?? 'Unknown'}
-                                        </span>
+                                                    {trait.traitName ?? 'Unknown'}
+                                            </span>
                                         ))}
                                     </div>
                                     <AddToCartButton paper={paper}/>

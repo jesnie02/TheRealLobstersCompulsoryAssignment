@@ -41,38 +41,7 @@ public class PaperService : IPaperService
         _updatePaperValidator = updatePaperValidator;
         _context = context;
     }
-/*
-    public async Task<PaperDto> CreatePaperAsync(CreatePaperDto createPaperDto)
-    {
-        await _createPaperValidator.ValidateAndThrowAsync(createPaperDto);
-        var paper = createPaperDto.ToPaper();
-        await _context.Papers.AddAsync(paper);
-        await _context.SaveChangesAsync();
 
-        return PaperDto.FromEntity(paper);
-    }
-
-    
-
-    public async Task<PaperDto> UpdatePaperAsync(UpdatePaperDto updatePaperDto)
-    {
-        var paper = await _context.Papers.FindAsync(updatePaperDto.Id);
-        if (paper == null)
-        {
-            throw new Exception("Paper not found");
-        }
-
-        paper.Name = updatePaperDto.Name ?? string.Empty;
-        paper.Discontinued = updatePaperDto.Discontinued;
-        paper.Stock = updatePaperDto.Stock;
-        paper.Price = updatePaperDto.Price;
-
-        _context.Papers.Update(paper);
-        await _context.SaveChangesAsync();
-
-        return PaperDto.FromEntity(paper);
-    }
-    */
         
 
     public async Task DeletePaperAsync(int paperId)

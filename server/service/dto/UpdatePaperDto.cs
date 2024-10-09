@@ -22,6 +22,7 @@ public class UpdatePaperDto
             Discontinued = Discontinued,
             Stock = Stock,
             Price = Price
+            
         };
     }
 }
