@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { http } from "../../http.ts";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 interface UpdatePaperProductProps {
     closeModal: () => void;
@@ -50,15 +51,17 @@ const UpdatePaperProduct = ({ closeModal, paperId, initialData, onSuccess }: Upd
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const payload = { ...formData, id: paperId };
+        const payload = { ...formData, id: paperId, traitIds: formData.traitIds };
         console.log("Submitting data:", { paperId, payload });
         try {
             const response = await http.api.paperUpdateExistingPaper(paperId, payload);
             console.log("Response:", response);
-            await onSuccess(); // Call the onSuccess callback
+            toast.success('Paper updated successfully');
+            await onSuccess();
             closeModal();
         } catch (error) {
             console.error("Error updating paper:", error);
+            toast.error('Failed to update paper');
             if (axios.isAxiosError(error)) {
                 console.error("Response data:", error.response?.data);
                 console.error("Response status:", error.response?.status);
