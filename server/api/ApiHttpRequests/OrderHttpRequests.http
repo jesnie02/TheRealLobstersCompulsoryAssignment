@@ -52,3 +52,11 @@ Content-Type: application/json
 ### Delete an order by its id 
 DELETE http://localhost:5139/api/order/1
 Content-Type: application/json
+
+### Update the status of an order by its id
+PATCH http://localhost:5139/api/order/8/status
+Content-Type: application/json
+
+{
+  "status": "Shipped"
+}

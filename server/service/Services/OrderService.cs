@@ -15,6 +15,7 @@ namespace service.Services
         Task<OrderDto?> UpdateOrderByIdAsync(int id, OrderDto updateOrderDto);
         Task<bool> DeleteOrderByIdAsync(int id);
         Task<List<OrderDto>> GetAllOrdersAsync();
+        Task<OrderDto?> UpdateOrderStatusByIdAsync(int id, string status);
     }
 
     public class OrderService : IOrderService
@@ -132,6 +133,22 @@ namespace service.Services
             await _orderValidator.ValidateAndThrowAsync(updateOrderDto);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Order was successfully updated");
+
+            return new OrderDto().FromEntity(order);
+        }
+        
+        public async Task<OrderDto?> UpdateOrderStatusByIdAsync(int id, string status)
+        {
+            var order = await _context.Orders.Include(o => o.OrderEntries).FirstOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                _logger.LogWarning($"Order with ID {id} was not found.");
+                return null;
+            }
+
+            order.Status = status;
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("Order status was successfully updated");
 
             return new OrderDto().FromEntity(order);
         }
