@@ -189,13 +189,15 @@ namespace service.Services
         public async Task<List<OrderEntryDto>> GetOrderEntriesAsync()
         {
             var orderEntries = await _context.OrderEntries.ToListAsync();
-            return orderEntries.Select(entry => new OrderEntryDto
-            {
-                Id = entry.Id,
-                ProductId = entry.ProductId,
-                Quantity = entry.Quantity,
-                OrderId = entry.OrderId ?? 0 // Map OrderId property
-            }).ToList();
+            return orderEntries
+                .Where(entry => entry.OrderId.HasValue) // Ensure OrderId is not null
+                .Select(entry => new OrderEntryDto
+                {
+                    Id = entry.Id,
+                    ProductId = entry.ProductId,
+                    Quantity = entry.Quantity,
+                    OrderId = entry.OrderId.Value // Use Value to avoid defaulting to 0
+                }).ToList();
         }
     }
 }

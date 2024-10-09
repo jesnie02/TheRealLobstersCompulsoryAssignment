@@ -4,6 +4,7 @@ import { useFetchCustomerById } from '../../Hooks/useFetchCustomerById.ts';
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
+import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 import { useEffect, useState } from 'react';
 
 const OrderDetail = () => {
@@ -63,6 +64,8 @@ const OrderDetail = () => {
                 </div>
             </div>
 
+            {/* Order Entries Table */}
+            <OrderEntriesTable />
 
             {/* Action Buttons */}
             <div className="flex space-x-4 mt-6">

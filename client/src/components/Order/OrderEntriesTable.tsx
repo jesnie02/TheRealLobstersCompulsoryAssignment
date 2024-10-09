@@ -1,25 +1,39 @@
-import React from 'react';
-
-import { OrderEntryDto, PaperDto } from '../../Api';
+import { useParams } from 'react-router-dom';
+import { OrderEntryDto } from '../../Api';
 import useFetchAllOrderEntries from '../../Hooks/useFetchAllOrderEntries';
+import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers';
+import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById';
 
-interface OrderEntriesTableProps {
-    orderId: number;
-    papers: PaperDto[];
-}
 
-const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId, papers }) => {
-    const { orderEntries, loading, error } = useFetchAllOrderEntries();
+const OrderEntriesTable: React.FC = () => {
+    const { orderId } = useParams<{ orderId: string }>();
 
-    if (loading) {
+    // Validate orderId
+    if (!orderId || parseInt(orderId, 10) === 0) {
+        return <p className="text-red-500 mt-4">Invalid Order ID</p>;
+    }
+
+    const { orderEntries, loading: entriesLoading, error: entriesError } = useFetchAllOrderEntries();
+    const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
+    const { loading: orderLoading, error: orderError } = useFetchOrderById(orderId);
+
+    if (entriesLoading || papersLoading || orderLoading) {
         return <p>Loading...</p>;
     }
 
-    if (error) {
-        return <p className="text-red-500 mt-4">{error}</p>;
+    if (entriesError) {
+        return <p className="text-red-500 mt-4">{entriesError}</p>;
     }
 
-    const filteredEntries = orderEntries.filter(entry => entry.orderId === orderId);
+    if (papersError) {
+        return <p className="text-red-500 mt-4">{papersError}</p>;
+    }
+
+    if (orderError) {
+        return <p className="text-red-500 mt-4">{orderError}</p>;
+    }
+
+    const filteredEntries = orderEntries.filter(entry => entry.orderId === parseInt(orderId, 10));
 
     const calculateTotals = (orderEntries: OrderEntryDto[]) => {
         const totalQuantity = orderEntries.reduce((sum, entry) => sum + (entry.quantity ?? 0), 0);

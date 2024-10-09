@@ -2,14 +2,12 @@
 import { Api, CustomerDto } from '../../Api.ts';
 import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
 import { useEffect, useState } from 'react';
-import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
 import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 
 const CustomerById = () => {
     const { id } = useParams<{ id: string }>();
     const customerId = parseInt(id as string, 10);
     const { orders, error: ordersError } = useFetchOrdersByCustomerId(customerId);
-    const { papers, loading: papersLoading } = useFetchAllPapers();
     const [customer, setCustomer] = useState<CustomerDto | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [images, setImages] = useState<string[]>([]);
@@ -54,7 +52,7 @@ const CustomerById = () => {
         return <p className="text-red-500 mt-4">{error}</p>;
     }
 
-    if (!customer || papersLoading) {
+    if (!customer) {
         return <p>Loading...</p>;
     }
 
@@ -106,10 +104,7 @@ const CustomerById = () => {
                                             <p className="text-lg">Delivery Date: {order.deliveryDate}</p>
                                             <p className="text-lg">Total: ${order.totalAmount}</p>
                                             <p className="text-lg">Status: {order.status}</p>
-                                            <OrderEntriesTable
-                                                orderId={order.id!}
-                                                papers={papers}
-                                            />
+                                            <OrderEntriesTable />
                                         </div>
                                     </li>
                                 ))}
