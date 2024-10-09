@@ -1,5 +1,5 @@
 ﻿import { useParams } from 'react-router-dom';
-import { Api, CustomerDto, OrderEntryDto} from '../../Api.ts';
+import { Api, CustomerDto } from '../../Api.ts';
 import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
 import { useEffect, useState } from 'react';
 import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
@@ -49,16 +49,6 @@ const CustomerById = () => {
 
         fetchCustomer();
     }, [customerId]);
-
-    const calculateTotals = (orderEntries: OrderEntryDto[]) => {
-        const totalQuantity = orderEntries.reduce((sum, entry) => sum + (entry.quantity ?? 0), 0);
-        const totalPrice = orderEntries.reduce((sum, entry) => {
-            const paper = papers.find(paper => paper.id === entry.productId);
-            const price = paper?.price ?? 0;
-            return sum + (entry.quantity ?? 0) * price;
-        }, 0);
-        return { totalQuantity, totalPrice };
-    };
 
     if (error) {
         return <p className="text-red-500 mt-4">{error}</p>;
@@ -119,7 +109,6 @@ const CustomerById = () => {
                                             <OrderEntriesTable
                                                 orderId={order.id!}
                                                 papers={papers}
-                                                calculateTotals={calculateTotals}
                                             />
                                         </div>
                                     </li>

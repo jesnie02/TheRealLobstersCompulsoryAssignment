@@ -6,10 +6,9 @@ import useFetchAllOrderEntries from '../../Hooks/useFetchAllOrderEntries';
 interface OrderEntriesTableProps {
     orderId: number;
     papers: PaperDto[];
-    calculateTotals: (orderEntries: OrderEntryDto[]) => { totalQuantity: number; totalPrice: number };
 }
 
-const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId, papers, calculateTotals }) => {
+const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId, papers }) => {
     const { orderEntries, loading, error } = useFetchAllOrderEntries();
 
     if (loading) {
@@ -21,6 +20,16 @@ const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId, papers, 
     }
 
     const filteredEntries = orderEntries.filter(entry => entry.orderId === orderId);
+
+    const calculateTotals = (orderEntries: OrderEntryDto[]) => {
+        const totalQuantity = orderEntries.reduce((sum, entry) => sum + (entry.quantity ?? 0), 0);
+        const totalPrice = orderEntries.reduce((sum, entry) => {
+            const paper = papers.find(paper => paper.id === entry.productId);
+            const price = paper?.price ?? 0;
+            return sum + (entry.quantity ?? 0) * price;
+        }, 0);
+        return { totalQuantity, totalPrice };
+    };
 
     return (
         <div>
