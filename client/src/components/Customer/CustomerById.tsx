@@ -104,7 +104,7 @@ const CustomerById = () => {
                                             <p className="text-lg">Delivery Date: {order.deliveryDate}</p>
                                             <p className="text-lg">Total: ${order.totalAmount}</p>
                                             <p className="text-lg">Status: {order.status}</p>
-                                            <OrderEntriesTable />
+                                            <OrderEntriesTable orderId={order.id!} />
                                         </div>
                                     </li>
                                 ))}

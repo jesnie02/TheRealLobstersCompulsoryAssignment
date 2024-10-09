@@ -65,7 +65,7 @@ const OrderDetail = () => {
             </div>
 
             {/* Order Entries Table */}
-            <OrderEntriesTable />
+            {order && <OrderEntriesTable orderId={order.id!} />}
 
             {/* Action Buttons */}
             <div className="flex space-x-4 mt-6">

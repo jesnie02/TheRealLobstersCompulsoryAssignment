@@ -1,21 +1,21 @@
-import { useParams } from 'react-router-dom';
 import { OrderEntryDto } from '../../Api';
 import useFetchAllOrderEntries from '../../Hooks/useFetchAllOrderEntries';
 import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers';
 import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById';
 
+interface OrderEntriesTableProps {
+    orderId: number;
+}
 
-const OrderEntriesTable: React.FC = () => {
-    const { orderId } = useParams<{ orderId: string }>();
-
+const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId }) => {
     // Validate orderId
-    if (!orderId || parseInt(orderId, 10) === 0) {
+    if (!orderId || orderId === 0) {
         return <p className="text-red-500 mt-4">Invalid Order ID</p>;
     }
 
     const { orderEntries, loading: entriesLoading, error: entriesError } = useFetchAllOrderEntries();
     const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
-    const { loading: orderLoading, error: orderError } = useFetchOrderById(orderId);
+    const { loading: orderLoading, error: orderError } = useFetchOrderById(orderId.toString());
 
     if (entriesLoading || papersLoading || orderLoading) {
         return <p>Loading...</p>;
@@ -33,7 +33,7 @@ const OrderEntriesTable: React.FC = () => {
         return <p className="text-red-500 mt-4">{orderError}</p>;
     }
 
-    const filteredEntries = orderEntries.filter(entry => entry.orderId === parseInt(orderId, 10));
+    const filteredEntries = orderEntries.filter(entry => entry.orderId === orderId);
 
     const calculateTotals = (orderEntries: OrderEntryDto[]) => {
         const totalQuantity = orderEntries.reduce((sum, entry) => sum + (entry.quantity ?? 0), 0);
