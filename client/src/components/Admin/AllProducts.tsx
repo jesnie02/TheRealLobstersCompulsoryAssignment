@@ -6,6 +6,7 @@ import CreatePaperProduct from "./CreatePaperProduct.tsx";
 import UpdatePaperProduct from "./UpdatePaperProduct.tsx";
 import { PaperDto } from "../../Api.ts";
 import { AxiosError } from "axios";
+import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
 
 interface Paper {
     id: number;
@@ -29,6 +30,8 @@ const AllProducts = () => {
     const [Paper, setPaper] = useAtom(PapersAtom);
     const [selectedPaper, setSelectedPaper] = useState<Paper | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>("");
+    // @ts-ignore
+    const [selectedContent, setSelectedContent] = useAtom(selectedContentAtom);
 
     const fetchPapers = async () => {
         try {
@@ -87,14 +90,6 @@ const AllProducts = () => {
         (document.getElementById('update_modal') as HTMLDialogElement).showModal();
     };
 
-    const handleDelete = async (paperId: number) => {
-        try {
-            await http.api.paperDeletePaper(paperId);
-            fetchPapers();
-        } catch (error) {
-            console.error('Error deleting paper:', error);
-        }
-    };
 
     const filteredPapers = (Paper as Paper[]).filter((paper: Paper) =>
         paper.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,6 +103,10 @@ const AllProducts = () => {
     return (
         <div className="overflow-x-auto m-16">
             <div className="flex justify-end space-x-2 m-1 ml-4">
+                <button
+                    className="bg-orange-500 hover:bg-orange-700 text-white font-bold  px-4 rounded focus:outline-none focus:shadow-outline btn-sm "
+                    onClick={() => setSelectedContent('Content 4')}> Traits Overview
+                </button>
                 <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold  px-4 rounded focus:outline-none focus:shadow-outline btn-sm "
                     onClick={() => (document.getElementById('my_modal_5') as HTMLDialogElement).showModal()}>Create
@@ -140,7 +139,6 @@ const AllProducts = () => {
                     <th className="border">Price</th>
                     <th className="border">Traits</th>
                     <th className="border">Update</th>
-                    <th className="border">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -156,14 +154,6 @@ const AllProducts = () => {
                                     onClick={() => openUpdateModal(paper)}>Update
                             </button>
                         </td>
-                        <td className="border">
-                            <button
-                                className="btn btn-ghost bg-red-600 btn-xs"
-                                onClick={() => handleDelete(paper.id)}
-                            >
-                                Delete
-                            </button>
-                        </td>
                     </tr>
                 ))}
                 </tbody>
@@ -175,7 +165,6 @@ const AllProducts = () => {
                     <th className="border">Price</th>
                     <th className="border">Traits</th>
                     <th className="border">Update</th>
-                    <th className="border">Delete</th>
                 </tr>
                 </tfoot>
             </table>
