@@ -1,13 +1,15 @@
 ﻿import { useParams } from 'react-router-dom';
-import { Api, CustomerDto } from '../../Api.ts';
+import { Api, CustomerDto, OrderEntry } from '../../Api.ts';
 import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
-import OrderItem from '../Order/OrderItem.tsx';
 import { useEffect, useState } from 'react';
+import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
+import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
 
 const CustomerById = () => {
     const { id } = useParams<{ id: string }>();
     const customerId = parseInt(id as string, 10);
     const { orders, error: ordersError } = useFetchOrdersByCustomerId(customerId);
+    const { papers, loading: papersLoading } = useFetchAllPapers();
     const [customer, setCustomer] = useState<CustomerDto | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [images, setImages] = useState<string[]>([]);
@@ -48,16 +50,25 @@ const CustomerById = () => {
         fetchCustomer();
     }, [customerId]);
 
-    const handleRemoveOrder = (orderId: number) => {
-        // Implement the logic to remove the order
-        console.log(`Remove order with ID: ${orderId}`);
+    const calculateTotals = (orderEntries: OrderEntry[] | undefined) => {
+        if (!orderEntries) return { totalQuantity: 0, totalPrice: 0 };
+        return orderEntries.reduce(
+            (totals, entry) => {
+                const paper = papers.find(paper => paper.id === entry.productId);
+                const price = paper?.price ?? 0;
+                totals.totalQuantity += entry.quantity ?? 0;
+                totals.totalPrice += (entry.quantity ?? 0) * price;
+                return totals;
+            },
+            { totalQuantity: 0, totalPrice: 0 }
+        );
     };
 
     if (error) {
         return <p className="text-red-500 mt-4">{error}</p>;
     }
 
-    if (!customer) {
+    if (!customer || papersLoading) {
         return <p>Loading...</p>;
     }
 
@@ -102,7 +113,27 @@ const CustomerById = () => {
                             {orders
                                 .filter(order => order.status !== 'cancelled')
                                 .map((order) => (
-                                    <OrderItem key={order.id} order={order} onRemove={handleRemoveOrder}/>
+                                    <li key={order.id} className="cart-item p-4 bg-lightGray rounded-lg shadow-sm flex justify-between items-center">
+                                        <div>
+                                            <h2 className="text-2xl font-semibold">Order ID: {order.id}</h2>
+                                            <p className="text-lg">Order Date: {order.orderDate}</p>
+                                            <p className="text-lg">Delivery Date: {order.deliveryDate}</p>
+                                            <p className="text-lg">Total: ${order.totalAmount}</p>
+                                            <p className="text-lg">Status: {order.status}</p>
+                                            <div className="mt-4">
+                                                <h3 className="text-xl font-semibold">Order Entries:</h3>
+                                                {order.orderEntries && order.orderEntries.length > 0 ? (
+                                                    <OrderEntriesTable
+                                                        orderEntries={order.orderEntries}
+                                                        papers={papers}
+                                                        calculateTotals={calculateTotals}
+                                                    />
+                                                ) : (
+                                                    <p className="text-lg">No order entries available.</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </li>
                                 ))}
                         </ul>
                     </div>
