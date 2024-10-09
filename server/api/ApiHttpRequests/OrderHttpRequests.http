@@ -60,3 +60,7 @@ Content-Type: application/json
 {
   "status": "Shipped"
 }
+
+### Get all order entries
+GET http://localhost:5139/api/order/entries
+Content-Type: application/json

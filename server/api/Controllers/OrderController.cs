@@ -105,6 +105,19 @@ namespace api.Controllers
 
             return NoContent();
         }
+        
+        // Retrieves all order entries
+        [HttpGet("entries")]
+        public async Task<ActionResult<List<OrderEntryDto>>> GetOrderEntries()
+        {
+            var orderEntries = await _orderService.GetOrderEntriesAsync();
+            if (orderEntries == null || !orderEntries.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(orderEntries);
+        }
     }
 }
 

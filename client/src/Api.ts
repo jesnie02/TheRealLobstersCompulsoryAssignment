@@ -44,9 +44,13 @@ export interface OrderDto {
 
 export interface OrderEntryDto {
   /** @format int32 */
+  id?: number;
+  /** @format int32 */
   productId?: number;
   /** @format int32 */
   quantity?: number;
+  /** @format int32 */
+  orderId?: number;
 }
 
 export interface OrderWithUserDto {
@@ -88,7 +92,7 @@ export interface Trait {
    * @minLength 0
    * @maxLength 255
    */
-  traitName?: string | null;
+  traitName?: string;
   papers?: Paper[];
 }
 
@@ -133,7 +137,7 @@ export interface Order {
    * @minLength 0
    * @maxLength 50
    */
-  status?: string | null;
+  status?: string;
   /** @format double */
   totalAmount?: number;
   /** @format int32 */
@@ -539,6 +543,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "PATCH",
         body: data,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Order
+     * @name OrderGetOrderEntries
+     * @request GET:/api/Order/entries
+     */
+    orderGetOrderEntries: (params: RequestParams = {}) =>
+      this.request<OrderEntryDto[], any>({
+        path: `/api/Order/entries`,
+        method: "GET",
         format: "json",
         ...params,
       }),

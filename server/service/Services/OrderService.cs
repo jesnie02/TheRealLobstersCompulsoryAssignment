@@ -16,6 +16,7 @@ namespace service.Services
         Task<bool> DeleteOrderByIdAsync(int id);
         Task<List<OrderDto>> GetAllOrdersAsync();
         Task<OrderDto?> UpdateOrderStatusByIdAsync(int id, string status);
+        Task<List<OrderEntryDto>> GetOrderEntriesAsync();
     }
 
     public class OrderService : IOrderService
@@ -183,6 +184,18 @@ namespace service.Services
             _logger.LogInformation("Order and its entries were successfully deleted, and stock was updated");
 
             return true;
+        }
+        
+        public async Task<List<OrderEntryDto>> GetOrderEntriesAsync()
+        {
+            var orderEntries = await _context.OrderEntries.ToListAsync();
+            return orderEntries.Select(entry => new OrderEntryDto
+            {
+                Id = entry.Id,
+                ProductId = entry.ProductId,
+                Quantity = entry.Quantity,
+                OrderId = entry.OrderId ?? 0 // Map OrderId property
+            }).ToList();
         }
     }
 }
