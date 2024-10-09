@@ -15,7 +15,7 @@ const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({ orderId, status }
         }
     };
 
-    const isDisabled = loading || status === "Shipped" || status === "Delivered";
+    const isDisabled = loading || ["shipped", "delivered", "cancelled"].includes(status.toLowerCase());
 
     return (
         <div>

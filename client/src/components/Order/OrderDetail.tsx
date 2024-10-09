@@ -1,18 +1,16 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById.ts';
-import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers.ts';
 import { useFetchCustomerById } from '../../Hooks/useFetchCustomerById.ts';
-import { OrderEntry } from "../../Api.ts";
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
+import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 import { useEffect, useState } from 'react';
 
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const navigate = useNavigate();
     const { order, loading: orderLoading, error: orderError } = useFetchOrderById(orderId ?? '');
-    const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
     const { customer, loading: customerLoading, error: customerError } = useFetchCustomerById(order?.customerId ?? 0);
     const [orderStatus, setOrderStatus] = useState(order?.status ?? '');
 
@@ -22,28 +20,9 @@ const OrderDetail = () => {
         }
     }, [order]);
 
-    if (orderLoading || papersLoading || customerLoading) return <div>Loading...</div>;
+    if (orderLoading || customerLoading) return <div>Loading...</div>;
     if (orderError) return <div>Error: {orderError}</div>;
-    if (papersError) return <div>Error: {papersError}</div>;
     if (customerError) return <div>Error: {customerError}</div>;
-
-    const getPaperDetails = (productId: number) => {
-        return papers.find(paper => paper.id === productId);
-    };
-
-    const calculateTotals = (orderEntries: OrderEntry[] | undefined) => {
-        if (!orderEntries) return { totalQuantity: 0, totalPrice: 0 };
-        return orderEntries.reduce(
-            (totals, entry) => {
-                const paper = getPaperDetails(entry.productId!);
-                const price = paper?.price ?? 0;
-                totals.totalQuantity += entry.quantity ?? 0;
-                totals.totalPrice += (entry.quantity ?? 0) * price;
-                return totals;
-            },
-            { totalQuantity: 0, totalPrice: 0 }
-        );
-    };
 
     const handleBackClick = () => {
         navigate(-1);
@@ -85,34 +64,8 @@ const OrderDetail = () => {
                 </div>
             </div>
 
-            {/* Order Entries */}
-            <h3 className="text-2xl font-bold mt-6 mb-4">Order Entries</h3>
-            <table className="min-w-full bg-white rounded-lg shadow border">
-                <thead>
-                <tr>
-                    <th className="py-2 px-4 border-b text-left">Product Name</th>
-                    <th className="py-2 px-4 border-b text-left">Unit Price</th>
-                    <th className="py-2 px-4 border-b text-left">Quantity</th>
-                </tr>
-                </thead>
-                <tbody>
-                {order?.orderEntries?.map(entry => {
-                    const paper = getPaperDetails(entry.productId!);
-                    return (
-                        <tr key={entry.productId} className="hover:bg-gray-100">
-                            <td className="py-2 px-4 border-b">{paper?.name ?? 'N/A'}</td>
-                            <td className="py-2 px-4 border-b">${paper?.price ?? 'N/A'}</td>
-                            <td className="py-2 px-4 border-b">{entry.quantity}</td>
-                        </tr>
-                    );
-                })}
-                <tr className="font-bold">
-                    <td className="py-2 px-4 border-b">Totals</td>
-                    <td className="py-2 px-4 border-b">${calculateTotals(order?.orderEntries).totalPrice}</td>
-                    <td className="py-2 px-4 border-b">{calculateTotals(order?.orderEntries).totalQuantity}</td>
-                </tr>
-                </tbody>
-            </table>
+            {/* Order Entries Table */}
+            {order && <OrderEntriesTable orderId={order.id!} />}
 
             {/* Action Buttons */}
             <div className="flex space-x-4 mt-6">

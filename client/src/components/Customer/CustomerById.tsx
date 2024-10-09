@@ -1,8 +1,9 @@
 ﻿import { useParams } from 'react-router-dom';
 import { Api, CustomerDto } from '../../Api.ts';
 import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
-import OrderItem from '../Order/OrderItem.tsx';
 import { useEffect, useState } from 'react';
+import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
+import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 
 const CustomerById = () => {
     const { id } = useParams<{ id: string }>();
@@ -11,7 +12,7 @@ const CustomerById = () => {
     const [customer, setCustomer] = useState<CustomerDto | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [images, setImages] = useState<string[]>([]);
-
+    const [logo] = useState<string>('/assets/Registration.png');
     const imagesContext = import.meta.glob('/src/assets/RandomProfileImg/*.jpg');
 
     useEffect(() => {
@@ -48,11 +49,6 @@ const CustomerById = () => {
         fetchCustomer();
     }, [customerId]);
 
-    const handleRemoveOrder = (orderId: number) => {
-        // Implement the logic to remove the order
-        console.log(`Remove order with ID: ${orderId}`);
-    };
-
     if (error) {
         return <p className="text-red-500 mt-4">{error}</p>;
     }
@@ -62,53 +58,65 @@ const CustomerById = () => {
     }
 
     return (
-        <div className="flex flex-col items-center mt-16">
-            <div className="flex w-full max-w-5xl shadow-lg">
+        <div className="container mx-auto mt-8 mb-8">
+            <div className="flex flex-col md:flex-row border rounded-lg shadow-lg overflow-hidden">
                 {/* Left profile section */}
-                <div className="w-1/3 bg-white p-8 border-r">
-                    <div className="text-center">
-                        <img
-                            src={getRandomProfilePicture()}
-                            alt="Customer Profile"
-                            className="rounded-full w-32 h-32 mx-auto"
+                <div className="md:w-1/5 bg-lightPink p-8 flex flex-col items-center">
+                    <img
+                        src={getRandomProfilePicture()}
+                        alt="Customer Profile"
+                        className="rounded-full w-32 h-32 mb-4"
+                    />
+                    <h2 className="text-2xl font-bold">{customer.name}</h2>
+                    <p className="text-gray-600">Customer</p>
+                    <div className="m-16 flex items-center self-start ml-4">
+                        <img className="m-4 self-start"
+                             src={logo}
+                             alt="Logo"
                         />
-                        <h2 className="text-2xl font-bold mt-4">{customer.name}</h2>
-                        <p className="text-gray-600">Customer</p>
+                        <p className="text-blue-500 mt-2 ml-2">Edit info</p>
                     </div>
                 </div>
 
                 {/* Right order details section */}
-                <div className="w-2/3 bg-white p-8">
-                    <h2 className="text-2xl font-bold">Official Information</h2>
-                    <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div>
-                            <p className="font-bold">Email</p>
-                            <p className="text-gray-600">{customer.email}</p>
+                <div className="md:w-4/5 bg-gray-100 p-8">
+                    <h2 className="text-2xl font-bold">Customer Details</h2>
+                    <div className="mt-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <p className="font-bold">Email:</p>
+                                <p className="text-gray-600">{customer.email}</p>
+                            </div>
+                            <div>
+                                <p className="font-bold">Phone Number:</p>
+                                <p className="text-gray-600">{customer.phone}</p>
+                            </div>
+                            <div>
+                                <p className="font-bold">Address:</p>
+                                <p className="text-gray-600">{customer.address}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="font-bold">Phone Number</p>
-                            <p className="text-gray-600">{customer.phone}</p>
+                        <h2 className="text-2xl font-bold mt-4">Order History</h2>
+                        <div className="mt-4 max-h-96 overflow-y-auto">
+                            {ordersError && <p className="text-red-500 mt-4">{ordersError}</p>}
+                            <ul className="space-y-8">
+                                {orders
+                                    .filter(order => order.status !== 'cancelled')
+                                    .map((order) => (
+                                        <li key={order.id} className="p-4 bg-white rounded-lg shadow-sm">
+                                            <div className="flex justify-between items-center">
+                                                <h2 className="text-xl font-semibold">Order ID: {order.id}</h2>
+                                                <CancelOrderButton orderId={order.id!} status={order.status ?? ''}/>
+                                            </div>
+                                            <p className="text-md">Order Date: {order.orderDate}</p>
+                                            <p className="text-md">Delivery Date: {order.deliveryDate}</p>
+                                            <p className="text-md">Total: €{order.totalAmount}</p>
+                                            <p className="text-md">Status: {order.status}</p>
+                                            <OrderEntriesTable orderId={order.id!}/>
+                                        </li>
+                                    ))}
+                            </ul>
                         </div>
-                        <div>
-                            <p className="font-bold">Address</p>
-                            <p className="text-gray-600">{customer.address}</p>
-                        </div>
-                    </div>
-
-                    <h2 className="text-2xl font-bold mt-8">Order History</h2>
-                    <div className="mt-4 max-h-96 overflow-y-auto">
-                        {ordersError && <p className="text-red-500 mt-4">{ordersError}</p>}
-                        <ul className="cart-list space-y-4">
-                            {orders
-                                .filter(order => order.status !== 'cancelled')
-                                .map((order) => (
-                                    <OrderItem key={order.id} order={order} onRemove={handleRemoveOrder}/>
-                                ))}
-                        </ul>
-                    </div>
-
-                    <div className="card-actions justify-end mt-4">
-                        <button className="btn btn-primary">Update Order</button>
                     </div>
                 </div>
             </div>
