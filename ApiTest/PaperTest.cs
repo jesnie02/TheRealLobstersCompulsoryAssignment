@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using _service.dto;
+using Bogus;
 using dataAccess;
 using dataAccess.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -23,49 +24,7 @@ public class PaperTest : WebApplicationFactory<Program>
         _outputHelper = outputHelper;
     }
  
-    /*
-   
-    [Fact]
-    public async Task UpdatePaperTest()
-    {
-        // Arrange
-        _ctxSetup.DbContextInstance.Papers.Add(TestObjects.GetPaper());
-        _ctxSetup.DbContextInstance.SaveChanges();
-
-        var updatePaper = new UpdatePaperDto()
-        {
-            Id = 1,
-            Name = "Test2",
-            Discontinued = true,
-            Price = 200,
-            Stock = 20,
-            TraitIds = new List<int>{1, 2, 3}
-        };
-
-        // Act
-        var updateResult = await CreateClient().PatchAsJsonAsync($"/api/paper/{updatePaper.Id}", updatePaper);
-        updateResult.EnsureSuccessStatusCode();
-
-        var responseContent = await updateResult.Content.ReadAsStringAsync();
-        _outputHelper.WriteLine("Response Content: " + responseContent);
-
-        Assert.False(string.IsNullOrEmpty(responseContent), "Response content is empty");
-
-        var updateResponseDto = JsonSerializer.Deserialize<paperDetailViewModel>(responseContent);
-        _outputHelper.WriteLine("Deserialized Response: " + JsonSerializer.Serialize(updateResponseDto));
-
-        // Assert
-        Assert.Equal(HttpStatusCode.OK, updateResult.StatusCode);
-        Assert.NotNull(updateResponseDto);
-        Assert.NotEqual(0, updateResponseDto.Id);
-        Assert.Equal(updatePaper.Id, updateResponseDto.Id);
-        Assert.Equal(updatePaper.Name, updateResponseDto.Name);
-        Assert.Equal(updatePaper.Discontinued, updateResponseDto.Discontinued);
-        Assert.Equal(updatePaper.Price, updateResponseDto.Price);
-        Assert.Equal(updatePaper.Stock, updateResponseDto.Stock);
-    }
-    */
-    
+  
     
     [Fact]
     public async Task GetPapersTest()
@@ -93,7 +52,44 @@ public class PaperTest : WebApplicationFactory<Program>
         Assert.NotEmpty(responseDto);
     }
    
+    [Fact]
+    public async Task UpdateExistingPaper_ShouldReturnOkResult_WhenPaperIsUpdated()
+    {
+        // Arrange
+        var faker = new Faker();
+        var updatePaperDto = new UpdatePaperDto
+        {
+            Id = faker.Random.Int(1),
+            Name = faker.Commerce.ProductName(),
+            Discontinued = faker.Random.Bool(),
+            Stock = faker.Random.Int(100),
+            Price = faker.Random.Double(24, 34),
+            TraitIds = new List<int> { faker.Random.Int(1), faker.Random.Int(4) }
+        };
 
+        var updatedPaper = new paperDetailViewModel
+        {
+            Id = updatePaperDto.Id,
+            Name = updatePaperDto.Name,
+            Discontinued = updatePaperDto.Discontinued,
+            Stock = updatePaperDto.Stock,
+            Price = updatePaperDto.Price,
+            Traits = updatePaperDto.TraitIds.Select(id => new PaperTraitDetailViewModel { Id = id, TraitName = faker.Commerce.ProductAdjective() }).ToList()
+        };
+
+        _ctxSetup.DbContextInstance.Papers.Add(updatePaperDto.ToPaper());
+        _ctxSetup.DbContextInstance.SaveChanges();
+
+        // Act
+        var response = await CreateClient().PatchAsync($"/api/paper/{updatePaperDto.Id}", JsonContent.Create(updatePaperDto));
+        response.EnsureSuccessStatusCode();
+        var responseContent = await response.Content.ReadFromJsonAsync<paperDetailViewModel>();
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(responseContent);
+        Assert.Equal(updatedPaper.Id, responseContent.Id);
+    }
+}
    
     
-}

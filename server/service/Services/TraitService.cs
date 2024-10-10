@@ -14,7 +14,7 @@ namespace service.Services
         Task<TraitDto> CreateTraitAsync(TraitDto traitDto);
         Task<TraitDto?> GetTraitByIdAsync(int id);
         Task<IEnumerable<TraitDto>> GetAllTraitsAsync();
-        Task<TraitDto> UpdateTraitAsync(TraitDto traitDto);
+        Task<TraitDto?> UpdateTraitAsync(TraitDto traitDto);
         Task<bool> DeleteTraitAsync(int id);
         Task<IEnumerable<TraitDto>> GetTraitsByPaperIdAsync(int paperId);
     }
@@ -60,11 +60,18 @@ namespace service.Services
             return traits.Select(trait => new TraitDto().FromEntity(trait)).ToList();
         }
 
-        public async Task<TraitDto> UpdateTraitAsync(TraitDto traitDto)
+        public async Task<TraitDto?> UpdateTraitAsync(TraitDto traitDto)
         {
+            if (traitDto == null)
+            {
+                _logger.LogWarning("TraitDto is null");
+                return null;
+            }
+
             var trait = await _context.Traits.FindAsync(traitDto.Id);
             if (trait == null)
             {
+                _logger.LogWarning($"Trait with ID {traitDto.Id} not found");
                 return null;
             }
 
