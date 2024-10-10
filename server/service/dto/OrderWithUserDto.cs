@@ -9,7 +9,7 @@ public class OrderWithUserDto
     public string? Status { get; set; }
     public double TotalAmount { get; set; }
     public int CustomerId { get; set; }
-    public CustomerDto Customer { get; set; }
+    public CustomerDto? Customer { get; set; }
     public List<OrderEntryDto> OrderEntries { get; set; } = new List<OrderEntryDto>();
 
     public OrderWithUserDto FromEntity(Order order)
@@ -22,7 +22,7 @@ public class OrderWithUserDto
             Status = order.Status,
             TotalAmount = order.TotalAmount,
             CustomerId = order.CustomerId,
-            Customer = CustomerDto.FromCustomer(order.Customer),
+            Customer = order.Customer != null ? CustomerDto.FromCustomer(order.Customer) : null,
             OrderEntries = order.OrderEntries.Select(e => new OrderEntryDto
             {
                 ProductId = e.ProductId,

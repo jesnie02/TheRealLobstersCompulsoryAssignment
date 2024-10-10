@@ -3,5 +3,5 @@
 public class TraitToPaperDto
 {
     public int PaperId { get; set; }
-    public List<int> TraitIds { get; set; }
+    public List<int>? TraitIds { get; set; }
 }

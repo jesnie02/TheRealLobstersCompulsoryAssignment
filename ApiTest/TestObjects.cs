@@ -31,4 +31,14 @@ public class TestObjects
     }
     
     
+    public static Paper updatePaper(Paper paper)
+    {
+        paper.Name = "Updated Name";
+        paper.Price = 100;
+        paper.Stock = 10;
+        paper.Discontinued = true;
+        paper.Traits = new List<Trait>();
+        return paper;
+    }
+    
 }
