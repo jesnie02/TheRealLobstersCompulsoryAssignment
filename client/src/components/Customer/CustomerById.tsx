@@ -1,6 +1,6 @@
 ﻿import { useParams } from 'react-router-dom';
 import { Api, CustomerDto } from '../../Api.ts';
-import { useFetchOrdersByCustomerId } from "../../Hooks/useFetchOrdersByCustomerId.ts";
+import { useFetchOrdersByCustomerId } from "../../Hooks/hookIndex.ts";
 import { useEffect, useState } from 'react';
 import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";

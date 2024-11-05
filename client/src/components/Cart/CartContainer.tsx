@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/CartAtom";
-import { PapersAtom } from "../../Atoms/PapersAtom.tsx";
+import { PapersAtom, CartAtom } from "../../Atoms/atomIndex.ts";
 import CreateOrderButton from "../Utilities/CreateOrderButton.tsx";
 
 export default function CartContainer() {

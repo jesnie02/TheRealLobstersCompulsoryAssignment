@@ -1,7 +1,7 @@
 ﻿import React, { useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
 import { Api } from "../../Api.ts";
-import {allTraitsAtom} from "../../Atoms/AllTraitsAtom.tsx";
+import {AllTraitsAtom} from "../../Atoms/atomIndex.ts";
 import toast, {Toaster} from "react-hot-toast";
 
 
@@ -12,7 +12,7 @@ const selectedTraitAtom = atom<string | null>(null);
 const CreateTraits = () => {
     const [trait, setTrait] = useAtom(traitAtom);
     const [traits, setTraits] = useAtom(traitsAtom);
-    const [allTraits, setAllTraits] = useAtom(allTraitsAtom);
+    const [allTraits, setAllTraits] = useAtom(AllTraitsAtom);
     const [selectedTrait, setSelectedTrait] = useAtom(selectedTraitAtom);
 
     const api = new Api();

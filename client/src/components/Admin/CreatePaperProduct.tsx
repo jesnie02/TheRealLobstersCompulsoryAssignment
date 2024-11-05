@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { traitsAtom } from '../../Atoms/traitsAtom';
+import { traitsAtom } from '../../Atoms/atomIndex.ts';
 import { http } from '../../http.ts';
 import { Trait } from "../../Api.ts";
 import toast, { Toaster } from "react-hot-toast";

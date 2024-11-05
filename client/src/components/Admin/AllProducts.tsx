@@ -1,12 +1,11 @@
 import { useAtom } from "jotai";
-import { PapersAtom } from "../../Atoms/PapersAtom.tsx";
 import { http } from "../../http.ts";
 import { useEffect, useState } from "react";
 import CreatePaperProduct from "./CreatePaperProduct.tsx";
 import UpdatePaperProduct from "./UpdatePaperProduct.tsx";
 import { PaperDto } from "../../Api.ts";
 import { AxiosError } from "axios";
-import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
+import {selectedContentAtom, PapersAtom} from "../../Atoms/atomIndex.ts";
 
 interface Paper {
     id: number;

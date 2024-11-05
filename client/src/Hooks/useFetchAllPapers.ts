@@ -1,9 +1,9 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState, useCallback } from 'react';
-import { PapersAtom } from '../Atoms/PapersAtom.tsx';
+import { PapersAtom } from '../Atoms/atomIndex.ts';
 import { http } from '../http.ts';
 
-export const useFetchAllPapers = () => {
+const useFetchAllPapers = () => {
     const [papers, setPapers] = useAtom(PapersAtom);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -29,3 +29,5 @@ export const useFetchAllPapers = () => {
 
     return { papers, loading, error, fetchPapers };
 };
+
+export default useFetchAllPapers;

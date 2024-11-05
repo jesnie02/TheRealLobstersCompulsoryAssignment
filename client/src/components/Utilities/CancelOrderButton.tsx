@@ -1,5 +1,5 @@
 import React from 'react';
-import useCancelOrder from "../../Hooks/useCancelOrder.ts";
+import { useCancelOrder } from "../../Hooks/hookIndex.ts"
 
 interface CancelOrderButtonProps {
     orderId: number;

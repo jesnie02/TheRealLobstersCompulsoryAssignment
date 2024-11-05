@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { http } from '../http.ts';
 
-export const useFetchCustomerOrderHistory = () => {
+const useFetchCustomerOrderHistory = () => {
     const [customers, setCustomers] = useState<{ [key: string]: string }>({});
     const [error, setError] = useState<string | null>(null);
 
@@ -20,3 +20,5 @@ export const useFetchCustomerOrderHistory = () => {
 
     return { customers, error, fetchCustomer };
 };
+
+export default useFetchCustomerOrderHistory;

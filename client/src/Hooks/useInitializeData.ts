@@ -1,12 +1,11 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { http } from "../http";
-import {PapersAtom} from "../Atoms/PapersAtom.tsx";
-import {allTraitsAtom} from "../Atoms/AllTraitsAtom.tsx";
+import { AllTraitsAtom, PapersAtom } from "../Atoms/atomIndex.ts";
 
-export function useInitializeData() {
+const useInitializeData = () => {
     const [, setPapers] = useAtom(PapersAtom);
-    const [, setAllTraits] = useAtom(allTraitsAtom);
+    const [, setAllTraits] = useAtom(AllTraitsAtom);
 
     useEffect(() => {
         http.api.paperGetAllPapers().then((response) => {
@@ -16,9 +15,7 @@ export function useInitializeData() {
         });
 
         fetchTraits();
-
     }, []);
-
 
     const fetchTraits = async () => {
         try {
@@ -33,4 +30,6 @@ export function useInitializeData() {
             console.error('Error fetching traits:', error);
         }
     };
-}
+};
+
+export default useInitializeData;

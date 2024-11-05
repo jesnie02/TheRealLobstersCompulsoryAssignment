@@ -1,7 +1,5 @@
 import { OrderEntryDto } from '../../Api';
-import useFetchAllOrderEntries from '../../Hooks/useFetchAllOrderEntries';
-import { useFetchAllPapers } from '../../Hooks/useFetchAllPapers';
-import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById';
+import { useFetchGetOrderById, useFetchAllOrderEntries, useFetchAllPapers } from '../../Hooks/hookIndex.ts';
 
 interface OrderEntriesTableProps {
     orderId: number;
@@ -15,7 +13,7 @@ const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId }) => {
 
     const { orderEntries, loading: entriesLoading, error: entriesError } = useFetchAllOrderEntries();
     const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
-    const { loading: orderLoading, error: orderError } = useFetchOrderById(orderId.toString());
+    const { loading: orderLoading, error: orderError } = useFetchGetOrderById(orderId.toString());
 
     if (entriesLoading || papersLoading || orderLoading) {
         return <p>Loading...</p>;

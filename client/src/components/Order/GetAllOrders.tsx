@@ -1,5 +1,4 @@
-import { useFetchAllOrders } from "../../Hooks/useFetchAllOrders";
-import { useFetchAllCustomers } from "../../Hooks/useFetchAllCustomers";
+import { useFetchAllCustomers, useFetchAllOrders } from "../../Hooks/hookIndex.ts";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

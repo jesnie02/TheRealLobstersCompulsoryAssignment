@@ -1,10 +1,10 @@
 import { useAtom } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
-import { OrdersAtom } from '../Atoms/OrdersAtom.tsx';
+import { OrdersAtom } from '../Atoms/atomIndex.ts';
 import { http } from '../http.ts';
-import {Order, OrderDto, OrderEntryDto} from '../Api.ts'; // Ensure this import is correct
+import { Order, OrderDto, OrderEntryDto } from '../Api.ts'; // Ensure this import is correct
 
-export const useFetchAllOrders = () => {
+const useFetchAllOrders = () => {
     const [orders, setOrders] = useAtom(OrdersAtom);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -38,3 +38,5 @@ export const useFetchAllOrders = () => {
 
     return { orders, loading, error };
 };
+
+export default useFetchAllOrders;

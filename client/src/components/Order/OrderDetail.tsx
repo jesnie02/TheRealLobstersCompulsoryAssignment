@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFetchOrderById } from '../../Hooks/useFetchGetOrderById.ts';
-import { useFetchCustomerById } from '../../Hooks/useFetchCustomerById.ts';
+import { useFetchCustomerById, useFetchGetOrderById } from '../../Hooks/hookIndex.ts';
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
@@ -10,7 +9,7 @@ import { useEffect, useState } from 'react';
 const OrderDetail = () => {
     const { orderId } = useParams<{ orderId: string }>();
     const navigate = useNavigate();
-    const { order, loading: orderLoading, error: orderError } = useFetchOrderById(orderId ?? '');
+    const { order, loading: orderLoading, error: orderError } = useFetchGetOrderById(orderId ?? '');
     const { customer, loading: customerLoading, error: customerError } = useFetchCustomerById(order?.customerId ?? 0);
     const [orderStatus, setOrderStatus] = useState(order?.status ?? '');
 

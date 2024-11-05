@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { http } from '../http.ts';
 import { OrderDto } from '../Api.ts';
 
-export const useFetchOrderById = (orderId: string) => {
+const useFetchOrderById = (orderId: string) => {
     const [order, setOrder] = useState<OrderDto | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -24,3 +24,5 @@ export const useFetchOrderById = (orderId: string) => {
 
     return { order, loading, error };
 };
+
+export default useFetchOrderById;

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/CartAtom.tsx";
-import { PapersAtom } from "../../Atoms/PapersAtom.tsx";
+import { PapersAtom, CartAtom } from "../../Atoms/atomIndex.ts";
 
 interface AddToCartButtonProps {
     paper: any;

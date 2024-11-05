@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { http } from '../http.ts';
 import { Customer } from '../Api.ts';
 
-export const useFetchCustomerById = (customerId: number) => {
+const useFetchCustomerById = (customerId: number) => {
     const [customer, setCustomer] = useState<Customer | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -26,3 +26,5 @@ export const useFetchCustomerById = (customerId: number) => {
 
     return { customer, loading, error };
 };
+
+export default useFetchCustomerById;

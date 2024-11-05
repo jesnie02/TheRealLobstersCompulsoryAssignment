@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/CartAtom";
+import { CartAtom } from "../../Atoms/atomIndex.ts";
 import cartLogo from '/assets/CartLogo.png';
 import { useEffect, useRef, useState } from "react";
 import CartContainer from "../Cart/CartContainer.tsx";

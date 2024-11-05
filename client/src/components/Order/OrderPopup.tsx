@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAtom } from 'jotai';
-import { CartAtom } from '../../Atoms/CartAtom';
-import { OrdersAtom } from '../../Atoms/OrdersAtom';
+import { OrdersAtom, CartAtom } from '../../Atoms/atomIndex.ts';
 import { handleCreateOrder } from './CreateOrder.tsx';
 
 interface OrderPopupProps {

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useFetchAllCustomers} from "../../Hooks/useFetchAllCustomers.ts";
+import {useFetchAllCustomers} from "../../Hooks/hookIndex.ts";
 import {useEffect, useState} from "react";
 
 const GetAllCustomer = () => {

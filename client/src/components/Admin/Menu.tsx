@@ -1,5 +1,5 @@
 import {useAtom} from 'jotai';
-import {selectedContentAtom} from "../../Atoms/nemuAtom.ts";
+import {selectedContentAtom} from "../../Atoms/selectedContentAtom.tsx";
 import GetAllCustomer from "../Customer/GetAllCustomer.tsx";
 import GetAllOrders from "../Order/GetAllOrders.tsx";
 import AllProducts from "./AllProducts.tsx";
