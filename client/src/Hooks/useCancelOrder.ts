@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { http } from "../http.ts";
+import {useState} from 'react';
+import {http} from "../http.ts";
 
 const useCancelOrder = () => {
     const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ const useCancelOrder = () => {
         }
     };
 
-    return { cancelOrder, loading, error };
+    return {cancelOrder, loading, error};
 };
 
 export default useCancelOrder;

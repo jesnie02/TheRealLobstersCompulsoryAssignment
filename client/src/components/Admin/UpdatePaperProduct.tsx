@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { http } from "../../http.ts";
+import {useEffect, useState} from "react";
+import {http} from "../../http.ts";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -16,7 +16,7 @@ interface UpdatePaperProductProps {
     onSuccess: () => Promise<void>;
 }
 
-const UpdatePaperProduct = ({ closeModal, paperId, initialData, onSuccess }: UpdatePaperProductProps) => {
+const UpdatePaperProduct = ({closeModal, paperId, initialData, onSuccess}: UpdatePaperProductProps) => {
     const [formData, setFormData] = useState({
         ...initialData,
         traitIds: initialData.traitIds || [],
@@ -42,7 +42,7 @@ const UpdatePaperProduct = ({ closeModal, paperId, initialData, onSuccess }: Upd
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value, type, checked } = e.target as HTMLInputElement;
+        const {name, value, type, checked} = e.target as HTMLInputElement;
         setFormData({
             ...formData,
             [name]: name === "discontinued" ? value === "true" : (type === "checkbox" ? checked : value),
@@ -51,8 +51,8 @@ const UpdatePaperProduct = ({ closeModal, paperId, initialData, onSuccess }: Upd
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const payload = { ...formData, id: paperId, traitIds: formData.traitIds };
-        console.log("Submitting data:", { paperId, payload });
+        const payload = {...formData, id: paperId, traitIds: formData.traitIds};
+        console.log("Submitting data:", {paperId, payload});
         try {
             const response = await http.api.paperUpdateExistingPaper(paperId, payload);
             console.log("Response:", response);
@@ -161,7 +161,8 @@ const UpdatePaperProduct = ({ closeModal, paperId, initialData, onSuccess }: Upd
                                 <span className="label-text font-bold">Traits</span>
                             </div>
                             <div className="flex items-center">
-                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered" value={selectedTrait?.traitName || "Pick one"}>
+                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered"
+                                        value={selectedTrait?.traitName || "Pick one"}>
                                     <option disabled value="Pick one">Pick one</option>
                                     {traits.map((trait) => (
                                         <option key={trait.id} value={trait.traitName}>{trait.traitName}</option>

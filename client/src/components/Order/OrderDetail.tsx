@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useFetchCustomerById, useFetchGetOrderById } from '../../Hooks/hookIndex.ts';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useFetchCustomerById, useFetchGetOrderById} from '../../Hooks/hookIndex.ts';
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
 import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
 import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 const OrderDetail = () => {
-    const { orderId } = useParams<{ orderId: string }>();
+    const {orderId} = useParams<{ orderId: string }>();
     const navigate = useNavigate();
-    const { order, loading: orderLoading, error: orderError } = useFetchGetOrderById(orderId ?? '');
-    const { customer, loading: customerLoading, error: customerError } = useFetchCustomerById(order?.customerId ?? 0);
+    const {order, loading: orderLoading, error: orderError} = useFetchGetOrderById(orderId ?? '');
+    const {customer, loading: customerLoading, error: customerError} = useFetchCustomerById(order?.customerId ?? 0);
     const [orderStatus, setOrderStatus] = useState(order?.status ?? '');
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const OrderDetail = () => {
             </div>
 
             {/* Order Entries Table */}
-            {order && <OrderEntriesTable orderId={order.id!} />}
+            {order && <OrderEntriesTable orderId={order.id!}/>}
 
             {/* Action Buttons */}
             <div className="flex space-x-4 mt-6">
@@ -74,8 +74,8 @@ const OrderDetail = () => {
                 >
                     Go Back
                 </button>
-                {order && <CancelOrderButton orderId={order.id!} status={orderStatus} />}
-                {order && <OrderStatusSelect orderId={order.id!} status={orderStatus} onChange={setOrderStatus} />}
+                {order && <CancelOrderButton orderId={order.id!} status={orderStatus}/>}
+                {order && <OrderStatusSelect orderId={order.id!} status={orderStatus} onChange={setOrderStatus}/>}
             </div>
         </div>
     );

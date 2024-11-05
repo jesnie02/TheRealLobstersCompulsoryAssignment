@@ -1,13 +1,13 @@
 import React from 'react';
-import { useCancelOrder } from "../../Hooks/hookIndex.ts"
+import {useCancelOrder} from "../../Hooks/hookIndex.ts"
 
 interface CancelOrderButtonProps {
     orderId: number;
     status: string;
 }
 
-const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({ orderId, status }) => {
-    const { cancelOrder, loading, error } = useCancelOrder();
+const CancelOrderButton: React.FC<CancelOrderButtonProps> = ({orderId, status}) => {
+    const {cancelOrder, loading, error} = useCancelOrder();
 
     const handleCancel = () => {
         if (window.confirm('Are you sure you want to cancel this order?')) {

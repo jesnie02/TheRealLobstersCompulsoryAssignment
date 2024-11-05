@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { http } from "../http.ts";
+import {useState} from 'react';
+import {http} from "../http.ts";
 
 const usePatchOrderStatus = () => {
     const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const usePatchOrderStatus = () => {
         setLoading(true);
         setError(null);
         try {
-            const updatedOrder = await http.api.orderUpdateOrderStatus(orderId, { status: newStatus });
+            const updatedOrder = await http.api.orderUpdateOrderStatus(orderId, {status: newStatus});
             setLoading(false);
             return updatedOrder;
         } catch (err) {
@@ -19,7 +19,7 @@ const usePatchOrderStatus = () => {
         }
     };
 
-    return { patchOrderStatus, loading, error };
+    return {patchOrderStatus, loading, error};
 };
 
 export default usePatchOrderStatus;

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import CustomerDashboard from "./CustomerDashboard.tsx";
 import GetAllPaperComponent from '../Paper/GetAllPaperComponent.tsx';
 
@@ -7,10 +7,10 @@ const CustomerApp = () => {
         <div>
             <Routes>
                 {/* This path is relative to /customerDash */}
-                <Route path="/" element={<CustomerDashboard />} />
+                <Route path="/" element={<CustomerDashboard/>}/>
 
                 {/* GetAllPaperComponent accessible from /customerDash/papers */}
-                <Route path="papers" element={<GetAllPaperComponent />} />
+                <Route path="papers" element={<GetAllPaperComponent/>}/>
             </Routes>
         </div>
     );

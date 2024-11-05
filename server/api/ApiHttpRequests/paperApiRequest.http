@@ -35,6 +35,10 @@ Content-Type: application/json
 
 {
   "paperId": 4,
-  "traitIds": [2, 5, 6]
+  "traitIds": [
+    2,
+    5,
+    6
+  ]
 }
 

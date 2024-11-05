@@ -1,6 +1,6 @@
 import {useAtom} from 'jotai';
 import {Api} from "../../Api.ts";
-import {FaPencilAlt } from 'react-icons/fa';
+import {FaPencilAlt} from 'react-icons/fa';
 import CreateTraits from "./CreateTraits.tsx";
 import {AllTraitsAtom} from "../../Atoms/atomIndex.ts";
 
@@ -10,11 +10,10 @@ const GetAllTraits = () => {
     const api = new Api();
 
 
-
     const handleUpdateAllTrait = async (index: number) => {
         const updatedTraitName = prompt("Update trait:", allTraits[index].traitName!);
         if (updatedTraitName !== null && updatedTraitName.trim()) {
-            const updatedTrait = { traitName: updatedTraitName, id: allTraits[index].id };
+            const updatedTrait = {traitName: updatedTraitName, id: allTraits[index].id};
             try {
                 console.log('Updating trait with ID:', allTraits[index].id);
                 await api.api.traitUpdateTrait(allTraits[index]!.id!, updatedTrait);
@@ -29,8 +28,9 @@ const GetAllTraits = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="border border-gray-300 rounded p-4 mt-12 mb-14" style={{ maxHeight: '600px', overflowY: 'auto' }}>
-                <table className="table" style={{ minWidth: '800px' }}>
+            <div className="border border-gray-300 rounded p-4 mt-12 mb-14"
+                 style={{maxHeight: '600px', overflowY: 'auto'}}>
+                <table className="table" style={{minWidth: '800px'}}>
                     <thead>
                     <tr>
                         <th>#</th>
@@ -39,7 +39,7 @@ const GetAllTraits = () => {
                         <th className="flex justify-end pl-2">
                             <button
                                 className="btn btn-success btn-sm mt-1"
-                                style={{ marginBottom: '4px' }}
+                                style={{marginBottom: '4px'}}
                                 onClick={() => {
                                     const modal = document.getElementById('my_modal_5') as HTMLDialogElement | null;
                                     if (modal) {
@@ -59,7 +59,7 @@ const GetAllTraits = () => {
                             <td className="pr-20">{trait.traitName}</td>
                             <td className="space-x-4">
                                 <button onClick={() => handleUpdateAllTrait(index)} className="mr-2">
-                                    <FaPencilAlt />
+                                    <FaPencilAlt/>
                                 </button>
 
                             </td>
@@ -77,7 +77,7 @@ const GetAllTraits = () => {
             </div>
             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box flex flex-col items-center">
-                    <CreateTraits />
+                    <CreateTraits/>
                     <div className="modal-action flex justify-end">
                         <form method="dialog">
                             <button className="btn">Close</button>

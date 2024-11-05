@@ -4,7 +4,7 @@ interface StatusBadgeProps {
     status: string;
 }
 
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+const StatusBadge: React.FC<StatusBadgeProps> = ({status}) => {
     const getStatusBadge = (status: string) => {
         switch (status.toLowerCase()) {
             case 'cancelled':

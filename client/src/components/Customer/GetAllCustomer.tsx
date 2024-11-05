@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useFetchAllCustomers} from "../../Hooks/hookIndex.ts";
 import {useEffect, useState} from "react";
 
 const GetAllCustomer = () => {
-    const { customers, } = useFetchAllCustomers();
+    const {customers,} = useFetchAllCustomers();
     const navigate = useNavigate();
     const [images, setImages] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState("");

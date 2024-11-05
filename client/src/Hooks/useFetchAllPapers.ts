@@ -1,7 +1,7 @@
-import { useAtom } from 'jotai';
-import { useEffect, useState, useCallback } from 'react';
-import { PapersAtom } from '../Atoms/atomIndex.ts';
-import { http } from '../http.ts';
+import {useAtom} from 'jotai';
+import {useCallback, useEffect, useState} from 'react';
+import {PapersAtom} from '../Atoms/atomIndex.ts';
+import {http} from '../http.ts';
 
 const useFetchAllPapers = () => {
     const [papers, setPapers] = useAtom(PapersAtom);
@@ -27,7 +27,7 @@ const useFetchAllPapers = () => {
         fetchPapers(); // Always fetch the latest data from the API
     }, [fetchPapers]);
 
-    return { papers, loading, error, fetchPapers };
+    return {papers, loading, error, fetchPapers};
 };
 
 export default useFetchAllPapers;

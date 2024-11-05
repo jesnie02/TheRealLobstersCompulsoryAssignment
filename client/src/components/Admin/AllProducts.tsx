@@ -1,11 +1,11 @@
-import { useAtom } from "jotai";
-import { http } from "../../http.ts";
-import { useEffect, useState } from "react";
+import {useAtom} from "jotai";
+import {http} from "../../http.ts";
+import {useEffect, useState} from "react";
 import CreatePaperProduct from "./CreatePaperProduct.tsx";
 import UpdatePaperProduct from "./UpdatePaperProduct.tsx";
-import { PaperDto } from "../../Api.ts";
-import { AxiosError } from "axios";
-import {selectedContentAtom, PapersAtom} from "../../Atoms/atomIndex.ts";
+import {PaperDto} from "../../Api.ts";
+import {AxiosError} from "axios";
+import {PapersAtom, selectedContentAtom} from "../../Atoms/atomIndex.ts";
 
 interface Paper {
     id: number;
@@ -94,7 +94,7 @@ const AllProducts = () => {
         paper.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         paper.traits.map((trait: Trait) => trait.traitName).join(', ').toLowerCase().includes(searchTerm.toLowerCase()) ||
         paper.price.toString().includes(searchTerm) ||
-        paper.stock.toString().includes(searchTerm)  ||
+        paper.stock.toString().includes(searchTerm) ||
         paper.discontinued.toString().includes(searchTerm)
     );
 

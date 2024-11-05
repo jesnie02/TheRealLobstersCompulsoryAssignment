@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { http } from '../http.ts';
-import { Customer } from '../Api.ts';
+import {useEffect, useState} from 'react';
+import {http} from '../http.ts';
+import {Customer} from '../Api.ts';
 
 const useFetchCustomerById = (customerId: number) => {
     const [customer, setCustomer] = useState<Customer | null>(null);
@@ -24,7 +24,7 @@ const useFetchCustomerById = (customerId: number) => {
         }
     }, [customerId]);
 
-    return { customer, loading, error };
+    return {customer, loading, error};
 };
 
 export default useFetchCustomerById;

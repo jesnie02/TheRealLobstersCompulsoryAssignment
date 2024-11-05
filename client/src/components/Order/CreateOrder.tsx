@@ -1,5 +1,4 @@
-import { Api } from '../../Api';
-import { OrderDto, CreateCustomerDto } from '../../Api';
+import {Api, CreateCustomerDto, OrderDto} from '../../Api';
 
 const api = new Api();
 

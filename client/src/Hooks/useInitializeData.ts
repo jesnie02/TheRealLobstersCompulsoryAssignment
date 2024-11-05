@@ -1,7 +1,7 @@
-import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { http } from "../http";
-import { AllTraitsAtom, PapersAtom } from "../Atoms/atomIndex.ts";
+import {useAtom} from "jotai";
+import {useEffect} from "react";
+import {http} from "../http";
+import {AllTraitsAtom, PapersAtom} from "../Atoms/atomIndex.ts";
 
 const useInitializeData = () => {
     const [, setPapers] = useAtom(PapersAtom);
@@ -21,7 +21,7 @@ const useInitializeData = () => {
         try {
             const response = await http.api.traitGetAllTraits();
             if (Array.isArray(response.data)) {
-                const traitsData = response.data.map((item: any) => ({ id: item.id, traitName: item.traitName }));
+                const traitsData = response.data.map((item: any) => ({id: item.id, traitName: item.traitName}));
                 setAllTraits(traitsData);
             } else {
                 console.error('Unexpected response format:', response.data);

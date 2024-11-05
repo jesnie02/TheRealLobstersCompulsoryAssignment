@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useAtom } from 'jotai';
-import { OrdersAtom, CartAtom } from '../../Atoms/atomIndex.ts';
-import { handleCreateOrder } from './CreateOrder.tsx';
+import React, {useState} from 'react';
+import {useAtom} from 'jotai';
+import {CartAtom, OrdersAtom} from '../../Atoms/atomIndex.ts';
+import {handleCreateOrder} from './CreateOrder.tsx';
 
 interface OrderPopupProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const OrderPopup: React.FC<OrderPopupProps> = ({ isOpen, onClose }) => {
+const OrderPopup: React.FC<OrderPopupProps> = ({isOpen, onClose}) => {
     const [cart, setCart] = useAtom(CartAtom);
     const [, setOrders] = useAtom(OrdersAtom);
     const [customerName, setCustomerName] = useState('');

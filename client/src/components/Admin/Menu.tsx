@@ -6,9 +6,6 @@ import AllProducts from "./AllProducts.tsx";
 import GetAllTraits from "../Traits/GetAllTraits.tsx";
 
 
-
-
-
 const Menu = () => {
     const [selectedContent, setSelectedContent] = useAtom(selectedContentAtom);
 
@@ -27,7 +24,7 @@ const Menu = () => {
                     Customers
                 </button>
                 <button className="btn mx-2" onClick={() => setSelectedContent('Content 2')}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048">
                         <path fill="currentColor"
                               d="m2029 1453l-557 558l-269-270l90-90l179 178l467-466zM1024 640H640V512h384zm0 256H640V768h384zm-384 128h384v128H640zM512 640H384V512h128zm0 256H384V768h128zm-128 128h128v128H384zm768-384V128H256v1792h896v128H128V0h1115l549 549v731l-128 128V640zm128-128h293l-293-293z"/>
                     </svg>
@@ -43,10 +40,10 @@ const Menu = () => {
                 </button>
             </div>
             <div>
-                {selectedContent === 'Content 1' && <GetAllCustomer />}
+                {selectedContent === 'Content 1' && <GetAllCustomer/>}
                 {selectedContent === 'Content 2' && <GetAllOrders/>}
-                {selectedContent === 'Content 3' && <AllProducts />}
-                {selectedContent === 'Content 4' && <GetAllTraits />}
+                {selectedContent === 'Content 3' && <AllProducts/>}
+                {selectedContent === 'Content 4' && <GetAllTraits/>}
             </div>
         </div>
     );

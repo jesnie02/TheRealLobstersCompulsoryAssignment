@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import OrderPopup from "../Order/OrderPopup.tsx";
 
 export default function CreateOrderButton() {
@@ -13,7 +13,7 @@ export default function CreateOrderButton() {
             <button className="btn btn-outline mt-1" onClick={openPopup}>
                 Make Order
             </button>
-            <OrderPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+            <OrderPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}/>
         </>
     );
 }

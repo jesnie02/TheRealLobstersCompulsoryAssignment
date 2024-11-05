@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import StatusBadge from "./StatusBadge";
 import {usePatchOrderStatus} from '../../Hooks/hookIndex.ts';
 
@@ -10,8 +10,8 @@ interface OrderStatusSelectProps {
 
 const statusOptions = ["Pending", "Booked", "Shipped", "Delivered", "Cancelled"];
 
-const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({ orderId, status, onChange }) => {
-    const { patchOrderStatus, loading } = usePatchOrderStatus();
+const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({orderId, status, onChange}) => {
+    const {patchOrderStatus, loading} = usePatchOrderStatus();
     const [isOpen, setIsOpen] = useState(false);
 
     const handleStatusChange = async (newStatus: string) => {
@@ -31,7 +31,7 @@ const OrderStatusSelect: React.FC<OrderStatusSelectProps> = ({ orderId, status, 
                 className={`bg-white px-4 py-2 bg-opacity-0 ${status ? `status-${status.toLowerCase()}` : ''}`}
                 disabled={loading || status === "Cancelled"} //dissable badge sellect if order is originally cancelled
             >
-                <StatusBadge status={status} />
+                <StatusBadge status={status}/>
                 <span className="ml-2">&#9662;</span> {/* Unicode down arrow */}
             </button>
             {isOpen && (

@@ -1,7 +1,7 @@
-import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
-import { CustomersAtom } from '../Atoms/atomIndex.ts';
-import { http } from '../http.ts';
+import {useAtom} from 'jotai';
+import {useEffect, useState} from 'react';
+import {CustomersAtom} from '../Atoms/atomIndex.ts';
+import {http} from '../http.ts';
 
 const useFetchAllCustomers = () => {
     const [customers, setCustomers] = useAtom(CustomersAtom);
@@ -24,7 +24,7 @@ const useFetchAllCustomers = () => {
         fetchCustomers();
     }, [setCustomers]);
 
-    return { customers, error };
+    return {customers, error};
 };
 
 export default useFetchAllCustomers;

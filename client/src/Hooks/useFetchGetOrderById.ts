@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { http } from '../http.ts';
-import { OrderDto } from '../Api.ts';
+import {useEffect, useState} from 'react';
+import {http} from '../http.ts';
+import {OrderDto} from '../Api.ts';
 
 const useFetchOrderById = (orderId: string) => {
     const [order, setOrder] = useState<OrderDto | null>(null);
@@ -22,7 +22,7 @@ const useFetchOrderById = (orderId: string) => {
         fetchOrder();
     }, [orderId]);
 
-    return { order, loading, error };
+    return {order, loading, error};
 };
 
 export default useFetchOrderById;

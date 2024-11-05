@@ -1,23 +1,23 @@
-import { useState } from "react";
-import { useAtom } from "jotai";
-import { PapersAtom, CartAtom } from "../../Atoms/atomIndex.ts";
+import {useState} from "react";
+import {useAtom} from "jotai";
+import {CartAtom, PapersAtom} from "../../Atoms/atomIndex.ts";
 
 interface AddToCartButtonProps {
     paper: any;
 }
 
-export default function AddToCartButton({ paper }: AddToCartButtonProps) {
+export default function AddToCartButton({paper}: AddToCartButtonProps) {
     const [, setCart] = useAtom(CartAtom);
     const [quantity, setQuantity] = useState<number | "">(1);
     const [papers, setPapers] = useAtom(PapersAtom);
 
     const addToCart = async (paper: any) => {
-        const paperWithQuantity = { ...paper, quantity: Number(quantity) };
+        const paperWithQuantity = {...paper, quantity: Number(quantity)};
         setCart((prevCart) => [...prevCart, paperWithQuantity]);
         const newStock = paper.stock - Number(quantity);
         setPapers(papers.map(p =>
             p.id === paper.id
-                ? { ...p, stock: newStock }
+                ? {...p, stock: newStock}
                 : p
         ));
         alert(`${paper.name} added to cart!`);

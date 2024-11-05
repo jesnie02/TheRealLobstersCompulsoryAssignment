@@ -1,14 +1,14 @@
-﻿import { useParams } from 'react-router-dom';
-import { Api, CustomerDto } from '../../Api.ts';
-import { useFetchOrdersByCustomerId } from "../../Hooks/hookIndex.ts";
-import { useEffect, useState } from 'react';
+﻿import {useParams} from 'react-router-dom';
+import {Api, CustomerDto} from '../../Api.ts';
+import {useFetchOrdersByCustomerId} from "../../Hooks/hookIndex.ts";
+import {useEffect, useState} from 'react';
 import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
 
 const CustomerById = () => {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const customerId = parseInt(id as string, 10);
-    const { orders, error: ordersError } = useFetchOrdersByCustomerId(customerId);
+    const {orders, error: ordersError} = useFetchOrdersByCustomerId(customerId);
     const [customer, setCustomer] = useState<CustomerDto | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [images, setImages] = useState<string[]>([]);

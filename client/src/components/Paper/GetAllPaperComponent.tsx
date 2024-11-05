@@ -1,14 +1,14 @@
-import { useFetchAllPapers } from "../../Hooks/hookIndex.ts";
+import {useFetchAllPapers} from "../../Hooks/hookIndex.ts";
 import AddToCartButton from "../Utilities/AddToCartButton.tsx";
-import { useState } from "react";
-import { useAtom } from "jotai";
+import {useState} from "react";
+import {useAtom} from "jotai";
 import Slider from '@mui/material/Slider';
 import Checkbox from '@mui/material/Checkbox';
 import {FormControlLabel} from "@mui/material";
-import { selectedTraitsAtom, priceRangeAtom } from "../../Atoms/atomIndex.ts";
+import {priceRangeAtom, selectedTraitsAtom} from "../../Atoms/atomIndex.ts";
 
 export default function GetAllPaperComponent() {
-    const { papers, loading, error } = useFetchAllPapers();
+    const {papers, loading, error} = useFetchAllPapers();
     const [sortOrder, setSortOrder] = useState("name");
     const [selectedTraits, setSelectedTraits] = useAtom(selectedTraitsAtom);
     const [priceRange, setPriceRange] = useAtom(priceRangeAtom);
@@ -54,7 +54,8 @@ export default function GetAllPaperComponent() {
 
     return (
         <div>
-            <h1 className="menu-title text-6xl m-5 text-black bg-lightPink bg-opacity-50 p-10 rounded-lg shadow-lg">Product Catalogue</h1>
+            <h1 className="menu-title text-6xl m-5 text-black bg-lightPink bg-opacity-50 p-10 rounded-lg shadow-lg">Product
+                Catalogue</h1>
             <div className="card-body">
                 <div className="flex justify-end mb-4 mr-4">
                     <input

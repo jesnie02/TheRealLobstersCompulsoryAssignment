@@ -1,19 +1,19 @@
-import { OrderEntryDto } from '../../Api';
-import { useFetchGetOrderById, useFetchAllOrderEntries, useFetchAllPapers } from '../../Hooks/hookIndex.ts';
+import {OrderEntryDto} from '../../Api';
+import {useFetchAllOrderEntries, useFetchAllPapers, useFetchGetOrderById} from '../../Hooks/hookIndex.ts';
 
 interface OrderEntriesTableProps {
     orderId: number;
 }
 
-const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId }) => {
+const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({orderId}) => {
     // Validate orderId
     if (!orderId || orderId === 0) {
         return <p className="text-red-500 mt-4">Invalid Order ID</p>;
     }
 
-    const { orderEntries, loading: entriesLoading, error: entriesError } = useFetchAllOrderEntries();
-    const { papers, loading: papersLoading, error: papersError } = useFetchAllPapers();
-    const { loading: orderLoading, error: orderError } = useFetchGetOrderById(orderId.toString());
+    const {orderEntries, loading: entriesLoading, error: entriesError} = useFetchAllOrderEntries();
+    const {papers, loading: papersLoading, error: papersError} = useFetchAllPapers();
+    const {loading: orderLoading, error: orderError} = useFetchGetOrderById(orderId.toString());
 
     if (entriesLoading || papersLoading || orderLoading) {
         return <p>Loading...</p>;
@@ -40,7 +40,7 @@ const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId }) => {
             const price = paper?.price ?? 0;
             return sum + (entry.quantity ?? 0) * price;
         }, 0);
-        return { totalQuantity, totalPrice };
+        return {totalQuantity, totalPrice};
     };
 
     return (
@@ -72,7 +72,7 @@ const OrderEntriesTable: React.FC<OrderEntriesTableProps> = ({ orderId }) => {
             </table>
             <div className="mt-4">
                 <strong>Total Quantity:</strong> {calculateTotals(filteredEntries).totalQuantity}
-                <br />
+                <br/>
                 <strong>Total Price:</strong> ${calculateTotals(filteredEntries).totalPrice.toFixed(2)}
             </div>
         </div>

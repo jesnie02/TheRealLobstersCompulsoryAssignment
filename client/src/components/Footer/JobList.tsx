@@ -1,11 +1,13 @@
-
-
 const jobList = [
-    { id: 1, title: 'Paper Technician', description: 'Responsible for maintenance of paper production machinery.' },
-    { id: 2, title: 'Production Manager', description: 'Overseeing production lines for paper products.' },
-    { id: 3, title: 'Quality Control Specialist', description: 'Ensuring product quality and compliance with standards.' },
-    { id: 4, title: 'Purchasing Manager', description: 'Procurement of raw materials for paper production.' },
-    { id: 5, title: 'Logistics Coordinator', description: 'Planning deliveries and distribution logistics.' },
+    {id: 1, title: 'Paper Technician', description: 'Responsible for maintenance of paper production machinery.'},
+    {id: 2, title: 'Production Manager', description: 'Overseeing production lines for paper products.'},
+    {
+        id: 3,
+        title: 'Quality Control Specialist',
+        description: 'Ensuring product quality and compliance with standards.'
+    },
+    {id: 4, title: 'Purchasing Manager', description: 'Procurement of raw materials for paper production.'},
+    {id: 5, title: 'Logistics Coordinator', description: 'Planning deliveries and distribution logistics.'},
 ];
 
 const JobList = () => {

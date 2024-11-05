@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -8,7 +8,7 @@ const ContactUs = () => {
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormData({
             ...formData,
             [name]: value
@@ -20,7 +20,7 @@ const ContactUs = () => {
 
         console.log(formData);
         alert("Thank you for your message! We'll get back to you soon.");
-        setFormData({ name: '', email: '', message: '' }); // Reset form after submission
+        setFormData({name: '', email: '', message: ''}); // Reset form after submission
     };
 
     return (

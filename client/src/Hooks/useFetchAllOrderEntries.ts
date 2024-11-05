@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Api, OrderEntryDto } from '../Api';
+import {useEffect, useState} from 'react';
+import {Api, OrderEntryDto} from '../Api';
 
 const useFetchAllOrderEntries = () => {
     const [orderEntries, setOrderEntries] = useState<OrderEntryDto[]>([]);
@@ -21,7 +21,7 @@ const useFetchAllOrderEntries = () => {
         fetchOrderEntries();
     }, []);
 
-    return { orderEntries, loading, error };
+    return {orderEntries, loading, error};
 };
 
 export default useFetchAllOrderEntries;

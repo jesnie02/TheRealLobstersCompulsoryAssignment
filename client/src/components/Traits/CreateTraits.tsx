@@ -1,6 +1,6 @@
-﻿import React, { useEffect } from 'react';
-import { atom, useAtom } from 'jotai';
-import { Api } from "../../Api.ts";
+﻿import React, {useEffect} from 'react';
+import {atom, useAtom} from 'jotai';
+import {Api} from "../../Api.ts";
 import {AllTraitsAtom} from "../../Atoms/atomIndex.ts";
 import toast, {Toaster} from "react-hot-toast";
 
@@ -21,7 +21,7 @@ const CreateTraits = () => {
         try {
             const response = await api.api.traitGetAllTraits();
             if (Array.isArray(response.data)) {
-                const traitsData = response.data.map((item: any) => ({ id: item.id, traitName: item.traitName }));
+                const traitsData = response.data.map((item: any) => ({id: item.id, traitName: item.traitName}));
                 setAllTraits(traitsData);
             } else {
                 console.error('Unexpected response format:', response.data);
@@ -59,9 +59,9 @@ const CreateTraits = () => {
         e.preventDefault();
         try {
             for (const trait of traits.filter(t => t.trim())) {
-                const response = await api.api.traitCreateTrait({ traitName: trait });
+                const response = await api.api.traitCreateTrait({traitName: trait});
                 console.log('Trait submitted:', response.data);
-                setAllTraits([...allTraits, { id: response.data.id!, traitName: trait }]);
+                setAllTraits([...allTraits, {id: response.data.id!, traitName: trait}]);
             }
             setTraits(['', '', '', '', '']);
             await fetchTraits();
@@ -74,7 +74,7 @@ const CreateTraits = () => {
 
     return (
         <div className="flex flex-col items-center mt-12">
-            <Toaster />
+            <Toaster/>
             <h1 className="text-3xl font-bold mb-6">Create Trait</h1>
             <div className="flex items-center w-full max-w-4xl ">
                 <div className="rounded p-4 border border-gray-300 h-fit">

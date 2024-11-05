@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { http } from '../http';
-import { OrderDto } from "../Api.ts";
+import {useEffect, useState} from 'react';
+import {http} from '../http';
+import {OrderDto} from "../Api.ts";
 
 const useFetchOrdersByCustomerId = (customerId: number) => {
     const [orders, setOrders] = useState<OrderDto[]>([]);
@@ -21,7 +21,7 @@ const useFetchOrdersByCustomerId = (customerId: number) => {
         fetchOrders();
     }, [customerId]);
 
-    return { orders, error };
+    return {orders, error};
 };
 
 export default useFetchOrdersByCustomerId;

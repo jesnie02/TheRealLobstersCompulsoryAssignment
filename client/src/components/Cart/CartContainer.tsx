@@ -1,5 +1,5 @@
-import { useAtom } from "jotai";
-import { PapersAtom, CartAtom } from "../../Atoms/atomIndex.ts";
+import {useAtom} from "jotai";
+import {CartAtom, PapersAtom} from "../../Atoms/atomIndex.ts";
 import CreateOrderButton from "../Utilities/CreateOrderButton.tsx";
 
 export default function CartContainer() {
@@ -12,7 +12,7 @@ export default function CartContainer() {
         // Restore the stock count when an item is removed from the cart
         setPapers(papers.map(paper =>
             paper.id === paperToRemove.id
-                ? { ...paper, stock: paper.stock + paperToRemove.quantity }
+                ? {...paper, stock: paper.stock + paperToRemove.quantity}
                 : paper
         ));
     };
@@ -28,12 +28,14 @@ export default function CartContainer() {
                 <div>
                     <ul className="cart-list space-y-4">
                         {cart.map((paper, index) => (
-                            <li key={index} className="cart-item p-4 bg-lightGray rounded-lg shadow-sm flex justify-between items-center">
+                            <li key={index}
+                                className="cart-item p-4 bg-lightGray rounded-lg shadow-sm flex justify-between items-center">
                                 <div>
                                     <h2 className="text-2xl font-semibold">{paper.quantity} x {paper.name}</h2>
                                     <p className="text-lg">Price: ${(paper.price * paper.quantity).toFixed(2)}</p>
                                 </div>
-                                <button onClick={() => removeItem(index)} className="btn btn-danger bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+                                <button onClick={() => removeItem(index)}
+                                        className="btn btn-danger bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-700">
                                     Remove
                                 </button>
                             </li>

@@ -1,11 +1,11 @@
-import { useFetchAllCustomers, useFetchAllOrders } from "../../Hooks/hookIndex.ts";
+import {useFetchAllCustomers, useFetchAllOrders} from "../../Hooks/hookIndex.ts";
 import StatusBadge from "../Utilities/StatusBadge.tsx";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 const GetAllOrders = () => {
-    const { orders, loading: ordersLoading, error: ordersError } = useFetchAllOrders();
-    const { customers, error: customersError } = useFetchAllCustomers();
+    const {orders, loading: ordersLoading, error: ordersError} = useFetchAllOrders();
+    const {customers, error: customersError} = useFetchAllCustomers();
     const navigate = useNavigate();
 
     const [searchQuery, setSearchQuery] = useState("");

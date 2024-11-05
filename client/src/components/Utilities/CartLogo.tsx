@@ -1,7 +1,7 @@
-import { useAtom } from "jotai";
-import { CartAtom } from "../../Atoms/atomIndex.ts";
+import {useAtom} from "jotai";
+import {CartAtom} from "../../Atoms/atomIndex.ts";
 import cartLogo from '/assets/CartLogo.png';
-import { useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import CartContainer from "../Cart/CartContainer.tsx";
 
 const CartLogo = () => {
@@ -35,12 +35,12 @@ const CartLogo = () => {
     return (
         <div className="cart-logo" ref={dropdownRef}>
             <button onClick={toggleDropdown} className="Cart-button">
-                <img src={cartLogo} alt="Cart" className="cart-image" />
+                <img src={cartLogo} alt="Cart" className="cart-image"/>
                 <span className="cart-count">{cart.length}</span>
             </button>
             {isOpen && (
                 <div className="cart-dropdown-menu">
-                    <CartContainer />
+                    <CartContainer/>
                 </div>
             )}
         </div>

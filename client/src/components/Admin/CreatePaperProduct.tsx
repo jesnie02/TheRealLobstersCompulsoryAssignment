@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { useAtom } from 'jotai';
-import { traitsAtom } from '../../Atoms/atomIndex.ts';
-import { http } from '../../http.ts';
-import { Trait } from "../../Api.ts";
-import toast, { Toaster } from "react-hot-toast";
+import React, {useEffect, useState} from 'react';
+import {useAtom} from 'jotai';
+import {traitsAtom} from '../../Atoms/atomIndex.ts';
+import {http} from '../../http.ts';
+import {Trait} from "../../Api.ts";
+import toast, {Toaster} from "react-hot-toast";
 
 interface CreatePaperProductProps {
     closeModal: () => void;
 }
 
-const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: createCloseModal }) => {
+const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({closeModal: createCloseModal}) => {
     const [productName, setProductName] = useState('');
     const [discontinued, setDiscontinued] = useState(false);
     const [stock, setStock] = useState(0);
@@ -80,7 +80,7 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
 
     return (
         <div className="container mx-auto p-4">
-            <Toaster />
+            <Toaster/>
             <h1 className="text-2xl font-bold mb-4">Create Paper Product</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -152,7 +152,8 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({ closeModal: cre
                                 <span className="label-text font-bold">Traits</span>
                             </div>
                             <div className="flex items-center">
-                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered" defaultValue="">
+                                <select onChange={handleSelectTrait} id="traits" className="select select-bordered"
+                                        defaultValue="">
                                     <option disabled value="">Pick one</option>
                                     {filteredTraits.map((trait) => (
                                         <option key={trait.id} value={trait.traitName || ''}>{trait.traitName}</option>

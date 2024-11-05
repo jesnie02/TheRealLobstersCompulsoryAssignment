@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { http } from '../http.ts';
+import {useCallback, useState} from 'react';
+import {http} from '../http.ts';
 
 const useFetchCustomerOrderHistory = () => {
     const [customers, setCustomers] = useState<{ [key: string]: string }>({});
@@ -11,14 +11,14 @@ const useFetchCustomerOrderHistory = () => {
             if (response.status === 200) {
                 const customerOrders = response.data;
                 const customerName = customerOrders.length > 0 ? customerOrders[0].customer?.name : "Unknown";
-                setCustomers(prev => ({ ...prev, [customerId]: customerName }));
+                setCustomers(prev => ({...prev, [customerId]: customerName}));
             }
         } catch (err: any) {
             setError(err.message);
         }
     }, []);
 
-    return { customers, error, fetchCustomer };
+    return {customers, error, fetchCustomer};
 };
 
 export default useFetchCustomerOrderHistory;
