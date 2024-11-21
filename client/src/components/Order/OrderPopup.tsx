@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {useAtom} from 'jotai';
 import {CartAtom, OrdersAtom} from '../../Atoms/atomIndex.ts';
-import {handleCreateOrder} from './CreateOrder.tsx';
+import CreateOrder from "./CreateOrder.tsx";
+
+
 
 interface OrderPopupProps {
     isOpen: boolean;
@@ -18,7 +20,7 @@ const OrderPopup: React.FC<OrderPopupProps> = ({isOpen, onClose}) => {
     const [deliveryDate, setDeliveryDate] = useState('');
 
     const handleCreateOrderWrapper = async () => {
-        await handleCreateOrder(
+        await CreateOrder(
             cart,
             customerName,
             customerEmail,

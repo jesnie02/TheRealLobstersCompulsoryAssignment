@@ -6,17 +6,16 @@ import {useAtom} from 'jotai';
 import {ThemeAtom} from '../Atoms/atomIndex.ts';
 import {useEffect} from 'react';
 import Home from './Home.tsx';
-import CustomerApp from './Customer/CustomerApp.tsx';
-import LoginCustomer from './Customer/LoginCustomer.tsx';
-import CustomerById from './Customer/CustomerById.tsx';
-import OrderDetail from './Order/OrderDetail.tsx';
 import {useInitializeData} from '../Hooks/hookIndex.ts';
 import Footer from './Footer/Footer.tsx';
 import AboutUs from "./Footer/AboutUs.tsx";
 import Jobs from "./Footer/JobList.tsx";
 import ContactUs from "./Footer/ContactUs.tsx";
-import {AdminApp} from "./componentImports.tsx";
-
+import AdminApp from "./Admin/AdminApp.tsx";
+import CustomerApp from "./Customer/CustomerApp.tsx";
+import LoginCustomer from "./Customer/LoginCustomer.tsx";
+import CustomerById from "./Customer/CustomerById.tsx";
+import OrderDetail from "./Order/OrderDetail.tsx";
 
 const App = () => {
     const [theme] = useAtom(ThemeAtom);

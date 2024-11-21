@@ -1,11 +1,11 @@
 import {useFetchAllPapers} from "../../Hooks/hookIndex.ts";
-import AddToCartButton from "../Utilities/AddToCartButton.tsx";
 import {useState} from "react";
 import {useAtom} from "jotai";
 import Slider from '@mui/material/Slider';
 import Checkbox from '@mui/material/Checkbox';
 import {FormControlLabel} from "@mui/material";
 import {priceRangeAtom, selectedTraitsAtom} from "../../Atoms/atomIndex.ts";
+import AddToCartButton from "../Utilities/AddToCartButton.tsx";
 
 export default function GetAllPaperComponent() {
     const {papers, loading, error} = useFetchAllPapers();

@@ -1,11 +1,11 @@
 import {useAtom} from "jotai";
-import {http} from "../../http.ts";
 import {useEffect, useState} from "react";
-import CreatePaperProduct from "./CreatePaperProduct.tsx";
-import UpdatePaperProduct from "./UpdatePaperProduct.tsx";
-import {PaperDto} from "../../Api.ts";
+import {useHttp} from "../../Hooks/hookIndex.ts";
+import {PaperDto} from "../../Models/Api.ts";
 import {AxiosError} from "axios";
 import {PapersAtom, selectedContentAtom} from "../../Atoms/atomIndex.ts";
+import CreatePaperProduct from "./CreatePaperProduct.tsx";
+import UpdatePaperProduct from "./UpdatePaperProduct.tsx";
 
 interface Paper {
     id: number;
@@ -34,12 +34,12 @@ const AllProducts = () => {
 
     const fetchPapers = async () => {
         try {
-            const response = await http.api.paperGetAllPapers();
+            const response = await useHttp().api.paperGetAllPapers();
             if (Array.isArray(response.data)) {
                 const papersWithTraits = await Promise.all(response.data.map(async (paperDto: PaperDto) => {
                     if (paperDto.id !== undefined) {
                         try {
-                            const traitsResponse = await http.api.traitGetTraitsByPaperId(paperDto.id);
+                            const traitsResponse = await useHttp().api.traitGetTraitsByPaperId(paperDto.id);
                             return {
                                 ...paperDto,
                                 traits: Array.isArray(traitsResponse.data) ? traitsResponse.data as Trait[] : [],

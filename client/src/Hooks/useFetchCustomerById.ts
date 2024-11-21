@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {http} from '../http.ts';
-import {Customer} from '../Api.ts';
+import {useHttp} from "./hookIndex.ts";
+import {Customer} from '../Models/modelIndex.ts';
 
 const useFetchCustomerById = (customerId: number) => {
     const [customer, setCustomer] = useState<Customer | null>(null);
@@ -10,7 +10,7 @@ const useFetchCustomerById = (customerId: number) => {
     useEffect(() => {
         const fetchCustomer = async () => {
             try {
-                const response = await http.api.customerGetCustomerById(customerId);
+                const response = await useHttp().api.customerGetCustomerById(customerId);
                 setCustomer(response.data);
             } catch (err: any) {
                 setError(err.message);

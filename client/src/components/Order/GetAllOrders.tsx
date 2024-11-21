@@ -1,7 +1,7 @@
 import {useFetchAllCustomers, useFetchAllOrders} from "../../Hooks/hookIndex.ts";
-import StatusBadge from "../Utilities/StatusBadge.tsx";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import StatusBadge from "../Utilities/StatusBadge.tsx";
 
 const GetAllOrders = () => {
     const {orders, loading: ordersLoading, error: ordersError} = useFetchAllOrders();

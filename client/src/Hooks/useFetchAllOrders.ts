@@ -1,8 +1,8 @@
 import {useAtom} from 'jotai';
 import {useCallback, useEffect, useState} from 'react';
 import {OrdersAtom} from '../Atoms/atomIndex.ts';
-import {http} from '../http.ts';
-import {Order, OrderDto, OrderEntryDto} from '../Api.ts'; // Ensure this import is correct
+import {useHttp} from "./hookIndex.ts";
+import {Order, OrderDto, OrderEntryDto} from '../Models/modelIndex.ts'; // Ensure this import is correct
 
 const useFetchAllOrders = () => {
     const [orders, setOrders] = useAtom(OrdersAtom);
@@ -12,7 +12,7 @@ const useFetchAllOrders = () => {
     const fetchOrders = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await http.api.orderGetAllOrders();
+            const response = await useHttp().api.orderGetAllOrders();
             if (response.status !== 200) throw new Error("Failed to fetch orders");
 
             const orders: Order[] = response.data.map((orderDto: OrderDto) => ({

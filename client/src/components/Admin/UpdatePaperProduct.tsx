@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {http} from "../../http.ts";
+import {useHttp} from "../../Hooks/hookIndex.ts";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -27,7 +27,7 @@ const UpdatePaperProduct = ({closeModal, paperId, initialData, onSuccess}: Updat
     useEffect(() => {
         const fetchTraits = async () => {
             try {
-                const response = await http.api.traitGetAllTraits();
+                const response = await useHttp().api.traitGetAllTraits();
                 if (Array.isArray(response.data)) {
                     setTraits(response.data);
                 } else {
@@ -54,7 +54,7 @@ const UpdatePaperProduct = ({closeModal, paperId, initialData, onSuccess}: Updat
         const payload = {...formData, id: paperId, traitIds: formData.traitIds};
         console.log("Submitting data:", {paperId, payload});
         try {
-            const response = await http.api.paperUpdateExistingPaper(paperId, payload);
+            const response = await useHttp().api.paperUpdateExistingPaper(paperId, payload);
             console.log("Response:", response);
             toast.success('Paper updated successfully');
             await onSuccess();

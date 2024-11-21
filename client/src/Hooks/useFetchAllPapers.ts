@@ -1,7 +1,7 @@
 import {useAtom} from 'jotai';
 import {useCallback, useEffect, useState} from 'react';
 import {PapersAtom} from '../Atoms/atomIndex.ts';
-import {http} from '../http.ts';
+import {useHttp} from "./hookIndex.ts";
 
 const useFetchAllPapers = () => {
     const [papers, setPapers] = useAtom(PapersAtom);
@@ -11,7 +11,7 @@ const useFetchAllPapers = () => {
     const fetchPapers = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await http.api.paperGetAllPapers();
+            const response = await useHttp().api.paperGetAllPapers();
             if (response.status !== 200) throw new Error("Failed to fetch papers");
 
             setPapers(response.data);

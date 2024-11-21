@@ -1,7 +1,7 @@
 import {useAtom} from 'jotai';
 import {useEffect, useState} from 'react';
 import {CustomersAtom} from '../Atoms/atomIndex.ts';
-import {http} from '../http.ts';
+import {useHttp} from "./hookIndex.ts";
 
 const useFetchAllCustomers = () => {
     const [customers, setCustomers] = useAtom(CustomersAtom);
@@ -10,7 +10,7 @@ const useFetchAllCustomers = () => {
     useEffect(() => {
         const fetchCustomers = async () => {
             try {
-                const response = await http.api.customerGetCustomers();
+                const response = await useHttp().api.customerGetCustomers();
                 const customersWithStringId = response.data.map((customer: any) => ({
                     ...customer,
                     id: customer.id.toString(),

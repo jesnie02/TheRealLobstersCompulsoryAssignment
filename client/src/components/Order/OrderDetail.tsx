@@ -1,10 +1,10 @@
 import {useNavigate, useParams} from 'react-router-dom';
 import {useFetchCustomerById, useFetchGetOrderById} from '../../Hooks/hookIndex.ts';
-import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
-import StatusBadge from "../Utilities/StatusBadge.tsx";
-import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
-import OrderEntriesTable from '../Order/OrderEntriesTable.tsx';
 import {useEffect, useState} from 'react';
+import StatusBadge from "../Utilities/StatusBadge.tsx";
+import OrderEntriesTable from "./OrderEntriesTable.tsx";
+import CancelOrderButton from "../Utilities/CancelOrderButton.tsx";
+import OrderStatusSelect from "../Utilities/OrderStatusSelect.tsx";
 
 const OrderDetail = () => {
     const {orderId} = useParams<{ orderId: string }>();

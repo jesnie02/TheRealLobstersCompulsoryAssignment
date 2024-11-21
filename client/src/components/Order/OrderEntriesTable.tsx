@@ -1,4 +1,4 @@
-import {OrderEntryDto} from '../../Api';
+import {OrderEntryDto} from '../../Models/modelIndex.ts';
 import {useFetchAllOrderEntries, useFetchAllPapers, useFetchGetOrderById} from '../../Hooks/hookIndex.ts';
 
 interface OrderEntriesTableProps {

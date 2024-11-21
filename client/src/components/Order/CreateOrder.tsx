@@ -1,4 +1,4 @@
-import {Api, CreateCustomerDto, OrderDto} from '../../Api';
+import {Api, CreateCustomerDto, OrderDto} from '../../Models/modelIndex.ts';
 
 const api = new Api();
 
@@ -71,3 +71,5 @@ export const handleCreateOrder = async (
         alert('Error creating order: ' + error.message);  // Inform the user of the error
     }
 };
+
+export default handleCreateOrder;

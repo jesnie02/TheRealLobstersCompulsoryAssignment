@@ -1,6 +1,6 @@
 import {useAtom} from "jotai";
 import {useEffect} from "react";
-import {http} from "../http";
+import {useHttp} from "./hookIndex.ts";
 import {AllTraitsAtom, PapersAtom} from "../Atoms/atomIndex.ts";
 
 const useInitializeData = () => {
@@ -8,7 +8,7 @@ const useInitializeData = () => {
     const [, setAllTraits] = useAtom(AllTraitsAtom);
 
     useEffect(() => {
-        http.api.paperGetAllPapers().then((response) => {
+        useHttp().api.paperGetAllPapers().then((response) => {
             setPapers(response.data);
         }).catch(e => {
             console.log(e);
@@ -19,7 +19,7 @@ const useInitializeData = () => {
 
     const fetchTraits = async () => {
         try {
-            const response = await http.api.traitGetAllTraits();
+            const response = await useHttp().api.traitGetAllTraits();
             if (Array.isArray(response.data)) {
                 const traitsData = response.data.map((item: any) => ({id: item.id, traitName: item.traitName}));
                 setAllTraits(traitsData);

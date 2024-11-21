@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import StatusBadge from "./StatusBadge";
 import {usePatchOrderStatus} from '../../Hooks/hookIndex.ts';
+import StatusBadge from "./StatusBadge.tsx";
 
 interface OrderStatusSelectProps {
     orderId: number;

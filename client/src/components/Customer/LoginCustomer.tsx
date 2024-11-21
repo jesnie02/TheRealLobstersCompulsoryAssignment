@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {http} from '../../http.ts';
-
+import {useHttp} from "../../Hooks/hookIndex.ts";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +10,7 @@ const Login = () => {
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await http.api.customerGetCustomerIdByEmail(email);
+            const response = await useHttp().api.customerGetCustomerIdByEmail(email);
             if (response.status !== 200) throw new Error("Customer not found");
 
             const customerId = response.data;

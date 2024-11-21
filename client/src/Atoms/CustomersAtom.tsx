@@ -1,4 +1,4 @@
 import {atom} from "jotai";
-import {Customer} from "../Api";
+import {Customer} from "../Models/modelIndex.ts";
 
 export const CustomersAtom = atom<Customer[]>([]);

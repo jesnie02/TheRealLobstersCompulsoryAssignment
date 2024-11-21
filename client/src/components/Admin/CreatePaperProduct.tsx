@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useAtom} from 'jotai';
 import {traitsAtom} from '../../Atoms/atomIndex.ts';
-import {http} from '../../http.ts';
-import {Trait} from "../../Api.ts";
+import {useHttp} from "../../Hooks/hookIndex.ts";
+import {Trait} from "../../Models/modelIndex.ts";
 import toast, {Toaster} from "react-hot-toast";
 
 interface CreatePaperProductProps {
@@ -21,7 +21,7 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({closeModal: crea
 
     const fetchTraits = async () => {
         try {
-            const response = await http.api.traitGetAllTraits();
+            const response = await useHttp().api.traitGetAllTraits();
             if (Array.isArray(response.data)) {
                 setAllTraits(response.data);
             } else {
@@ -40,7 +40,7 @@ const CreatePaperProduct: React.FC<CreatePaperProductProps> = ({closeModal: crea
         event.preventDefault();
         console.log(addedTraits);
         try {
-            const response = await http.api.paperCreateNewPaper({
+            const response = await useHttp().api.paperCreateNewPaper({
                 name: productName,
                 discontinued,
                 stock,

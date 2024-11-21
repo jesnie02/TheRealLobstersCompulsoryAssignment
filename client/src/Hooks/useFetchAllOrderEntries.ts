@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Api, OrderEntryDto} from '../Api';
+import {Api, OrderEntryDto} from '../Models/modelIndex.ts';
 
 const useFetchAllOrderEntries = () => {
     const [orderEntries, setOrderEntries] = useState<OrderEntryDto[]>([]);

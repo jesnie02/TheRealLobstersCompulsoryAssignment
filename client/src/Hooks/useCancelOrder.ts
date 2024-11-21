@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {http} from "../http.ts";
+import {useHttp} from "./hookIndex.ts";
 
 const useCancelOrder = () => {
     const [loading, setLoading] = useState(false);
@@ -9,7 +9,7 @@ const useCancelOrder = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await http.api.orderDeleteOrder(orderId);
+            const response = await useHttp().api.orderDeleteOrder(orderId);
             console.log('Response:', response);
             if (response.status === 200 || response.status === 204) {
                 alert(`Order ${orderId} has been canceled successfully.`);

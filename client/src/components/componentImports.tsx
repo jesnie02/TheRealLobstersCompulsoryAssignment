@@ -1,34 +1,3 @@
-// componentImports.tsx
-export {default as AdminApp} from './AdminApp';
-export {default as AdminDashboard} from './AdminDashboard';
-export {default as AllProducts} from './AllProducts';
-export {default as CreatePaperProduct} from './CreatePaperProduct';
-export {default as Menu} from './Menu';
-export {default as UpdatePaperProduct} from './UpdatePaperProduct';
-export {default as CartContainer} from './Cart/CartContainer';
-export {default as CustomerApp} from './Customer/CustomerApp';
-export {default as CustomerById} from './Customer/CustomerById';
-export {default as CustomerDashboard} from './Customer/CustomerDashboard';
-export {default as GetAllCustomer} from './Customer/GetAllCustomer';
-export {default as LoginCustomer} from './Customer/LoginCustomer';
-export {default as AboutUs} from './Footer/AboutUs';
-export {default as ContactUs} from './Footer/ContactUs';
-export {default as Footer} from './Footer/Footer';
-export {default as JobList} from './Footer/JobList';
-export {default as CreateOrder} from './Order/CreateOrder';
-export {default as GetAllOrders} from './Order/GetAllOrders';
-export {default as OrderDetail} from './Order/OrderDetail';
-export {default as OrderEntriesTable} from './Order/OrderEntriesTable';
-export {default as OrderPopup} from './Order/OrderPopup';
-export {default as GetAllPaperComponent} from './Paper/GetAllPaperComponent';
-export {default as CreateTraits} from './Traits/CreateTraits';
-export {default as GetAllTraits} from './Traits/GetAllTraits';
-export {default as AddToCartButton} from './Utilities/AddToCartButton';
-export {default as CancelOrderButton} from './Utilities/CancelOrderButton';
-export {default as CartLogo} from './Utilities/CartLogo';
-export {default as CreateOrderButton} from './Utilities/CreateOrderButton';
-export {default as HomeLogo} from './Utilities/HomeLogo';
-export {default as OrderStatusSelect} from './Utilities/OrderStatusSelect';
-export {default as ProfileLogo} from './Utilities/ProfileLogo';
-export {default as SearchBar} from './Utilities/SearchBar';
-export {default as StatusBadge} from './Utilities/StatusBadge';
+export * from "../Hooks/hookIndex"
+export * from "../Atoms/atomIndex"
+export * from "../Models/modelIndex"

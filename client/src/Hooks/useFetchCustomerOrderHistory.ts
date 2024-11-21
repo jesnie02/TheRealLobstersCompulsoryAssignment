@@ -1,5 +1,5 @@
 import {useCallback, useState} from 'react';
-import {http} from '../http.ts';
+import {useHttp} from "./hookIndex.ts";
 
 const useFetchCustomerOrderHistory = () => {
     const [customers, setCustomers] = useState<{ [key: string]: string }>({});
@@ -7,7 +7,7 @@ const useFetchCustomerOrderHistory = () => {
 
     const fetchCustomer = useCallback(async (customerId: number) => {
         try {
-            const response = await http.api.orderGetOrderHistory(customerId);
+            const response = await useHttp().api.orderGetOrderHistory(customerId);
             if (response.status === 200) {
                 const customerOrders = response.data;
                 const customerName = customerOrders.length > 0 ? customerOrders[0].customer?.name : "Unknown";

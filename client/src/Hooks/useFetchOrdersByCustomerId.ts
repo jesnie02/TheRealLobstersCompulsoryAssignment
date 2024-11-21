@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
-import {http} from '../http';
-import {OrderDto} from "../Api.ts";
+import {useHttp} from "./hookIndex.ts";
+import {OrderDto} from "../Models/modelIndex.ts";
 
 const useFetchOrdersByCustomerId = (customerId: number) => {
     const [orders, setOrders] = useState<OrderDto[]>([]);
@@ -9,7 +9,7 @@ const useFetchOrdersByCustomerId = (customerId: number) => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await http.api.customerGetOrdersByCustomerId(customerId);
+                const response = await useHttp().api.customerGetOrdersByCustomerId(customerId);
                 if (response.status !== 200) throw new Error("Orders not found");
 
                 setOrders(response.data);
